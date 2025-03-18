@@ -1,0 +1,139 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.header_link {
+  display: flex;
+  text-decoration: none;
+  color: #000;
+  align-items: center;
+  justify-content: center;
+}
+
+.header_container {
+  background-color: #fff;
+  display: flex;
+  gap: 20px;
+  color: #fff;
+  padding: 13px 34px;
+  border-bottom: 0.75px solid #808080;
+}
+
+.header_logo {
+  display: flex;
+  gap: 15px;
+  margin-right: 10px;
+  font-size: var(--logo-size);
+  font-weight: 580;
+  white-space: nowrap;
+  flex: 1;
+  cursor: pointer; /* Con trỏ chuột thay đổi khi hover */
+}
+
+.header_logo .img {
+  aspect-ratio: 1;
+  object-fit: auto;
+  object-position: center;
+  width: 53px;
+  border-radius: 50%;
+}
+
+.header_name {
+  font-family: var(--logo-font);
+  flex-grow: 1;
+  flex-basis: auto;
+  margin: auto 0;
+}
+
+.header_set,
+.header_tab {
+  display: flex;
+  font-size: var(--header-size);
+  text-align: center;
+  letter-spacing: 0.1px;
+  line-height: 100%;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  flex: 1;
+  margin: auto 0;
+}
+
+.header_set {
+  gap: 10px;
+}
+
+.header_tab {
+  gap: 20px;
+  justify-content: end; /* Căn giữa theo chiều ngang */
+}
+
+/* .header_sign_up {
+  font-weight: var(--header-weight-size);
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  margin-right: 40px;
+  font-size: var(--header-size);
+} */
+
+.header_start {
+  font-size: 16px;
+  width: 100px;
+  height: 40px;
+  color: #fff;
+  font-family: var(--body-font);
+  background: var(--color-button);
+  border: 1px solid var(--color-button);
+  border-radius: 15px;
+  padding: 12px;
+}
+
+.header_start:hover {
+  opacity: 0.8;
+  border: 2px solid var(--color-button);
+}
+
+.header_start_active {
+  font-size: var(--small-size);
+  color: #fff;
+  text-decoration-line: underline;
+}
+
+#header_noti_container {
+  padding: 10px;
+  background: #fff;
+  border: 3px solid var(--color-button);
+  border-radius: 50%;
+}
+
+#header_bell {
+  font-size: 20px;
+  color: var(--color-button);
+  cursor: pointer;
+}
+
+#header_avatar {
+  padding: 6px 10px;
+  background: #fff;
+  border: 2.4px solid var(--color-button);
+  border-radius: 30px;
+}
+
+#user_logo {
+  background: var(--color-button);
+  color: #fff;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.username {
+  font-family: var(--body-font);
+  font-size: var(--header-size);
+  color: #000;
+  border: none;
+  border-radius: 0%;
+  padding-left: 10px;
+}
