@@ -1,10 +1,10 @@
 import "./index.css";
-import google_icon from "../../../img/google_icon.png";
+import google_icon from "@/assets/img/google_icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { Form, Input, Button, Checkbox, message } from "antd";
-import BtnBlue from "../../../components/btn/btn-blue";
+import BtnBlue from "@/components/btn/btn-blue";
 
 function Register() {
   //message

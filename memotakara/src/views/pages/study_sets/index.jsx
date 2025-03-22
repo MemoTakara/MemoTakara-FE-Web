@@ -3,8 +3,8 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Tooltip, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import BtnWhite from "../../../components/btn/btn-white";
-import BtnBlue from "../../../components/btn/btn-blue";
+import BtnWhite from "@/components/btn/btn-white";
+import BtnBlue from "@/components/btn/btn-blue";
 
 function StudySets() {
   const [active, setActive] = useState("");

@@ -1,16 +1,16 @@
-import "../../main.css";
+import "@/main.css";
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../../components/main_layout";
-import LandingPage from "../pages/landing_page";
-import Register from "../pages/register";
-import Login from "../pages/login";
-import Dashboard from "../pages/dashboard";
-import Statistics from "../pages/statistics";
-import Settings from "../pages/settings";
-import StudySets from "../pages/study_sets";
-import CreateCollection from "../pages/create_collection";
-import StudyDetail from "../pages/study_detail";
-// import ErrorPage from "../pages/error_page";
+import MainLayout from "@/components/main_layout";
+import LandingPage from "@/views/pages/landing_page";
+import Register from "@/views/pages/register";
+import Login from "@/views/pages/login";
+import Dashboard from "@/views/pages/dashboard";
+import Statistics from "@/views/pages/statistics";
+import Settings from "@/views/pages/settings";
+import StudySets from "@/views/pages/study_sets";
+import CreateCollection from "@/views/pages/create_collection";
+import StudyDetail from "@/views/pages/study_detail";
+// import ErrorPage from "@/views/pages/error_page";
 
 const router = createBrowserRouter([
   {

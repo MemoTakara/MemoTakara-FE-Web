@@ -1,13 +1,13 @@
 import "./index.css";
-import google_icon from "../../img/google_icon.png";
-import logo from "../../img/logo.png";
+import google_icon from "@/assets/img/google_icon.png";
+import logo from "@/assets/img/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Form, message, Input } from "antd";
 import { GithubFilled, LinkedinFilled } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import BtnBlue from "../btn/btn-blue";
+import BtnBlue from "@/components/btn/btn-blue";
 
 function Footer() {
   const [active, setActive] = useState("");

@@ -1,5 +1,5 @@
 import "./index.css";
-import logo from "../../img/logo.png";
+import logo from "@/assets/img/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AutoComplete, Input, Badge, Popconfirm, Select } from "antd";
@@ -9,9 +9,9 @@ import {
   FireOutlined,
   BookOutlined,
 } from "@ant-design/icons";
-import HeaderSet from "../btn/btn-header-set";
-import BtnWhite from "../btn/btn-white";
-import BtnBlue from "../btn/btn-blue";
+import HeaderSet from "@/components/btn/btn-header-set";
+import BtnWhite from "@/components/btn/btn-white";
+import BtnBlue from "@/components/btn/btn-blue";
 
 // Search bar
 const getRandomInt = (max, min = 0) =>

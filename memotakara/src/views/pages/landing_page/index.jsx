@@ -1,12 +1,12 @@
 import "./index.css";
-import landing_img from "../../../img/landing_img.png";
-import landing_feature1 from "../../../img/landing_feature1.png";
-import landing_feature2 from "../../../img/landing_feature2.png";
-import landing_feature3 from "../../../img/landing_feature3.png";
+import landing_img from "@/assets/img/landing_img.png";
+import landing_feature1 from "@/assets/img/landing_feature1.png";
+import landing_feature2 from "@/assets/img/landing_feature2.png";
+import landing_feature3 from "@/assets/img/landing_feature3.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BtnBlue from "../../../components/btn/btn-blue.jsx";
-import BtnWhite from "../../../components/btn/btn-white.jsx";
+import BtnBlue from "@/components/btn/btn-blue.jsx";
+import BtnWhite from "@/components/btn/btn-white.jsx";
 
 function LandingPage() {
   const [active, setActive] = useState("");

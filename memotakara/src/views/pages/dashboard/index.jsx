@@ -9,9 +9,9 @@ import {
   recentCollections,
   recommendCollections,
   popularCollections,
-} from "../../../data/data.jsx";
-import BtnBlue from "../../../components/btn/btn-blue.jsx";
-import DashboardCard from "../../../components/dashboard_card/index.jsx";
+} from "@/data/data.jsx";
+import BtnBlue from "@/components/btn/btn-blue.jsx";
+import DashboardCard from "@/components/dashboard_card/index.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
