@@ -6,11 +6,11 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import BtnBlue from "../../../components/btn/btn-blue";
 
-function SignUp() {
+function Register() {
   //message
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
-  const openSignupMessage = () => {
+  const openRegisterMessage = () => {
     const key = "updatable";
     messageApi.loading({ content: "Loading...", key });
     setTimeout(() => {
@@ -22,15 +22,15 @@ function SignUp() {
   };
 
   return (
-    <div className="sign_up_container">
-      <div className="sign_up_header">Sign up in less than 2 minutes.</div>
-      <div className="sign_up_form">
+    <div className="register_container">
+      <div className="register_header">Sign up in less than 2 minutes.</div>
+      <div className="register_form">
         <Form
           layout="horizontal"
           style={{
             width: 400,
           }}
-          onFinish={openSignupMessage}
+          onFinish={openRegisterMessage}
         >
           {/* username */}
           <Form.Item
@@ -123,8 +123,8 @@ function SignUp() {
             {/* <BtnBlue defaultText="SIGN UP" /> */}
             <Button
               type="primary"
-              className="sign_up_btn_signup"
-              onClick={openSignupMessage}
+              className="register_btn_register"
+              onClick={openRegisterMessage}
             >
               SIGN UP
             </Button>
@@ -171,7 +171,7 @@ function SignUp() {
         Already have account?
         <span>
           <Link
-            className="sign_up_link"
+            className="register_link"
             to="/login"
             style={{ textDecoration: "underline" }}
           >
@@ -183,4 +183,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Register;

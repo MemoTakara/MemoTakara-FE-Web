@@ -158,10 +158,10 @@ const Header = () => {
 
               <Link
                 className={`header_link ${
-                  active === "sign_up" ? "header_start_active" : ""
+                  active === "register" ? "header_start_active" : ""
                 }`}
-                to="/sign_up"
-                onClick={() => setActive("sign_up")}
+                to="/register"
+                onClick={() => setActive("register")}
               >
                 <BtnBlue defaultText="Sign up" style={{ fontSize: "15px" }} />
               </Link>

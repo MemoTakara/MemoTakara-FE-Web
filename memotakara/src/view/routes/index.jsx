@@ -2,7 +2,7 @@ import "../../main.css";
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../../components/main_layout";
 import LandingPage from "../pages/landing_page";
-import SignUp from "../pages/sign_up";
+import Register from "../pages/register";
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
 import Statistics from "../pages/statistics";
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
     // errorElement: <ErrorPage />,
   },
   {
-    path: "/sign_up",
-    element: <MainLayout component={<SignUp />} />,
+    path: "/register",
+    element: <MainLayout component={<Register />} />,
   },
   {
     path: "/login",

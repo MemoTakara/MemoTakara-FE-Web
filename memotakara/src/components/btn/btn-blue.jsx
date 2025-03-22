@@ -16,7 +16,6 @@ const BtnBlue = ({ defaultText, disabled, style }) => {
     color: disabled ? "var(--color-text-disabled)" : "#fff", // Đổi màu chữ
 
     padding: "10px",
-    border: "none", // Xóa tất cả border mặc định
     borderRadius: "var(--button-border-radius)",
     border: disabled
       ? "1px solid #999"

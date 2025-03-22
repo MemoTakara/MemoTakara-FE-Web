@@ -16,7 +16,6 @@ const BtnWhite = ({ defaultText, style }) => {
     color: "var(--color-text)",
 
     padding: "10px",
-    border: "none", // Xóa tất cả border mặc định
     borderRadius: "var(--button-border-radius)",
     border: isClicked ? "1px solid" : "1px solid var(--color-light-button)",
 

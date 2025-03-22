@@ -127,12 +127,12 @@ function Login() {
       </div>
 
       {/* sign up */}
-      <div className="switch_to_signup" style={{ fontSize: "18px" }}>
+      <div className="switch_to_register" style={{ fontSize: "18px" }}>
         Don't have account?
         <span>
           <Link
             className="login_link"
-            to="/sign_up"
+            to="/register"
             style={{ textDecoration: "underline" }}
           >
             Sign up now!
