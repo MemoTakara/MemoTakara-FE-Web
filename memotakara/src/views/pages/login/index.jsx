@@ -1,25 +1,35 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
-import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox, message } from "antd";
+import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue";
 
 function Login() {
-  //message
-  const [messageApi, contextHolder] = message.useMessage();
+  const { login } = useAuth(); // Lấy hàm login từ context
+  const [messageApi] = message.useMessage();
   const navigate = useNavigate();
-  const openLoginMessage = (values) => {
-    const key = "updatable";
+
+  const handleLogin = async (values) => {
+    const key = "currently logged in";
     messageApi.loading({ content: "Loading...", key });
-    setTimeout(() => {
-      messageApi.success({ content: "Login Success!", key, duration: 2 });
+
+    try {
+      await login(values.username, values.password);
+      messageApi.success({
+        content: "Login Successful!",
+        key,
+        duration: 2,
+      });
       setTimeout(() => {
-        localStorage.setItem("username", values.username);
+        login(values.username);
         navigate("/dashboard");
       }, 2000); // Thời gian chờ để hiển thị thông báo trước khi chuyển hướng
-    }, 1000);
+    } catch (error) {
+      messageApi.error({ content: "Login  Failed", key, duration: 2 });
+    }
   };
 
   return (
@@ -37,7 +47,7 @@ function Login() {
         style={{
           width: 400,
         }}
-        onFinish={openLoginMessage}
+        onFinish={handleLogin}
       >
         {/* username */}
         <Form.Item
@@ -84,7 +94,7 @@ function Login() {
 
         {/* login */}
         <Form.Item>
-          {contextHolder}
+          {/* {contextHolder} */}
           {/* <BtnBlue defaultText="LOG IN" /> */}
           <Button type="primary" className="login_btn_login" htmlType="submit">
             LOG IN

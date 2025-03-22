@@ -1,24 +1,34 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
-import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox, message } from "antd";
+import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue";
 
 function Register() {
-  //message
-  const [messageApi, contextHolder] = message.useMessage();
+  const { register } = useAuth();
+  const [messageApi] = message.useMessage();
   const navigate = useNavigate();
-  const openRegisterMessage = () => {
-    const key = "updatable";
-    messageApi.loading({ content: "Loading...", key });
-    setTimeout(() => {
-      messageApi.success({ content: "Sign Up Success!", key, duration: 2 });
+
+  const handleRegister = async (values) => {
+    const key = "registering";
+    messageApi.loading({ content: "Registering...", key });
+
+    try {
+      await register(values.username, values.email, values.password);
+      messageApi.success({
+        content: "Registration Successful!",
+        key,
+        duration: 2,
+      });
       setTimeout(() => {
-        navigate("/login");
-      }, 2000); // Thời gian chờ để hiển thị thông báo trước khi chuyển hướng
-    }, 1000);
+        navigate("/dashboard");
+      }, 2000);
+    } catch (error) {
+      messageApi.error({ content: "Registration Failed", key, duration: 2 });
+    }
   };
 
   return (
@@ -30,7 +40,7 @@ function Register() {
           style={{
             width: 400,
           }}
-          onFinish={openRegisterMessage}
+          onFinish={handleRegister}
         >
           {/* username */}
           <Form.Item
@@ -119,12 +129,12 @@ function Register() {
 
           {/* sign up */}
           <Form.Item style={{ textAlign: "center" }}>
-            {contextHolder}
+            {/* {contextHolder} */}
             {/* <BtnBlue defaultText="SIGN UP" /> */}
             <Button
               type="primary"
               className="register_btn_register"
-              onClick={openRegisterMessage}
+              onClick={handleRegister}
             >
               SIGN UP
             </Button>

@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Input, Button, message, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 //Upload image
 const props = {
@@ -41,8 +42,10 @@ function Settings() {
   };
 
   //Sign out
+  const { user, logout } = useAuth();
   const handleSignout = () => {
-    localStorage.removeItem("username");
+    console.log(user?.username); // Xem tên người dùng
+    logout(); // Đăng xuất
     navigate("/");
   };
 

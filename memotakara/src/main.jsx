@@ -1,7 +1,12 @@
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
+import { RouterProvider, BrowserRouter } from "react-router-dom";
 import router from "@/views/routes";
+import Providers from "@/contexts"; // Import toàn bộ Context
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <React.StrictMode>
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>
+  </React.StrictMode>
 );

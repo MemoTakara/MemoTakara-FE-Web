@@ -1,6 +1,9 @@
 import "@/main.css";
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "@/components/main_layout";
+import UserLayout from "@/components/layout/UserLayout";
+import GuestLayout from "@/components/layout/GuestLayout";
+import ProtectedRoute from "@/views/routes/ProtectedRoute";
+
 import LandingPage from "@/views/pages/landing_page";
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
@@ -10,46 +13,71 @@ import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
 import CreateCollection from "@/views/pages/create_collection";
 import StudyDetail from "@/views/pages/study_detail";
-// import ErrorPage from "@/views/pages/error_page";
+import NotAuthorized from "@/views/error-pages/NotAuthorized";
 
 const router = createBrowserRouter([
   {
+    path: "/not-authorized",
+    element: <NotAuthorized />,
+  },
+  {
     path: "/",
-    element: <MainLayout component={<LandingPage />} />,
-    // errorElement: <ErrorPage />,
+    element: <GuestLayout />,
+    children: [
+      {
+        path: "/",
+        element: <LandingPage />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+    ],
   },
   {
-    path: "/register",
-    element: <MainLayout component={<Register />} />,
+    path: "/",
+    element: <ProtectedRoute requiredRole="user" />,
+    children: [
+      {
+        path: "/",
+        element: <UserLayout />,
+        children: [
+          {
+            path: "/dashboard",
+            element: <Dashboard />,
+          },
+          {
+            path: "/statistics",
+            element: <Statistics />,
+          },
+          {
+            path: "/settings",
+            element: <Settings />,
+          },
+          {
+            path: "/study_sets",
+            element: <StudySets />,
+          },
+          {
+            path: "/create_collection",
+            element: <CreateCollection />,
+          },
+          {
+            path: "/study_detail",
+            element: <StudyDetail />,
+          },
+        ],
+      },
+    ],
   },
-  {
-    path: "/login",
-    element: <MainLayout component={<Login />} />,
-  },
-  {
-    path: "/dashboard",
-    element: <MainLayout component={<Dashboard />} />,
-  },
-  {
-    path: "/statistics",
-    element: <MainLayout component={<Statistics />} />,
-  },
-  {
-    path: "/settings",
-    element: <MainLayout component={<Settings />} />,
-  },
-  {
-    path: "/study_sets",
-    element: <MainLayout component={<StudySets />} />,
-  },
-  {
-    path: "/create_collection",
-    element: <MainLayout component={<CreateCollection />} />,
-  },
-  {
-    path: "/study_detail",
-    element: <MainLayout component={<StudyDetail />} />,
-  },
+  // {
+  //   path: "/admin",
+  //   element: <ProtectedRoute requiredRole="admin" />,
+  // },
 ]);
 
 export default router;

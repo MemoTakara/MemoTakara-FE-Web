@@ -52,7 +52,7 @@ const handleLanguage = (value) => {
   console.log(`selected ${value}`);
 };
 
-const Header = () => {
+const UserHeader = () => {
   const [active, setActive] = useState("");
   const user = localStorage.getItem("username");
 
@@ -303,4 +303,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default UserHeader;
