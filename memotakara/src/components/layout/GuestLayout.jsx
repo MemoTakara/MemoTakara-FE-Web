@@ -6,13 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 function GuestLayout() {
   const { token, user } = useAuth();
-
-  // Nếu đã có token nhưng chưa lấy xong user -> Chờ lấy user
-  if (token && user === null) {
-    return <div>Loading...</div>;
-  }
-
-  if (token && user) {
+  if (token) {
     return <Navigate to="/" />;
   }
 
@@ -21,8 +15,9 @@ function GuestLayout() {
       <div className="header">
         <GuestHeader />
       </div>
-      <div className="body" />
-      <Outlet />
+      <div className="body">
+        <Outlet />
+      </div>
       <div className="footer">
         <Footer />
       </div>

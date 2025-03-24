@@ -14,17 +14,15 @@ function Login() {
 
   const handleLogin = async (values) => {
     const key = "currently logged in";
-    messageApi.loading({ content: "Loading...", key });
 
     try {
-      await login(values.username, values.password);
+      await login(values.email, values.password);
       messageApi.success({
         content: "Login Successful!",
         key,
         duration: 2,
       });
       setTimeout(() => {
-        login(values.username);
         navigate("/dashboard");
       }, 2000); // Thời gian chờ để hiển thị thông báo trước khi chuyển hướng
     } catch (error) {
@@ -49,20 +47,18 @@ function Login() {
         }}
         onFinish={handleLogin}
       >
-        {/* username */}
+        {/* email */}
         <Form.Item
           layout="vertical"
-          label="Username"
-          name="username"
+          label="Email"
+          name="email"
           rules={[
-            {
-              required: true,
-              message: "Enter your username",
-            },
+            { type: "email", message: "Invalid email!" },
+            { required: true, message: "Please input your email!" },
           ]}
           style={{ height: "60px" }}
         >
-          <Input placeholder="Username" />
+          <Input placeholder="Email" />
         </Form.Item>
 
         {/* pass */}

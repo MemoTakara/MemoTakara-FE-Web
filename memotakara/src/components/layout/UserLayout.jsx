@@ -4,16 +4,16 @@ import Footer from "@/components/footer";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
-function UserLayout(props) {
+function UserLayout() {
   const { token, user } = useAuth();
 
   // Nếu đã có token nhưng chưa lấy xong user -> Chờ lấy user
-  if (token && user === null) {
-    return <div>Loading...</div>;
+  if (!token) {
+    return <Navigate to="/login" />;
   }
 
-  if (token && user) {
-    return <Navigate to="/" />;
+  if (!user) {
+    return <div>Chờ lấy user...</div>;
   }
 
   return (
@@ -21,8 +21,9 @@ function UserLayout(props) {
       <div className="header">
         <UserHeader />
       </div>
-      <div className="body" />
-      <Outlet />
+      <div className="body">
+        <Outlet />
+      </div>
       <div className="footer">
         <Footer />
       </div>

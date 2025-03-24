@@ -4,12 +4,13 @@ import { useAuth } from "@/contexts/AuthContext";
 const ProtectedRoute = ({ requiredRole }) => {
   const { user, token } = useAuth();
 
+  // Kiểm tra nếu token chưa có hoặc user chưa được tải
   if (!user || !token) {
-    return <Navigate to="/not-authorized" replace />;
+    return <Navigate to="/" replace />;
   }
 
-  // 🟠 Nếu có requiredRole, kiểm tra quyền truy cập
-  if (requiredRole && user.role !== requiredRole) {
+  // Kiểm tra role nếu có yêu cầu
+  if (requiredRole && user?.role !== requiredRole) {
     return <Navigate to="/not-authorized" replace />;
   }
 

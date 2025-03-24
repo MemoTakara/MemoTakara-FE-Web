@@ -41,12 +41,12 @@ function Settings() {
     });
   };
 
-  //Sign out
+  //Log out
   const { user, logout } = useAuth();
-  const handleSignout = () => {
+  const handleLogout = async () => {
     console.log(user?.username); // Xem tên người dùng
-    logout(); // Đăng xuất
-    navigate("/");
+    await logout(); // Đăng xuất
+    navigate("/login");
   };
 
   return (
@@ -60,7 +60,7 @@ function Settings() {
           className="setting_btn"
           id="setting_btn_signout"
           icon={<LogoutOutlined />}
-          onClick={handleSignout}
+          onClick={handleLogout}
         >
           Sign out
         </Button>

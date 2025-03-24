@@ -14,17 +14,21 @@ function Register() {
 
   const handleRegister = async (values) => {
     const key = "registering";
-    messageApi.loading({ content: "Registering...", key });
 
     try {
-      await register(values.username, values.email, values.password);
+      await register(
+        values.username,
+        values.email,
+        values.password,
+        values.password_confirmation
+      );
       messageApi.success({
         content: "Registration Successful!",
         key,
         duration: 2,
       });
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/login");
       }, 2000);
     } catch (error) {
       messageApi.error({ content: "Registration Failed", key, duration: 2 });
@@ -42,6 +46,20 @@ function Register() {
           }}
           onFinish={handleRegister}
         >
+          {/* email */}
+          <Form.Item
+            layout="vertical"
+            label="Email"
+            name="email"
+            rules={[
+              { type: "email", message: "Invalid email!" },
+              { required: true, message: "Please input your email!" },
+            ]}
+            style={{ height: "60px" }}
+          >
+            <Input />
+          </Form.Item>
+
           {/* username */}
           <Form.Item
             layout="vertical"
@@ -78,15 +96,15 @@ function Register() {
           {/* re-enter pass */}
           <Form.Item
             layout="vertical"
-            label="Re-enter password"
-            name="re_enter_password"
+            label="Confirm the password"
+            name="password_confirmation"
             style={{ height: "60px" }}
             dependencies={["password"]}
             hasFeedback
             rules={[
               {
                 required: true,
-                message: "Re-enter password",
+                message: "Confirm the password",
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {

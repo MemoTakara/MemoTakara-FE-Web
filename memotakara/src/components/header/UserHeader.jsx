@@ -99,205 +99,120 @@ const UserHeader = () => {
   return (
     <div className="header_max">
       <div class="header_container">
-        {!user ? (
-          <>
-            <div className="header_set">
-              <Link
-                to="/"
-                className="header_link"
-                onClick={() => setActive("/")}
-              >
-                <div className="header_logo">
-                  <img loading="lazy" src={logo} alt="logo" class="img" />
-                  <div class="header_name">MemoTakara</div>
-                </div>
-              </Link>
-
-              <Link
-                to="/"
-                className="header_link"
-                onClick={() => setActive("/")}
-              >
-                <HeaderSet
-                  defaultText="Home"
-                  isActive={active === "/"}
-                  onClick={() => setActive("/")}
-                />
-              </Link>
-
-              <Link
-                to="/"
-                className="header_link"
-                onClick={() => setActive("")}
-              >
-                <HeaderSet
-                  defaultText="About us"
-                  isActive={active === ""}
-                  onClick={() => setActive("")}
-                />
-              </Link>
+        <div className="header_set">
+          <Link
+            to="/dashboard"
+            className="header_link"
+            onClick={() => setActive("dashboard")}
+          >
+            <div className="header_logo">
+              <img loading="lazy" src={logo} alt="logo" class="img" />
+              <div class="header_name">MemoTakara</div>
             </div>
+          </Link>
 
-            <div className="header_tab">
-              <AutoComplete
-                popupMatchSelectWidth={252}
-                style={{
-                  width: 360,
-                }}
-                options={optionsSearch}
-                onSelect={onSelectSearch}
-                onSearch={handleSearch}
-                size="medium"
-              >
-                <Input.Search
-                  size="medium"
-                  placeholder="Search standard collection"
-                  enterButton
-                />
-              </AutoComplete>
+          <Link
+            to="/dashboard"
+            className={`header_link ${
+              active === "dashboard" ? "header_active" : ""
+            }`}
+            onClick={() => setActive("dashboard")}
+          >
+            <HeaderSet
+              defaultText="Home"
+              isActive={active === "dashboard"}
+              onClick={() => setActive("dashboard")}
+            />
+          </Link>
 
-              <Link
-                className={`header_link ${
-                  active === "register" ? "header_start_active" : ""
-                }`}
-                to="/register"
-                onClick={() => setActive("register")}
-              >
-                <BtnBlue defaultText="Sign up" style={{ fontSize: "15px" }} />
-              </Link>
+          <Link
+            className={`header_link ${
+              active === "study_sets" ? "header_active" : ""
+            }`}
+            onClick={() => setActive("study_sets")}
+            to="/study_sets"
+          >
+            <HeaderSet
+              defaultText="Study Sets"
+              isActive={active === "study_sets"}
+              onClick={() => setActive("study_sets")}
+            />
+          </Link>
 
-              <Link
-                className={`header_link ${
-                  active === "login" ? "header_start_active" : ""
-                }`}
-                to="/login"
-                onClick={() => setActive("login")}
-              >
-                <BtnBlue defaultText="Login" style={{ fontSize: "15px" }} />
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="header_set">
-              <Link
-                to="/dashboard"
-                className="header_link"
-                onClick={() => setActive("dashboard")}
-              >
-                <div className="header_logo">
-                  <img loading="lazy" src={logo} alt="logo" class="img" />
-                  <div class="header_name">MemoTakara</div>
-                </div>
-              </Link>
+          <Link
+            to="/statistics"
+            className={`header_link ${
+              active === "statistics" ? "header_active" : ""
+            }`}
+            onClick={() => setActive("statistics")}
+          >
+            <HeaderSet
+              defaultText="Statistics"
+              isActive={active === "statistics"}
+              onClick={() => setActive("statistics")}
+            />
+          </Link>
+        </div>
 
-              <Link
-                to="/dashboard"
-                className={`header_link ${
-                  active === "dashboard" ? "header_active" : ""
-                }`}
-                onClick={() => setActive("dashboard")}
-              >
-                <HeaderSet
-                  defaultText="Home"
-                  isActive={active === "dashboard"}
-                  onClick={() => setActive("dashboard")}
-                />
-              </Link>
+        <div className="header_tab">
+          <AutoComplete
+            popupMatchSelectWidth={252}
+            style={{
+              width: 360,
+            }}
+            options={optionsSearch}
+            onSelect={onSelectSearch}
+            onSearch={handleSearch}
+            size="medium"
+          >
+            <Input.Search
+              size="medium"
+              placeholder="Search standard collection"
+              enterButton
+            />
+          </AutoComplete>
 
-              <Link
-                className={`header_link ${
-                  active === "study_sets" ? "header_active" : ""
-                }`}
-                onClick={() => setActive("study_sets")}
-                to="/study_sets"
-              >
-                <HeaderSet
-                  defaultText="Study Sets"
-                  isActive={active === "study_sets"}
-                  onClick={() => setActive("study_sets")}
-                />
-              </Link>
+          <Select
+            defaultValue="English"
+            style={{
+              width: 115,
+              height: 40,
+            }}
+            onChange={handleLanguage}
+            options={[
+              {
+                value: "Vietnamese",
+                label: "Vietnamese",
+              },
+              {
+                value: "English",
+                label: "English",
+                disabled: true,
+              },
+              {
+                value: "Japanese",
+                label: "Japanese",
+              },
+            ]}
+          />
 
-              <Link
-                to="/statistics"
-                className={`header_link ${
-                  active === "statistics" ? "header_active" : ""
-                }`}
-                onClick={() => setActive("statistics")}
-              >
-                <HeaderSet
-                  defaultText="Statistics"
-                  isActive={active === "statistics"}
-                  onClick={() => setActive("statistics")}
-                />
-              </Link>
-            </div>
+          <div id="header_noti_container" onClick={() => toggleNotifications()}>
+            <BellOutlined id="header_bell" />
+          </div>
+          <BtnWhite id="header_noti_container">
+            <BellOutlined id="header_bell" />
+          </BtnWhite>
 
-            <div className="header_tab">
-              <AutoComplete
-                popupMatchSelectWidth={252}
-                style={{
-                  width: 360,
-                }}
-                options={optionsSearch}
-                onSelect={onSelectSearch}
-                onSearch={handleSearch}
-                size="medium"
-              >
-                <Input.Search
-                  size="medium"
-                  placeholder="Search standard collection"
-                  enterButton
-                />
-              </AutoComplete>
-
-              <Select
-                defaultValue="English"
-                style={{
-                  width: 115,
-                  height: 40,
-                }}
-                onChange={handleLanguage}
-                options={[
-                  {
-                    value: "Vietnamese",
-                    label: "Vietnamese",
-                  },
-                  {
-                    value: "English",
-                    label: "English",
-                    disabled: true,
-                  },
-                  {
-                    value: "Japanese",
-                    label: "Japanese",
-                  },
-                ]}
-              />
-
-              <div
-                id="header_noti_container"
-                onClick={() => toggleNotifications()}
-              >
-                <BellOutlined id="header_bell" />
-              </div>
-              <BtnWhite id="header_noti_container">
-                <BellOutlined id="header_bell" />
-              </BtnWhite>
-
-              <Link
-                className="header_link"
-                id="header_avatar"
-                to="/settings"
-                onClick={() => setActive("")}
-              >
-                <UserOutlined id="user_logo" />
-                <div className="username">{user}</div>
-              </Link>
-            </div>
-          </>
-        )}
+          <Link
+            className="header_link"
+            id="header_avatar"
+            to="/settings"
+            onClick={() => setActive("")}
+          >
+            <UserOutlined id="user_logo" />
+            <div className="username">{user}</div>
+          </Link>
+        </div>
       </div>
     </div>
   );

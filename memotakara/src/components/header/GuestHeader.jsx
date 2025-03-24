@@ -40,7 +40,7 @@ const searchResult = (query) =>
       };
     });
 
-const Header = () => {
+const GuestHeader = () => {
   const [active, setActive] = useState("");
 
   //Search bar
@@ -123,4 +123,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default GuestHeader;
