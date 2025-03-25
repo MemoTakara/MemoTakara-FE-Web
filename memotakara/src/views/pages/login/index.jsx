@@ -13,7 +13,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (values) => {
-    const key = "currently logged in";
+    const key = "loginMessage";
 
     try {
       await login(values.email, values.password);
@@ -24,7 +24,7 @@ function Login() {
       });
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000); // Thời gian chờ để hiển thị thông báo trước khi chuyển hướng
+      }, 2000);
     } catch (error) {
       messageApi.error({ content: "Login  Failed", key, duration: 2 });
     }

@@ -10,13 +10,14 @@ import {
   recommendCollections,
   popularCollections,
 } from "@/data/data.jsx";
+import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue.jsx";
 import DashboardCard from "@/components/dashboard_card/index.jsx";
 
 function Dashboard() {
   const navigate = useNavigate();
   const [active, setActive] = useState("");
-  const user = localStorage.getItem("username");
+  const { user } = useAuth();
 
   //Tooltip
   const [arrow, setArrow] = useState("Show");
@@ -76,7 +77,7 @@ function Dashboard() {
               fontWeight: "var(--header-weight-size)",
             }}
           >
-            @{user}
+            @{user?.username}
           </Link>
           {","}
           <br />

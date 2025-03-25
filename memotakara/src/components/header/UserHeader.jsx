@@ -9,6 +9,7 @@ import {
   FireOutlined,
   BookOutlined,
 } from "@ant-design/icons";
+import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
 import BtnBlue from "@/components/btn/btn-blue";
@@ -54,7 +55,7 @@ const handleLanguage = (value) => {
 
 const UserHeader = () => {
   const [active, setActive] = useState("");
-  const user = localStorage.getItem("username");
+  const { user } = useAuth();
 
   //Search bar
   const [optionsSearch, setOptionsSearch] = useState([]);
@@ -210,7 +211,7 @@ const UserHeader = () => {
             onClick={() => setActive("")}
           >
             <UserOutlined id="user_logo" />
-            <div className="username">{user}</div>
+            <div className="username">{user?.username}</div>
           </Link>
         </div>
       </div>

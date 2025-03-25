@@ -5,9 +5,10 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 function GuestLayout() {
-  const { token, user } = useAuth();
+  const { token } = useAuth();
   if (token) {
-    return <Navigate to="/" />;
+    console.log("navigate in guest layout to dashboard");
+    return <Navigate to="/dashboard" />;
   }
 
   return (

@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
     localStorage.getItem("ACCESS_TOKEN") || null
   );
 
-  // 🟢 Cập nhật token vào localStorage
+  // Cập nhật token vào localStorage
   const updateToken = (newToken) => {
     setToken(newToken);
     if (newToken) {
@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🟢 Kiểm tra nếu có token thì lấy thông tin user
+  // Kiểm tra nếu có token thì lấy thông tin user
   useEffect(() => {
     const fetchUser = async () => {
       if (!token) return;
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
       // return;
       try {
         console.log("có token à: ", token);
-        const response = await axios.get(`${API_BASE_URL}/user`, {
+        const response = await axios.get(`${API_BASE_URL}/users`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser(response.data);
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
     fetchUser();
   }, [token, `$API_BASE_URL`]);
 
-  // 🟢 Đăng nhập (Gửi request đến backend)
+  // Đăng nhập (Gửi request đến backend)
   const login = async (email, password) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/login`, {
@@ -75,7 +75,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔵 Đăng ký (Gửi request đến backend)
+  // Đăng ký (Gửi request đến backend)
   const register = async (username, email, password, password_confirmation) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/register`, {
@@ -99,7 +99,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🔴 Đăng xuất
+  // Đăng xuất
   const logout = async () => {
     if (!token) return; // Không làm gì nếu không có token
 

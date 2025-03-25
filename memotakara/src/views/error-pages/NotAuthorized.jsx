@@ -7,7 +7,10 @@ const NotAuthorized = () => {
       }}
     >
       <h1>403 - Forbidden</h1>
-      <p>Please login to access this page.</p>
+      <p>
+        Sorry, you are not authorized to access this page. <br />
+        Please login to access this page.
+      </p>
       <a href="/">Back to Home Page</a>
     </div>
   );

@@ -3,17 +3,19 @@ import UserHeader from "@/components/header/UserHeader";
 import Footer from "@/components/footer";
 import { Outlet, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import LoadingPage from "@/views/error-pages/LoadingPage";
 
 function UserLayout() {
-  const { token, user } = useAuth();
+  const { token, user, logout } = useAuth();
 
-  // Nếu đã có token nhưng chưa lấy xong user -> Chờ lấy user
+  //  nếu mất token -> điều hướng về /login, nhưng user vẫn chưa bị xóa khỏi
   if (!token) {
+    logout(); // Xóa user khỏi AuthContext
     return <Navigate to="/login" />;
   }
 
   if (!user) {
-    return <div>Chờ lấy user...</div>;
+    return <LoadingPage />;
   }
 
   return (

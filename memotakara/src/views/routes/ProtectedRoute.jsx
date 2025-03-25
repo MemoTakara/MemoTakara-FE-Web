@@ -1,12 +1,17 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const ProtectedRoute = ({ requiredRole }) => {
   const { user, token } = useAuth();
 
   // Kiểm tra nếu token chưa có hoặc user chưa được tải
-  if (!user || !token) {
-    return <Navigate to="/" replace />;
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user) {
+    return <LoadingPage />;
   }
 
   // Kiểm tra role nếu có yêu cầu

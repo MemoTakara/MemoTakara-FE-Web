@@ -13,71 +13,88 @@ import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
 import CreateCollection from "@/views/pages/create_collection";
 import StudyDetail from "@/views/pages/study_detail";
+
+import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
+import NotFound from "@/views/error-pages/NotFound"; // Nếu có alias
 
 const router = createBrowserRouter([
-  {
-    path: "/not-authorized",
-    element: <NotAuthorized />,
-  },
   {
     path: "/",
     element: <GuestLayout />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <LandingPage />,
       },
       {
-        path: "/register",
+        path: "register",
         element: <Register />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
     ],
   },
   {
-    path: "/",
+    path: "",
     element: <ProtectedRoute requiredRole="user" />,
     children: [
       {
-        path: "/",
         element: <UserLayout />,
+        errorElement: <div>Something went wrong!</div>, // Cách xử lý lỗi
         children: [
           {
-            path: "/dashboard",
+            path: "dashboard",
             element: <Dashboard />,
           },
           {
-            path: "/statistics",
+            path: "statistics",
             element: <Statistics />,
           },
           {
-            path: "/settings",
+            path: "settings",
             element: <Settings />,
           },
           {
-            path: "/study_sets",
+            path: "study_sets",
             element: <StudySets />,
           },
           {
-            path: "/create_collection",
+            path: "create_collection",
             element: <CreateCollection />,
           },
           {
-            path: "/study_detail",
+            path: "study_detail",
             element: <StudyDetail />,
           },
         ],
       },
     ],
   },
-  // {
-  //   path: "/admin",
-  //   element: <ProtectedRoute requiredRole="admin" />,
-  // },
+  {
+    path: "/admin",
+    element: <ProtectedRoute requiredRole="admin" />,
+    children: [
+      {
+        index: true,
+        element: <div>Admin Panel - Coming Soon</div>, // Tạm thời hiển thị thông báo
+      },
+    ],
+  },
+  {
+    path: "/not-authorized",
+    element: <NotAuthorized />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+  {
+    path: "/loading",
+    element: <LoadingPage />,
+  },
 ]);
 
 export default router;

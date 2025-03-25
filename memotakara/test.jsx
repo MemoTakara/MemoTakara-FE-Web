@@ -1,23 +1,11 @@
-useEffect(() => {
-  const fetchUser = async () => {
-    if (!token) return; // ⛔ Không có token thì không gọi API
-
-    try {
-      const response = await axios.get(`${API_BASE_URL}/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUser(response.data);
-    } catch (error) {
-      if (error.response?.status === 401) {
-        console.log("Unauthorized - Clearing token...");
-        updateToken(null);
-      } else {
-        console.error("Lỗi khác:", error);
-      }
-    }
-  };
-
-  if (token) {
-    fetchUser();
-  }
-}, [token]);
+import React from "react";
+import { Button, Result } from "antd";
+const App = () => (
+  <Result
+    status="404"
+    title="404"
+    subTitle="Sorry, the page you visited does not exist."
+    extra={<Button type="primary">Back Home</Button>}
+  />
+);
+export default App;
