@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const NotFound = () => {
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -6,9 +9,9 @@ const NotFound = () => {
         marginTop: "80px",
       }}
     >
-      <h1>404 - Not Found</h1>
-      <p>Sorry, the page you visited does not exist.</p>
-      <a href="/">Back to Home Page</a>
+      <h1>{t("views.error-pages.notFound.title")}</h1>
+      <p>{t("views.error-pages.notFound.des")}</p>
+      <a href="/">{t("views.error-pages.notFound.back_home")}</a>
     </div>
   );
 };

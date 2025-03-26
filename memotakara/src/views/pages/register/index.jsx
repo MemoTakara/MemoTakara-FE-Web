@@ -1,20 +1,18 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Input, Button, Checkbox, message } from "antd";
+import { Form, Input, Checkbox, message } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue";
+import BtnWhite from "@/components/btn/btn-white";
 
 function Register() {
   const { register } = useAuth();
-  const [messageApi] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
   const handleRegister = async (values) => {
-    const key = "registering";
-
+    const key = "registerMessage";
     try {
       await register(
         values.username,
@@ -29,9 +27,13 @@ function Register() {
       });
       setTimeout(() => {
         navigate("/login");
-      }, 2000);
+      }, 5000);
     } catch (error) {
-      messageApi.error({ content: "Registration Failed", key, duration: 2 });
+      messageApi.error({
+        content: error.response?.data?.message || "Registration Failed",
+        key,
+        duration: 2,
+      });
     }
   };
 
@@ -147,15 +149,16 @@ function Register() {
 
           {/* sign up */}
           <Form.Item style={{ textAlign: "center" }}>
-            {/* {contextHolder} */}
-            {/* <BtnBlue defaultText="SIGN UP" /> */}
-            <Button
-              type="primary"
-              className="register_btn_register"
-              onClick={handleRegister}
-            >
-              SIGN UP
-            </Button>
+            {contextHolder}
+            <BtnBlue
+              defaultText="SIGN UP"
+              style={{
+                width: "400px",
+                fontSize: "var(--header-size)",
+                fontWeight: "var(--header-weight-size)",
+                borderRadius: "var(--button-border-radius)",
+              }}
+            />
           </Form.Item>
         </Form>
       </div>
@@ -163,35 +166,24 @@ function Register() {
       {/* another option: copy login page */}
       <div>
         <div
-          style={{ fontWeight: "600", fontSize: "16px", marginLeft: "40px" }}
+          style={{
+            fontWeight: "var(--header-weight-size)",
+            fontSize: "var(--body-size)",
+            textAlign: "center",
+          }}
         >
           OR
         </div>
-        <div className="login_option">
-          <div>
-            <img
-              src={google_icon}
-              alt="Google Icon"
-              style={{
-                width: "27px",
-                height: "30px",
-                paddingTop: "4px",
-                cursor: "pointer",
-              }}
-            />
-          </div>
-          <div>
-            <FontAwesomeIcon
-              style={{
-                fontSize: "28px",
-                color: "#1877F2",
-                paddingLeft: "20px",
-                cursor: "pointer",
-              }}
-              icon={faFacebook}
-            />
-          </div>
-        </div>
+        <BtnWhite
+          defaultText="Continue with Google"
+          style={{
+            width: "400px",
+            fontSize: "var(--body-size)",
+            margin: "15px",
+          }}
+          iconSrc={google_icon}
+          iconAlt="Google icon"
+        />
       </div>
 
       {/* login */}

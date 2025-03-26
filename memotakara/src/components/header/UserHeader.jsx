@@ -2,7 +2,8 @@ import "./index.css";
 import logo from "@/assets/img/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AutoComplete, Input, Badge, Popconfirm, Select } from "antd";
+import { useTranslation } from "react-i18next";
+import { AutoComplete, Input, Badge, Popconfirm } from "antd";
 import {
   UserOutlined,
   BellOutlined,
@@ -13,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
 import BtnBlue from "@/components/btn/btn-blue";
+import BtnLanguage from "@/components/btn/btn-language";
 
 // Search bar
 const getRandomInt = (max, min = 0) =>
@@ -48,13 +50,9 @@ const searchResult = (query) =>
       };
     });
 
-//Language
-const handleLanguage = (value) => {
-  console.log(`selected ${value}`);
-};
-
 const UserHeader = () => {
   const [active, setActive] = useState("");
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   //Search bar
@@ -120,7 +118,7 @@ const UserHeader = () => {
             onClick={() => setActive("dashboard")}
           >
             <HeaderSet
-              defaultText="Home"
+              textKey="home"
               isActive={active === "dashboard"}
               onClick={() => setActive("dashboard")}
             />
@@ -134,7 +132,7 @@ const UserHeader = () => {
             to="/study_sets"
           >
             <HeaderSet
-              defaultText="Study Sets"
+              textKey="study_set"
               isActive={active === "study_sets"}
               onClick={() => setActive("study_sets")}
             />
@@ -148,7 +146,7 @@ const UserHeader = () => {
             onClick={() => setActive("statistics")}
           >
             <HeaderSet
-              defaultText="Statistics"
+              textKey="statistics"
               isActive={active === "statistics"}
               onClick={() => setActive("statistics")}
             />
@@ -168,50 +166,31 @@ const UserHeader = () => {
           >
             <Input.Search
               size="medium"
-              placeholder="Search standard collection"
-              enterButton
+              placeholder={t("search.placeholder")}
+              enterButton={t("search.enter")}
             />
           </AutoComplete>
 
-          <Select
-            defaultValue="English"
-            style={{
-              width: 115,
-              height: 40,
-            }}
-            onChange={handleLanguage}
-            options={[
-              {
-                value: "Vietnamese",
-                label: "Vietnamese",
-              },
-              {
-                value: "English",
-                label: "English",
-                disabled: true,
-              },
-              {
-                value: "Japanese",
-                label: "Japanese",
-              },
-            ]}
-          />
+          <BtnLanguage />
 
           <div id="header_noti_container" onClick={() => toggleNotifications()}>
             <BellOutlined id="header_bell" />
           </div>
-          <BtnWhite id="header_noti_container">
-            <BellOutlined id="header_bell" />
-          </BtnWhite>
 
           <Link
             className="header_link"
-            id="header_avatar"
             to="/settings"
             onClick={() => setActive("")}
           >
-            <UserOutlined id="user_logo" />
-            <div className="username">{user?.username}</div>
+            <BtnWhite
+              username={user.username}
+              iconSrc="logo.png"
+              iconAlt="User avatar"
+              style={{
+                border: "2.4px solid var(--color-button)",
+                borderRadius: "30px",
+              }}
+            />
           </Link>
         </div>
       </div>

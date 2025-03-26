@@ -1,6 +1,8 @@
 import { Spin } from "antd";
+import { useTranslation } from "react-i18next";
 
 const LoadingPage = () => {
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -9,7 +11,7 @@ const LoadingPage = () => {
       }}
     >
       <h2>
-        <Spin /> Loading... Please wait!
+        <Spin /> {t("views.error-pages.loadingPage.title")}
       </h2>
     </div>
   );

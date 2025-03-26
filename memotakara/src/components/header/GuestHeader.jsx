@@ -1,10 +1,12 @@
 import "./index.css";
 import logo from "@/assets/img/logo.png";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { AutoComplete, Input, Select } from "antd";
+import { AutoComplete, Input } from "antd";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnBlue from "@/components/btn/btn-blue";
+import BtnLanguage from "@/components/btn/btn-language";
 
 // Search bar
 const getRandomInt = (max, min = 0) =>
@@ -42,6 +44,7 @@ const searchResult = (query) =>
 
 const GuestHeader = () => {
   const [active, setActive] = useState("");
+  const { t } = useTranslation();
 
   //Search bar
   const [optionsSearch, setOptionsSearch] = useState([]);
@@ -65,7 +68,7 @@ const GuestHeader = () => {
 
           <Link to="/" className="header_link" onClick={() => setActive("/")}>
             <HeaderSet
-              defaultText="Home"
+              textKey="home"
               isActive={active === "/"}
               onClick={() => setActive("/")}
             />
@@ -73,7 +76,7 @@ const GuestHeader = () => {
 
           <Link to="/" className="header_link" onClick={() => setActive("")}>
             <HeaderSet
-              defaultText="About us"
+              textKey="about_us"
               isActive={active === ""}
               onClick={() => setActive("")}
             />
@@ -93,10 +96,12 @@ const GuestHeader = () => {
           >
             <Input.Search
               size="medium"
-              placeholder="Search standard collection"
-              enterButton
+              placeholder={t("search.placeholder")}
+              enterButton={t("search.enter")}
             />
           </AutoComplete>
+
+          <BtnLanguage />
 
           <Link
             className={`header_link ${
@@ -105,7 +110,7 @@ const GuestHeader = () => {
             to="/register"
             onClick={() => setActive("register")}
           >
-            <BtnBlue defaultText="Sign up" style={{ fontSize: "15px" }} />
+            <BtnBlue textKey="register" style={{ fontSize: "15px" }} />
           </Link>
 
           <Link
@@ -115,7 +120,7 @@ const GuestHeader = () => {
             to="/login"
             onClick={() => setActive("login")}
           >
-            <BtnBlue defaultText="Login" style={{ fontSize: "15px" }} />
+            <BtnBlue textKey="login" style={{ fontSize: "15px" }} />
           </Link>
         </div>
       </div>

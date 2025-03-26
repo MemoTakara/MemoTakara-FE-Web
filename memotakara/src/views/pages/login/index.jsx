@@ -1,40 +1,45 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Input, Button, Checkbox, message } from "antd";
+import { useTranslation } from "react-i18next";
+import { Form, Input, Checkbox, message } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue";
+import BtnWhite from "@/components/btn/btn-white";
 
 function Login() {
+  const { t } = useTranslation();
   const { login } = useAuth(); // Lấy hàm login từ context
-  const [messageApi] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
   const handleLogin = async (values) => {
     const key = "loginMessage";
-
     try {
       await login(values.email, values.password);
       messageApi.success({
-        content: "Login Successful!",
+        content: t("views.pages.login.noti_success"),
         key,
         duration: 2,
       });
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000);
+      }, 5000);
     } catch (error) {
-      messageApi.error({ content: "Login  Failed", key, duration: 2 });
+      messageApi.error({
+        content:
+          error.response?.status === 401
+            ? t("views.pages.login.noti_error1")
+            : t("views.pages.login.noti_error2"),
+        key,
+        duration: 2,
+      });
     }
   };
 
   return (
     <div className="login_container">
-      <div className="login_header">
-        Welcome back! Please enter your details.
-      </div>
+      <div className="login_header">{t("views.pages.login.header")}</div>
 
       <Form
         name="normal_login"
@@ -50,98 +55,97 @@ function Login() {
         {/* email */}
         <Form.Item
           layout="vertical"
-          label="Email"
-          name="email"
+          label={t("views.pages.login.email_placeholder")}
+          name={t("views.pages.login.email_placeholder")}
           rules={[
-            { type: "email", message: "Invalid email!" },
-            { required: true, message: "Please input your email!" },
+            { type: "email", message: t("views.pages.login.email_invalid") },
+            { required: true, message: t("views.pages.login.email_required") },
           ]}
           style={{ height: "60px" }}
         >
-          <Input placeholder="Email" />
+          <Input placeholder={t("views.pages.login.email_placeholder")} />
         </Form.Item>
 
         {/* pass */}
         <Form.Item
           layout="vertical"
-          label="Password"
-          name="password"
+          label={t("views.pages.login.password_placeholder")}
+          name={t("views.pages.login.password_placeholder")}
           rules={[
             {
               required: true,
-              message: "Enter your password",
+              message: t("views.pages.login.password_required"),
             },
           ]}
           style={{ height: "60px" }}
         >
-          <Input.Password type="password" placeholder="Password" />
+          <Input.Password
+            type="password"
+            placeholder={t("views.pages.login.password_placeholder")}
+          />
         </Form.Item>
 
         {/* checkbox - forgot pass*/}
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox style={{ fontSize: "16px" }}>Remember me</Checkbox>
+            <Checkbox style={{ fontSize: "16px" }}>
+              {t("views.pages.login.remember_me")}
+            </Checkbox>
           </Form.Item>
 
           <Link className="login_form_forgot" to="/forgot_password">
-            Forgot password?
+            {t("views.pages.login.forgot_password")}
           </Link>
         </Form.Item>
 
         {/* login */}
         <Form.Item>
-          {/* {contextHolder} */}
-          {/* <BtnBlue defaultText="LOG IN" /> */}
-          <Button type="primary" className="login_btn_login" htmlType="submit">
-            LOG IN
-          </Button>
+          {contextHolder}
+          <BtnBlue
+            textKey="login"
+            style={{
+              width: "400px",
+              fontSize: "var(--header-size)",
+              fontWeight: "var(--header-weight-size)",
+              borderRadius: "var(--button-border-radius)",
+            }}
+          />
         </Form.Item>
       </Form>
 
       {/* another option */}
       <div>
         <div
-          style={{ fontWeight: "600", fontSize: "16px", marginLeft: "40px" }}
+          style={{
+            fontWeight: "var(--header-weight-size)",
+            fontSize: "var(--body-size)",
+            textAlign: "center",
+          }}
         >
-          OR
+          {t("views.pages.login.or")}
         </div>
-        <div className="login_option">
-          <div>
-            <img
-              src={google_icon}
-              alt="Google Icon"
-              style={{
-                width: "27px",
-                height: "30px",
-                paddingTop: "4px",
-                cursor: "pointer",
-              }}
-            />
-          </div>
-          <div>
-            <FontAwesomeIcon
-              style={{
-                fontSize: "28px",
-                color: "#1877F2",
-                paddingLeft: "20px",
-                cursor: "pointer",
-              }}
-              icon={faFacebook}
-            />
-          </div>
-        </div>
+        <BtnWhite
+          textKey="login_with_google"
+          style={{
+            width: "400px",
+            fontSize: "var(--body-size)",
+            margin: "15px",
+          }}
+          iconSrc={google_icon}
+          iconAlt="Google icon"
+        />
       </div>
 
       {/* sign up */}
       <div className="switch_to_register" style={{ fontSize: "18px" }}>
-        Don't have account?
+        {t("views.pages.login.register")}
         <span>
           <Link
             className="login_link"
             to="/register"
             style={{ textDecoration: "underline" }}
           >
-            Sign up now!
+            {t("views.pages.login.register_now")}
           </Link>
         </span>
       </div>

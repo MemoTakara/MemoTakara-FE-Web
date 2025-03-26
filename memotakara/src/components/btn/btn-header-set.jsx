@@ -1,6 +1,9 @@
 import { useState } from "react";
-const HeaderSet = ({ defaultText, isActive, onClick, style }) => {
+import { useTranslation } from "react-i18next";
+
+const HeaderSet = ({ textKey, isActive, onClick, style }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const { t } = useTranslation();
   const btnHeaderStyle = {
     backgroundColor: isHovered
       ? "var(--color-light-button-hover)" // Hover
@@ -31,7 +34,7 @@ const HeaderSet = ({ defaultText, isActive, onClick, style }) => {
       onMouseLeave={() => setIsHovered(false)}
       style={btnHeaderStyle}
     >
-      {defaultText}
+      {t(`buttons.${textKey}`)}
     </button>
   );
 };

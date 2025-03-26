@@ -1,5 +1,8 @@
 import { useState } from "react";
-const BtnBlue = ({ defaultText, disabled, style }) => {
+import { useTranslation } from "react-i18next";
+
+const BtnBlue = ({ textKey, disabled, style }) => {
+  const { t } = useTranslation();
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -28,7 +31,7 @@ const BtnBlue = ({ defaultText, disabled, style }) => {
     fontSize: "var(--body-size)",
 
     transition: "0.3s ease-in-out", // tạo hiệu ứng mượt mà
-    transform: disabled ? "none" : "scale(1)", // Hiệu ứng phóng to khi hover
+    transform: disabled ? "scale(0.95)" : "scale(1)", // Hiệu ứng phóng to khi hover
     opacity: disabled ? 0.6 : 1, // Giảm độ rõ khi bị disable
     ...style, // Kết hợp với style được truyền từ props
   };
@@ -41,7 +44,7 @@ const BtnBlue = ({ defaultText, disabled, style }) => {
       disabled={disabled}
       style={btnBlueStyle}
     >
-      {defaultText}
+      {t(`buttons.${textKey}`)}
     </button>
   );
 };

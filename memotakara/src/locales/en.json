@@ -1,0 +1,93 @@
+{
+  "components": {
+    "dashboard_card": {},
+    "footer": {
+      "send_email_msg": "Subscribe to get information, latest news and other interesting offers from us!",
+      "msg_success": "Subscribed successfully!",
+      "msg_invalid": "Invalid email format!",
+      "msg_required": "Email is required!",
+      "email_placeholder": "enter your email",
+      "support": "Support",
+      "about_us": "About us",
+      "terms_of_condition": "Terms of Condition",
+      "help": "Help/FAQ"
+    }
+  },
+  "views": {
+    "error-pages": {
+      "loadingPage": {
+        "title": "Loading... Please wait!"
+      },
+      "notAuthorized": {
+        "title": "403 - Forbidden",
+        "des1": "Sorry, you are not authorized to access this page.",
+        "des2": "Please login to access this page.",
+        "back_home": "Back to Home Page"
+      },
+      "notFound": {
+        "title": "404 - Not Found",
+        "des": "Sorry, the page you visited does not exist.",
+        "back_home": "Back to Home Page"
+      }
+    },
+    "pages": {
+      "create_collection": {},
+      "dashboard": {},
+      "forgot-password": {},
+      "landing_page": {
+        "content1": "Enhance memory, cognition",
+        "content2": "Join the MemoTakara community today and explore the power of your mind!",
+        "feature": "Features",
+        "feature1": "Optimize Learning",
+        "des1": "Optimize your learning process by creating flashcards and study sets that make sense for your subjects.",
+        "feature2": "Customize Learning",
+        "des2": "Create customized flashcards and study sets for different subjects.",
+        "feature3": "Track Progress",
+        "des3": "Track your progress, see your improvement and get personalized recommendations."
+      },
+      "login": {
+        "header": "Welcome back! Please enter your details.",
+        "remember_me": "Remember me",
+        "forgot_password": "Forgot Password?",
+        "or": "OR",
+        "register": "Don't have an account?",
+        "register_now": "Sign up Now!",
+        "email_invalid": "Invalid email!",
+        "email_required": "Please input your email!",
+        "email_placeholder": "Enter your email",
+        "password_required": "Enter your password",
+        "password_placeholder": "Enter your password",
+        "password_confirm_invalid": "Password confirmation does not match!",
+        "noti_success": "Login Successful!",
+        "noti_error1": "Unauthorized: Incorrect email or password!",
+        "noti_error2": "Login Failed. Please try again."
+      },
+      "register": {},
+      "settings": {},
+      "statistics": {},
+      "study_detail": {},
+      "study_sets": {}
+    }
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "login": "Login",
+    "register": "Sign up",
+    "home": "Home",
+    "about_us": "About us",
+    "study_set": "Study set",
+    "statistics": "Statistics",
+    "get_started": "Get Started",
+    "learn_more": "Learn More",
+    "subscribe": "Subscribe",
+    "login_with_google": "Continue with Google"
+  },
+  "search": {
+    "placeholder": "Search standard collection",
+    "enter": "Search"
+  },
+  "image": {
+    "banner_alt": "Banner image"
+  }
+}

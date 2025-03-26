@@ -66,12 +66,16 @@ const AuthProvider = ({ children }) => {
       });
 
       updateToken(response.data.token);
-      setUser(response.data.user); // Lưu thông tin user từ backend, 🔵 Backend phải trả về { user, role }
+      setUser(response.data.user); // Lưu thông tin user từ backend, Backend phải trả về { user, role }
+
+      return response.data; // Trả về dữ liệu nếu login thành công
     } catch (error) {
       console.error(
         "Login failed:",
         error.response?.data?.message || error.message
       );
+      // Ném lỗi để `handleLogin()` có thể xử lý đúng
+      throw error;
     }
   };
 
@@ -96,6 +100,9 @@ const AuthProvider = ({ children }) => {
         "Registration failed:",
         error.response?.data?.message || error.message
       );
+
+      // Ném lỗi để handleRegister() xử lý
+      throw error;
     }
   };
 

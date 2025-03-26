@@ -7,6 +7,7 @@ import ProtectedRoute from "@/views/routes/ProtectedRoute";
 import LandingPage from "@/views/pages/landing_page";
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
+import ForgotPassword from "@/views/pages/forgot-password";
 import Dashboard from "@/views/pages/dashboard";
 import Statistics from "@/views/pages/statistics";
 import Settings from "@/views/pages/settings";
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: "login",
         element: <Login />,
       },
+      {
+        path: "forgot_password",
+        element: <ForgotPassword />,
+      },
     ],
   },
   {
@@ -43,7 +48,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <UserLayout />,
-        errorElement: <div>Something went wrong!</div>, // Cách xử lý lỗi
+        errorElement: <NotFound />, // Cách xử lý lỗi
         children: [
           {
             path: "dashboard",

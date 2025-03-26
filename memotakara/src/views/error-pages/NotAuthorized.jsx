@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const NotAuthorized = () => {
+  const { t } = useTranslation();
   return (
     <div
       style={{
@@ -6,12 +9,12 @@ const NotAuthorized = () => {
         marginTop: "80px",
       }}
     >
-      <h1>403 - Forbidden</h1>
+      <h1>{t("views.error-pages.notAuthorized.title")}</h1>
       <p>
-        Sorry, you are not authorized to access this page. <br />
-        Please login to access this page.
+        {t("views.error-pages.notAuthorized.des1")} <br />
+        {t("views.error-pages.notAuthorized.des2")}
       </p>
-      <a href="/">Back to Home Page</a>
+      <a href="/">{t("views.error-pages.notAuthorized.back_home")}</a>
     </div>
   );
 };

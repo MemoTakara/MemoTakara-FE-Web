@@ -1,0 +1,82 @@
+{
+  "components": {
+    "dashboard_card": {},
+    "footer": {
+      "send_email_msg": "Đăng ký để nhận thông tin, tin tức mới nhất và các ưu đãi hấp dẫn từ chúng tôi!",
+      "msg_success": "Đăng ký thành công!",
+      "msg_invalid": "Email không đúng định dạng!",
+      "msg_required": "Vui lòng nhập email!",
+      "email_placeholder": "nhập email của bạn",
+      "support": "Hỗ trợ",
+      "about_us": "Về chúng tôi",
+      "terms_of_condition": "Điều khoản sử dụng",
+      "help": "Trợ giúp/FAQ"
+    }
+  },
+  "views": {
+    "error-pages": {
+      "loadingPage": {
+        "title": "Đang tải... Vui lòng chờ!"
+      },
+      "notAuthorized": {
+        "title": "403 - Truy cập bị từ chối",
+        "des1": "Xin lỗi, bạn không có quyền truy cập trang này.",
+        "des2": "Vui lòng đăng nhập để truy cập trang này.",
+        "back_home": "Quay về Trang chủ"
+      },
+      "notFound": {
+        "title": "404 - Không tìm thấy trang",
+        "des": "Xin lỗi, trang bạn truy cập không tồn tại.",
+        "back_home": "Quay về Trang chủ"
+      }
+    },
+    "pages": {
+      "landing_page": {
+        "content1": "Nâng cao trí nhớ, nhận thức",
+        "content2": "Tham gia cộng đồng MemoTakara ngay hôm nay và khám phá sức mạnh trí tuệ của bạn!",
+        "feature": "Tính năng nổi bật",
+        "feature1": "Tối ưu hóa học tập",
+        "des1": "Tối ưu hóa quá trình học tập bằng cách tạo thẻ ghi nhớ và bộ học tập phù hợp với môn học của bạn.",
+        "feature2": "Học tập cá nhân hóa",
+        "des2": "Tạo thẻ ghi nhớ và bộ học tập tùy chỉnh cho các môn học khác nhau.",
+        "feature3": "Theo dõi tiến độ",
+        "des3": "Theo dõi tiến độ học tập, xem sự tiến bộ của bạn và nhận đề xuất cá nhân hóa."
+      },
+      "login": {
+        "header": "Chào mừng trở lại! Vui lòng nhập thông tin của bạn.",
+        "remember_me": "Ghi nhớ đăng nhập",
+        "forgot_password": "Quên mật khẩu?",
+        "or": "HOẶC",
+        "register": "Chưa có tài khoản?",
+        "register_now": "Đăng ký ngay!",
+        "email_invalid": "Email không hợp lệ!",
+        "email_required": "Vui lòng nhập email!",
+        "email_placeholder": "Nhập email của bạn",
+        "password_required": "Nhập mật khẩu",
+        "password_placeholder": "Nhập mật khẩu của bạn",
+        "password_confirm_invalid": "Mật khẩu xác nhận không khớp!",
+        "noti_success": "Đăng nhập thành công!",
+        "noti_error1": "Lỗi xác thực: Email hoặc mật khẩu không đúng!",
+        "noti_error2": "Đăng nhập thất bại. Vui lòng thử lại."
+      }
+    }
+  },
+  "buttons": {
+    "submit": "Gửi",
+    "cancel": "Hủy",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "home": "Trang chủ",
+    "about_us": "Về chúng tôi",
+    "study_set": "Bộ sưu tập",
+    "statistics": "Thống kê",
+    "get_started": "Bắt đầu ngay",
+    "learn_more": "Tìm hiểu thêm",
+    "subscribe": "Đăng ký",
+    "login_with_google": "Tiếp tục với Google"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm bộ sưu tập tiêu chuẩn",
+    "enter": "Tìm kiếm"
+  }
+}

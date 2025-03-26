@@ -1,0 +1,82 @@
+{
+  "components": {
+    "dashboard_card": {},
+    "footer": {
+      "send_email_msg": "最新情報やお得なオファーを受け取るには、ぜひご登録ください！",
+      "msg_success": "登録が完了しました！",
+      "msg_invalid": "メールアドレスの形式が正しくありません！",
+      "msg_required": "メールアドレスを入力してください！",
+      "email_placeholder": "メールアドレスを入力",
+      "support": "サポート",
+      "about_us": "私たちについて",
+      "terms_of_condition": "利用規約",
+      "help": "ヘルプ/FAQ"
+    }
+  },
+  "views": {
+    "error-pages": {
+      "loadingPage": {
+        "title": "読み込み中... 少々お待ちください！"
+      },
+      "notAuthorized": {
+        "title": "403 - アクセス拒否",
+        "des1": "申し訳ありませんが、このページへのアクセス権限がありません。",
+        "des2": "このページにアクセスするには、ログインしてください。",
+        "back_home": "ホームに戻る"
+      },
+      "notFound": {
+        "title": "404 - ページが見つかりません",
+        "des": "申し訳ありませんが、アクセスしたページは存在しません。",
+        "back_home": "ホームに戻る"
+      }
+    },
+    "pages": {
+      "landing_page": {
+        "content1": "記憶力と認知能力の向上",
+        "content2": "MemoTakaraコミュニティに今すぐ参加して、あなたの脳の可能性を解き放ちましょう！",
+        "feature": "主な機能",
+        "feature1": "学習の最適化",
+        "des1": "科目に合ったフラッシュカードや学習セットを作成して、学習プロセスを最適化しましょう。",
+        "feature2": "カスタマイズ学習",
+        "des2": "様々な科目に対応したカスタマイズ可能なフラッシュカードや学習セットを作成できます。",
+        "feature3": "進捗管理",
+        "des3": "学習の進捗を追跡し、自分の成長を確認し、パーソナライズされたアドバイスを受け取れます。"
+      },
+      "login": {
+        "header": "おかえりなさい！ログイン情報を入力してください。",
+        "remember_me": "ログイン状態を保持する",
+        "forgot_password": "パスワードをお忘れですか？",
+        "or": "または",
+        "register": "アカウントをお持ちでない方は",
+        "register_now": "今すぐ登録",
+        "email_invalid": "無効なメールアドレスです！",
+        "email_required": "メールアドレスを入力してください！",
+        "email_placeholder": "メールアドレスを入力",
+        "password_required": "パスワードを入力してください",
+        "password_placeholder": "パスワードを入力",
+        "password_confirm_invalid": "パスワードが一致しません！",
+        "noti_success": "ログイン成功！",
+        "noti_error1": "認証エラー：メールアドレスまたはパスワードが正しくありません！",
+        "noti_error2": "ログインに失敗しました。もう一度お試しください。"
+      }
+    }
+  },
+  "buttons": {
+    "submit": "送信",
+    "cancel": "キャンセル",
+    "login": "ログイン",
+    "register": "新規登録",
+    "home": "ホーム",
+    "about_us": "私たちについて",
+    "study_set": "学習セット",
+    "statistics": "統計",
+    "get_started": "始める",
+    "learn_more": "詳しく見る",
+    "subscribe": "登録",
+    "login_with_google": "Googleで続ける"
+  },
+  "search": {
+    "placeholder": "標準コレクションを検索",
+    "enter": "検索"
+  }
+}

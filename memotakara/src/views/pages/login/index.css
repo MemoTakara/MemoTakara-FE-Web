@@ -36,28 +36,6 @@
   color: var(--color-light-button);
 }
 
-.login_btn_login {
-  width: 400px;
-  height: 40px;
-  font-size: 16px;
-  font-weight: var(--header-weight-size);
-  background-color: var(--color-light-button);
-  color: #fff;
-  border-radius: 35px;
-}
-
-.login_btn_login:hover {
-  background-color: var(--color-light-button-hover);
-  color: #fff;
-}
-
-.login_option {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 15px;
-}
-
 .switch-to-register {
   text-align: center;
   color: #000;

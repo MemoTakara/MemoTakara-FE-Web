@@ -2,6 +2,7 @@ import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
 import logo from "@/assets/img/logo.png";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Form, message, Input } from "antd";
 import { GithubFilled, LinkedinFilled } from "@ant-design/icons";
@@ -10,9 +11,9 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import BtnBlue from "@/components/btn/btn-blue";
 
 function Footer() {
+  const { t } = useTranslation();
   const [active, setActive] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-  const user = localStorage.getItem("username");
 
   //Disable button
   const onFieldsChange = (_, allFields) => {
@@ -23,57 +24,44 @@ function Footer() {
     setIsDisabled(!isValid);
   };
 
-  //Send email
+  //Send email notification
   const [messageApi, contextHolder] = message.useMessage();
   const key = "updatable";
   const sendEmail = () => {
-    messageApi.open({ key, type: "loading", content: "Loading..." });
-    setTimeout(() => {
-      messageApi.open({
-        key,
-        type: "success",
-        content: "Subscribed successfully!",
-        duration: 2,
-      });
-    }, 1000);
+    messageApi.open({
+      key,
+      type: "success",
+      content: t("components.footer.msg_success"),
+      duration: 2,
+    });
   };
 
   return (
     <div class="footer_container">
       <div className="footer_cols">
-        <div className="footer_logo_set">
-          {!user ? (
-            <Link to="/" className="footer_link" onClick={() => setActive("")}>
-              <div className="footer_logo">
-                <img loading="lazy" src={logo} alt="logo" class="img" />
-                <div class="footer_name">MemoTakara</div>
-              </div>
-            </Link>
-          ) : (
-            <Link
-              to="/dashboard"
-              className="footer_link"
-              onClick={() => setActive("dashboard")}
-            >
-              <div className="footer_logo">
-                <img loading="lazy" src={logo} alt="logo" class="img" />
-                <div class="footer_name">MemoTakara</div>
-              </div>
-            </Link>
-          )}
-        </div>
+        <Link
+          to="/dashboard"
+          className="footer_link"
+          onClick={() => setActive("dashboard")}
+        >
+          <div className="footer_logo">
+            <img loading="lazy" src={logo} alt="logo" class="img" />
+            <div class="footer_name">MemoTakara</div>
+          </div>
+        </Link>
 
         <div className="footer_email">
           <div
             style={{
-              marginBottom: "15px",
+              width: "380px",
+              fontSize: "20px",
+              fontWeight: "var(--header-weight-size)",
+              marginBottom: "20px",
               wordWrap: "break-word",
               whiteSpace: "pre-wrap",
             }}
           >
-            Subscribe to get information, latest news and other interesting
-            offers about{" "}
-            <span style={{ fontFamily: "var(--logo-font)" }}>MemoTakara</span>!
+            {t("components.footer.send_email_msg")}
           </div>
 
           <Form
@@ -85,8 +73,11 @@ function Footer() {
             <Form.Item
               name="email"
               rules={[
-                { type: "email", message: "Invalid email!" },
-                { required: true, message: "Email is required!" },
+                { type: "email", message: t("components.footer.msg_invalid") },
+                {
+                  required: true,
+                  message: t("components.footer.msg_required"),
+                },
               ]}
             >
               <Input
@@ -97,14 +88,14 @@ function Footer() {
                   border: "2px solid var(--color-light-button)",
                   marginRight: "15px",
                 }}
-                placeholder="enter your email"
+                placeholder={t("components.footer.email_placeholder")}
               />
             </Form.Item>
 
             <Form.Item style={{ fontWeight: "var(--header-weight-size)" }}>
               {contextHolder}
               <BtnBlue
-                defaultText="Subscribe"
+                textKey="subscribe"
                 type="submit"
                 htmlType="submit"
                 disabled={isDisabled}
@@ -121,11 +112,13 @@ function Footer() {
               fontWeight: "var(--header-weight-size)",
             }}
           >
-            Support
+            {t("components.footer.support")}
           </div>
-          <Link className="footer_link">About us</Link>
-          <Link className="footer_link">Terms and Condition</Link>
-          <Link className="footer_link">Help/FAQ</Link>
+          <Link className="footer_link">{t("components.footer.about_us")}</Link>
+          <Link className="footer_link">
+            {t("components.footer.terms_of_condition")}
+          </Link>
+          <Link className="footer_link">{t("components.footer.help")}</Link>
         </div>
       </div>
 
@@ -136,7 +129,8 @@ function Footer() {
         ></div>
 
         <div className="footer_copyright">
-          © Copyright <span style={{ fontStyle: "italic" }}>cuhp293</span> 2024
+          © Copyright{" "}
+          <span style={{ fontStyle: "italic" }}>Dinh Thi Hong Phuc</span> 2025
         </div>
 
         <div className="footer_contact">
@@ -172,7 +166,7 @@ function Footer() {
 
           {/* github */}
           <a
-            href="https://github.com/cuhp293"
+            href="https://github.com/MemoTakara"
             target="_blank"
             rel="noopener noreferrer"
           >

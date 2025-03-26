@@ -1,5 +1,15 @@
 import { useState } from "react";
-const BtnWhite = ({ defaultText, style }) => {
+import { useTranslation } from "react-i18next";
+
+const BtnWhite = ({
+  textKey,
+  style,
+  iconSrc,
+  iconAlt = "",
+  iconStyle = {},
+  username,
+}) => {
+  const { t } = useTranslation();
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -8,6 +18,11 @@ const BtnWhite = ({ defaultText, style }) => {
   };
 
   const btnWhiteStyle = {
+    display: "flex", // Căn chỉnh icon và text
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px", // Khoảng cách giữa icon và text
+
     backgroundColor: isHovered
       ? "var(--color-light-button-hover)" // Hover
       : isClicked
@@ -17,14 +32,14 @@ const BtnWhite = ({ defaultText, style }) => {
 
     padding: "10px",
     borderRadius: "var(--button-border-radius)",
-    border: isClicked ? "1px solid" : "1px solid var(--color-light-button)",
+    border: "1px solid var(--color-light-button)",
 
     cursor: "pointer",
 
     fontSize: "var(--body-size)",
 
     transition: "0.3s ease-in-out", // tạo hiệu ứng mượt mà
-    transform: isHovered ? "scale(0.95)" : "scale(1)", // Hiệu ứng phóng to khi hover
+    transform: isHovered ? "scale(0.98)" : "scale(1)", // Hiệu ứng phóng to khi hover
     ...style, // Kết hợp với style được truyền từ props
   };
 
@@ -35,7 +50,14 @@ const BtnWhite = ({ defaultText, style }) => {
       onMouseLeave={() => setIsHovered(false)}
       style={btnWhiteStyle}
     >
-      {defaultText}
+      {iconSrc && (
+        <img
+          src={iconSrc}
+          alt={iconAlt}
+          style={{ width: "20px", height: "20px", ...iconStyle }}
+        />
+      )}
+      {username ? `${username}!` : t(`buttons.${textKey}`)}
     </button>
   );
 };

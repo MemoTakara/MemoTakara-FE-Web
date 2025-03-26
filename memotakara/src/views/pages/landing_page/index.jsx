@@ -4,11 +4,13 @@ import landing_feature1 from "@/assets/img/landing_feature1.png";
 import landing_feature2 from "@/assets/img/landing_feature2.png";
 import landing_feature3 from "@/assets/img/landing_feature3.png";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import BtnBlue from "@/components/btn/btn-blue.jsx";
 import BtnWhite from "@/components/btn/btn-white.jsx";
 
 function LandingPage() {
+  const { t } = useTranslation();
   const [active, setActive] = useState("");
   return (
     <div className="landing_container">
@@ -20,9 +22,7 @@ function LandingPage() {
               fontWeight: "var(--header-weight-size)",
             }}
           >
-            Enhance memory,
-            <br />
-            cognition
+            {t("views.pages.landing_page.content1")}
           </div>
           <div
             style={{
@@ -32,8 +32,7 @@ function LandingPage() {
               fontSize: "var(--header-size)",
             }}
           >
-            Join the MemoTakara community today and explore the power of your
-            mind!
+            {t("views.pages.landing_page.content2")}
           </div>
           <div className="landing_btn">
             <Link
@@ -41,17 +40,17 @@ function LandingPage() {
               className="landing_link"
               onClick={() => setActive("login")}
             >
-              <BtnBlue defaultText="Get started" />
+              <BtnBlue textKey="get_started" />
             </Link>
 
-            <BtnWhite id="landing_btn_more" defaultText="Learn more" />
+            <BtnWhite textKey="learn_more" />
           </div>
         </div>
 
-        <div className="landing_image">
+        <div>
           <img
             src={landing_img}
-            alt="dashboard image"
+            alt={t("image.banner_alt")}
             style={{
               width: "85%",
               objectFit: "cover",
@@ -63,7 +62,9 @@ function LandingPage() {
       </div>
 
       <div className="landing_feature">
-        <div className="landing_feature_title">Features</div>
+        <div className="landing_feature_title">
+          {t("views.pages.landing_page.feature")}
+        </div>
         <div className="landing_feature_list">
           <div
             className="landing_item"
@@ -81,7 +82,7 @@ function LandingPage() {
                 fontWeight: "var(--header-weight-size)",
               }}
             >
-              Optimize Learning
+              {t("views.pages.landing_page.feature1")}
             </div>
             <div
               style={{
@@ -92,7 +93,7 @@ function LandingPage() {
                 fontSize: "var(--body-size)",
               }}
             >
-              Customize memory practices to your needs and style.
+              {t("views.pages.landing_page.des1")}
             </div>
           </div>
 
@@ -112,7 +113,7 @@ function LandingPage() {
                 fontWeight: "var(--header-weight-size)",
               }}
             >
-              Boost Memory Retention
+              {t("views.pages.landing_page.feature2")}
             </div>
             <div
               style={{
@@ -123,7 +124,7 @@ function LandingPage() {
                 fontSize: "var(--body-size)",
               }}
             >
-              Enhance recall with scientifically-proven methods.
+              {t("views.pages.landing_page.des2")}
             </div>
           </div>
 
@@ -143,7 +144,7 @@ function LandingPage() {
                 fontWeight: "var(--header-weight-size)",
               }}
             >
-              AI Assistant
+              {t("views.pages.landing_page.feature3")}
             </div>
             <div
               style={{
@@ -154,8 +155,7 @@ function LandingPage() {
                 fontSize: "var(--body-size)",
               }}
             >
-              Provide personalized memory training, 24/7 support, and
-              interactive tips.
+              {t("views.pages.landing_page.des3")}
             </div>
           </div>
         </div>
