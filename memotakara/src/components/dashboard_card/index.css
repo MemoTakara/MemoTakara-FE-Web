@@ -11,6 +11,7 @@
   border-radius: 15px;
   border: 3px solid var(--color-button);
   padding: 20px 25px;
+  box-sizing: border-box;
 }
 
 .dashboard_card_title {
@@ -55,20 +56,12 @@
 
 .dashboard_card_footer {
   display: flex;
-  width: 100%;
-  gap: 82%;
+  justify-content: space-between;
+  align-items: center;
+  width: 250px;
 }
 
 .dashboard_card_link {
   text-decoration: none;
   color: #000;
-}
-
-.dashboard-btn-study-now {
-  background: var(--color-button);
-  color: #fff;
-  padding: 14px;
-  border-radius: 15px;
-  font-size: 12px;
-  font-weight: var(--header-weight-size);
 }

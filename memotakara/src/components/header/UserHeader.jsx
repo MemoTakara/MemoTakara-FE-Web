@@ -4,16 +4,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { AutoComplete, Input, Badge, Popconfirm } from "antd";
-import {
-  UserOutlined,
-  BellOutlined,
-  FireOutlined,
-  BookOutlined,
-} from "@ant-design/icons";
+import { BellOutlined, FireOutlined, BookOutlined } from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
-import BtnBlue from "@/components/btn/btn-blue";
 import BtnLanguage from "@/components/btn/btn-language";
 
 // Search bar

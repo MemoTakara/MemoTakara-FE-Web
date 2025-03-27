@@ -56,7 +56,7 @@ function Login() {
         <Form.Item
           layout="vertical"
           label={t("views.pages.login.email_placeholder")}
-          name={t("views.pages.login.email_placeholder")}
+          name="email"
           rules={[
             { type: "email", message: t("views.pages.login.email_invalid") },
             { required: true, message: t("views.pages.login.email_required") },
@@ -70,7 +70,7 @@ function Login() {
         <Form.Item
           layout="vertical"
           label={t("views.pages.login.password_placeholder")}
-          name={t("views.pages.login.password_placeholder")}
+          name="password"
           rules={[
             {
               required: true,

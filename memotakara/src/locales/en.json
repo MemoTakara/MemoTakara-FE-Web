@@ -1,6 +1,5 @@
 {
   "components": {
-    "dashboard_card": {},
     "footer": {
       "send_email_msg": "Subscribe to get information, latest news and other interesting offers from us!",
       "msg_success": "Subscribed successfully!",
@@ -32,8 +31,26 @@
     },
     "pages": {
       "create_collection": {},
-      "dashboard": {},
-      "forgot-password": {},
+      "dashboard": {
+        "welcome1": "Welcome back ",
+        "welcome2": "Let's get started with your flashcards due today!",
+        "due": "flashcards due",
+        "streak": "days streak",
+        "title1": "Recent",
+        "title2": "Recommend by ",
+        "title3": "Popular study sets"
+      },
+      "forgot-password": {
+        "header": "Forgot Password",
+        "enter_code": "Enter code to reset password",
+        "code_required": "Please enter code sent to reset password",
+        "des1": "Enter your email to receive a password reset code.",
+        "des2": "Enter the code sent to your email by the system",
+        "des3": "If you don't remember your email, please contact our support team.",
+        "resend_code": "Resend code",
+        "noti_success": "Password reset link sent successfully!",
+        "noti_error": "Email not found. Please check your email and try again."
+      },
       "landing_page": {
         "content1": "Enhance memory, cognition",
         "content2": "Join the MemoTakara community today and explore the power of your mind!",
@@ -62,7 +79,24 @@
         "noti_error1": "Unauthorized: Incorrect email or password!",
         "noti_error2": "Login Failed. Please try again."
       },
-      "register": {},
+      "register": {
+        "header": "Create an account! Please enter your details.",
+        "email_invalid": "Invalid email!",
+        "email_required": "Please input your email!",
+        "email_placeholder": "Enter your email",
+        "username_required": "Please input your username!",
+        "username_placeholder": "Enter your username",
+        "password_required": "Please enter your password",
+        "password_placeholder": "Enter your password",
+        "password_confirm_required": "Please confirm your password",
+        "password_confirm_placeholder": "Confirm your password",
+        "password_confirm_invalid": "Password confirmation does not match!",
+        "or": "OR",
+        "login": "Already have an account?",
+        "login_now": "Login Now!",
+        "noti_success": "Registration Successful!",
+        "noti_error": "Registration Failed. Please try again."
+      },
       "settings": {},
       "statistics": {},
       "study_detail": {},
@@ -72,8 +106,10 @@
   "buttons": {
     "submit": "Submit",
     "cancel": "Cancel",
+    "continue": "Continue",
     "login": "Login",
     "register": "Sign up",
+    "logout": "Sign out",
     "home": "Home",
     "about_us": "About us",
     "study_set": "Study set",
@@ -81,11 +117,30 @@
     "get_started": "Get Started",
     "learn_more": "Learn More",
     "subscribe": "Subscribe",
-    "login_with_google": "Continue with Google"
+    "login_with_google": "Continue with Google",
+    "back_to_login": "Back to Login",
+    "see_more": "See More",
+    "study_now": "Study Now"
   },
   "search": {
     "placeholder": "Search standard collection",
     "enter": "Search"
+  },
+  "tooltip": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "add": "Add",
+    "remove": "Remove",
+    "create_collection": "Create new collection",
+    "edit_collection": "Edit Collection",
+    "delete_collection": "Delete Collection",
+    "add_card": "Add Card",
+    "remove_card": "Remove Card",
+    "edit_card": "Edit Card",
+    "new_card": "new card",
+    "learning_card": "learning card",
+    "due_card": "due card"
   },
   "image": {
     "banner_alt": "Banner image"

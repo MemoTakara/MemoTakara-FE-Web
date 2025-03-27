@@ -1,6 +1,7 @@
 import "./index.css";
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -15,6 +16,7 @@ import BtnBlue from "@/components/btn/btn-blue.jsx";
 import DashboardCard from "@/components/dashboard_card/index.jsx";
 
 function Dashboard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [active, setActive] = useState("");
   const { user } = useAuth();
@@ -47,7 +49,7 @@ function Dashboard() {
       >
         <Tooltip
           placement="bottomRight"
-          title="Create new collection."
+          title={t("tooltip.create_collection")}
           arrow={mergedArrow}
         >
           <Button
@@ -66,7 +68,7 @@ function Dashboard() {
 
       <div className="dashboard_sayhi">
         <div id="dashboard_sayhi_text">
-          Welcome back{" "}
+          {t("views.pages.dashboard.welcome1")}
           <Link
             to="/study_sets"
             className="dashboard_link"
@@ -82,7 +84,7 @@ function Dashboard() {
           {","}
           <br />
           <span style={{ fontSize: "20px" }}>
-            Let's get started with your flashcards due today!
+            {t("views.pages.dashboard.welcome2")}
           </span>
         </div>
 
@@ -96,7 +98,7 @@ function Dashboard() {
                 fontWeight: "normal",
               }}
             >
-              flashcards due
+              {t("views.pages.dashboard.due")}
             </span>
           </div>
 
@@ -109,7 +111,7 @@ function Dashboard() {
                 fontWeight: "normal",
               }}
             >
-              days streak
+              {t("views.pages.dashboard.streak")}
             </span>
           </div>
         </div>
@@ -117,13 +119,15 @@ function Dashboard() {
 
       <div className="dashboard_recent">
         <div className="dashboard_title">
-          <div className="dashboard_title_text">Recent</div>
+          <div className="dashboard_title_text">
+            {t("views.pages.dashboard.title1")}
+          </div>
           <Link //see more
             to="/create_collection"
             className="dashboard_link"
             onClick={() => setActive("")}
           >
-            <BtnBlue defaultText="See more" />
+            <BtnBlue textKey="see_more" />
           </Link>
         </div>
 
@@ -144,7 +148,7 @@ function Dashboard() {
       <div className="dashboard_recommend">
         <div className="dashboard_title">
           <div className="dashboard_title_text">
-            Recommend by{" "}
+            {t("views.pages.dashboard.title2")}
             <span
               style={{
                 fontStyle: "italic",
@@ -160,7 +164,7 @@ function Dashboard() {
             className="dashboard_link"
             onClick={() => setActive("")}
           >
-            <BtnBlue defaultText="See more" />
+            <BtnBlue textKey="see_more" />
           </Link>
         </div>
 
@@ -180,13 +184,15 @@ function Dashboard() {
 
       <div className="dashboard_popular">
         <div className="dashboard_title">
-          <div className="dashboard_title_text">Popular study sets</div>
+          <div className="dashboard_title_text">
+            {t("views.pages.dashboard.title3")}
+          </div>
           <Link //see more
             to="/create_collection"
             className="dashboard_link"
             onClick={() => setActive("")}
           >
-            <BtnBlue defaultText="See more" />
+            <BtnBlue textKey="see_more" />
           </Link>
         </div>
 

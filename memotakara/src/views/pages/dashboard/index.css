@@ -25,16 +25,18 @@
   width: 100%;
   padding: 70px 50px;
   margin-bottom: 50px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #dashboard_sayhi_text {
+  flex: 1;
   font-size: 30px;
-  padding: 20px;
 }
 
 .dashboard_cards {
   display: flex;
-  gap: 50px;
+  gap: 40px;
 }
 
 .dashboard_due {
@@ -71,18 +73,12 @@
 .dashboard_title {
   display: flex;
   width: 100%;
-  gap: 80%;
-}
-
-.dashboard_recommend .dashboard_title {
-  gap: 60%;
-}
-
-.dashboard_popular .dashboard_title {
-  gap: 65%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dashboard_title_text {
+  flex: 1;
   font-weight: var(--header-weight-size);
   font-size: 32px;
 }

@@ -1,6 +1,5 @@
 {
   "components": {
-    "dashboard_card": {},
     "footer": {
       "send_email_msg": "Đăng ký để nhận thông tin, tin tức mới nhất và các ưu đãi hấp dẫn từ chúng tôi!",
       "msg_success": "Đăng ký thành công!",
@@ -31,16 +30,37 @@
       }
     },
     "pages": {
+      "create_collection": {},
+      "dashboard": {
+        "welcome1": "Chào mừng trở lại ",
+        "welcome2": "Hãy bắt đầu với các thẻ ghi nhớ đến hạn hôm nay!",
+        "due": "thẻ đến hạn",
+        "streak": "ngày liên tiếp",
+        "title1": "Gần đây",
+        "title2": "Gợi ý từ ",
+        "title3": "Bộ học tập phổ biến"
+      },
+      "forgot-password": {
+        "header": "Quên mật khẩu",
+        "enter_code": "Nhập mã để đặt lại mật khẩu",
+        "code_required": "Vui lòng nhập mã được gửi để đặt lại mật khẩu",
+        "des1": "Nhập email của bạn để nhận mã đặt lại mật khẩu.",
+        "des2": "Nhập mã hệ thống đã gửi đến email của bạn",
+        "des3": "Nếu không nhớ email, vui lòng liên hệ đội hỗ trợ của chúng tôi.",
+        "resend_code": "Gửi lại mã",
+        "noti_success": "Đã gửi liên kết đặt lại mật khẩu thành công!",
+        "noti_error": "Không tìm thấy email. Vui lòng kiểm tra lại email và thử lại."
+      },
       "landing_page": {
         "content1": "Nâng cao trí nhớ, nhận thức",
         "content2": "Tham gia cộng đồng MemoTakara ngay hôm nay và khám phá sức mạnh trí tuệ của bạn!",
         "feature": "Tính năng nổi bật",
         "feature1": "Tối ưu hóa học tập",
-        "des1": "Tối ưu hóa quá trình học tập bằng cách tạo thẻ ghi nhớ và bộ học tập phù hợp với môn học của bạn.",
-        "feature2": "Học tập cá nhân hóa",
+        "des1": "Tạo thẻ ghi nhớ và bộ học tập phù hợp với môn học của bạn.",
+        "feature2": "Cá nhân hóa",
         "des2": "Tạo thẻ ghi nhớ và bộ học tập tùy chỉnh cho các môn học khác nhau.",
         "feature3": "Theo dõi tiến độ",
-        "des3": "Theo dõi tiến độ học tập, xem sự tiến bộ của bạn và nhận đề xuất cá nhân hóa."
+        "des3": "Xem sự tiến bộ của bạn và nhận đề xuất cá nhân hóa."
       },
       "login": {
         "header": "Chào mừng trở lại! Vui lòng nhập thông tin của bạn.",
@@ -58,14 +78,38 @@
         "noti_success": "Đăng nhập thành công!",
         "noti_error1": "Lỗi xác thực: Email hoặc mật khẩu không đúng!",
         "noti_error2": "Đăng nhập thất bại. Vui lòng thử lại."
-      }
+      },
+      "register": {
+        "header": "Tạo tài khoản! Vui lòng nhập thông tin của bạn.",
+        "email_invalid": "Email không hợp lệ!",
+        "email_required": "Vui lòng nhập email!",
+        "email_placeholder": "Nhập email của bạn",
+        "username_required": "Vui lòng nhập tên người dùng!",
+        "username_placeholder": "Nhập tên người dùng",
+        "password_required": "Vui lòng nhập mật khẩu",
+        "password_placeholder": "Nhập mật khẩu",
+        "password_confirm_required": "Vui lòng xác nhận mật khẩu",
+        "password_confirm_placeholder": "Xác nhận mật khẩu",
+        "password_confirm_invalid": "Mật khẩu xác nhận không khớp!",
+        "or": "HOẶC",
+        "login": "Đã có tài khoản?",
+        "login_now": "Đăng nhập ngay!",
+        "noti_success": "Đăng ký thành công!",
+        "noti_error": "Đăng ký thất bại. Vui lòng thử lại."
+      },
+      "settings": {},
+      "statistics": {},
+      "study_detail": {},
+      "study_sets": {}
     }
   },
   "buttons": {
     "submit": "Gửi",
     "cancel": "Hủy",
+    "continue": "Tiếp tục",
     "login": "Đăng nhập",
     "register": "Đăng ký",
+    "logout": "Đăng xuất",
     "home": "Trang chủ",
     "about_us": "Về chúng tôi",
     "study_set": "Bộ sưu tập",
@@ -73,10 +117,32 @@
     "get_started": "Bắt đầu ngay",
     "learn_more": "Tìm hiểu thêm",
     "subscribe": "Đăng ký",
-    "login_with_google": "Tiếp tục với Google"
+    "login_with_google": "Tiếp tục với Google",
+    "back_to_login": "Quay lại trang Đăng nhập",
+    "see_more": "Xem thêm",
+    "study_now": "Học ngay"
+  },
+  "tooltip": {
+    "edit": "Chỉnh sửa",
+    "delete": "Xóa",
+    "save": "Lưu",
+    "add": "Thêm",
+    "remove": "Gỡ bỏ",
+    "create_collection": "Tạo bộ sưu tập mới",
+    "edit_collection": "Chỉnh sửa bộ sưu tập",
+    "delete_collection": "Xóa bộ sưu tập",
+    "add_card": "Thêm thẻ",
+    "remove_card": "Xóa thẻ",
+    "edit_card": "Chỉnh sửa thẻ",
+    "new_card": "thẻ mới",
+    "learning_card": "thẻ đang học",
+    "due_card": "thẻ đến hạn"
   },
   "search": {
     "placeholder": "Tìm kiếm bộ sưu tập tiêu chuẩn",
     "enter": "Tìm kiếm"
+  },
+  "image": {
+    "banner_alt": "Ảnh banner"
   }
 }

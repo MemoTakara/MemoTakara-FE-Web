@@ -1,9 +1,12 @@
 import "./index.css";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
+import BtnBlue from "@/components/btn/btn-blue";
 
 const DashboardCard = ({ collections, setCollections }) => {
+  const { t } = useTranslation();
   const [active, setActive] = useState("");
 
   //Tooltip
@@ -29,7 +32,7 @@ const DashboardCard = ({ collections, setCollections }) => {
           <div className="dashboard_card_status">
             <Tooltip //new
               placement="bottomRight"
-              title="new card"
+              title={t("tooltip.new_card")}
               arrow={mergedArrow}
             >
               <div className="dashboard_card_status_new">{collection.new}</div>
@@ -37,7 +40,7 @@ const DashboardCard = ({ collections, setCollections }) => {
 
             <Tooltip //learning
               placement="bottomRight"
-              title="learning card"
+              title={t("tooltip.learning_card")}
               arrow={mergedArrow}
             >
               <div className="dashboard_card_status_learn">
@@ -47,7 +50,7 @@ const DashboardCard = ({ collections, setCollections }) => {
 
             <Tooltip //due
               placement="bottomRight"
-              title="due card"
+              title={t("tooltip.due_card")}
               arrow={mergedArrow}
             >
               <div className="dashboard_card_status_due">{collection.due}</div>
@@ -62,6 +65,7 @@ const DashboardCard = ({ collections, setCollections }) => {
                 fontSize: "16px",
                 // fontWeight: "var(--header-weight-size)",
                 alignContent: "center",
+                flex: "1",
               }}
             >
               {collection.create_by}
@@ -72,19 +76,14 @@ const DashboardCard = ({ collections, setCollections }) => {
               className="dashboard_card_link"
               onClick={() => setActive("study_sets")}
             >
-              <Button
-                className="dashboard-btn-study-now"
+              <BtnBlue
+                textKey="study_now"
                 style={{
-                  color: "#fff",
-                  padding: "14px",
                   fontSize: "12px",
                   fontWeight: "var(--header-weight-size)",
                   borderRadius: "15px",
-                  background: "var(--color-button)",
                 }}
-              >
-                Study now
-              </Button>
+              />
             </Link>
           </div>
         </div>

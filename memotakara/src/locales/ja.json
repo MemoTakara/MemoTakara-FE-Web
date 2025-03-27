@@ -1,6 +1,5 @@
 {
   "components": {
-    "dashboard_card": {},
     "footer": {
       "send_email_msg": "最新情報やお得なオファーを受け取るには、ぜひご登録ください！",
       "msg_success": "登録が完了しました！",
@@ -31,6 +30,27 @@
       }
     },
     "pages": {
+      "create_collection": {},
+      "dashboard": {
+        "welcome1": "おかえりなさい ",
+        "welcome2": "今日の期限付きフラッシュカードから始めましょう！",
+        "due": "カードの期限",
+        "streak": "日連続",
+        "title1": "最近の活動",
+        "title2": "おすすめ ",
+        "title3": "人気の学習セット"
+      },
+      "forgot-password": {
+        "header": "パスワードをお忘れの方",
+        "enter_code": "パスワード再設定コードを入力",
+        "code_required": "パスワード再設定用のコードを入力してください",
+        "des1": "メールアドレスを入力して、コードを受け取ってください。",
+        "des2": "システムから送信されたコードを入力してください",
+        "des3": "メールアドレスがわからない場合は、サポートチームまでお問い合わせください。",
+        "resend_code": "コードを再送する",
+        "noti_success": "パスワード再設定リンクを送信しました！",
+        "noti_error": "メールアドレスが見つかりませんでした。正しいアドレスを入力してください。"
+      },
       "landing_page": {
         "content1": "記憶力と認知能力の向上",
         "content2": "MemoTakaraコミュニティに今すぐ参加して、あなたの脳の可能性を解き放ちましょう！",
@@ -58,14 +78,38 @@
         "noti_success": "ログイン成功！",
         "noti_error1": "認証エラー：メールアドレスまたはパスワードが正しくありません！",
         "noti_error2": "ログインに失敗しました。もう一度お試しください。"
-      }
+      },
+      "register": {
+        "header": "アカウント作成！情報を入力してください。",
+        "email_invalid": "無効なメールアドレスです！",
+        "email_required": "メールアドレスを入力してください！",
+        "email_placeholder": "メールアドレスを入力",
+        "username_required": "ユーザー名を入力してください！",
+        "username_placeholder": "ユーザー名を入力",
+        "password_required": "パスワードを入力してください",
+        "password_placeholder": "パスワードを入力",
+        "password_confirm_required": "パスワードを確認してください",
+        "password_confirm_placeholder": "パスワードを確認",
+        "password_confirm_invalid": "パスワードが一致しません！",
+        "or": "または",
+        "login": "既にアカウントをお持ちですか？",
+        "login_now": "今すぐログイン！",
+        "noti_success": "登録が完了しました！",
+        "noti_error": "登録に失敗しました。もう一度お試しください。"
+      },
+      "settings": {},
+      "statistics": {},
+      "study_detail": {},
+      "study_sets": {}
     }
   },
   "buttons": {
     "submit": "送信",
     "cancel": "キャンセル",
+    "continue": "次へ",
     "login": "ログイン",
-    "register": "新規登録",
+    "register": "登録",
+    "logout": "ログアウト",
     "home": "ホーム",
     "about_us": "私たちについて",
     "study_set": "学習セット",
@@ -73,10 +117,32 @@
     "get_started": "始める",
     "learn_more": "詳しく見る",
     "subscribe": "登録",
-    "login_with_google": "Googleで続ける"
+    "login_with_google": "Googleで続ける",
+    "back_to_login": "ログイン画面に戻る",
+    "see_more": "もっと見る",
+    "study_now": "今すぐ学習"
+  },
+  "tooltip": {
+    "edit": "編集",
+    "delete": "削除",
+    "save": "保存",
+    "add": "追加",
+    "remove": "削除",
+    "create_collection": "新しいコレクションを作成",
+    "edit_collection": "コレクションを編集",
+    "delete_collection": "コレクションを削除",
+    "add_card": "カードを追加",
+    "remove_card": "カードを削除",
+    "edit_card": "カードを編集",
+    "new_card": "新規カード",
+    "learning_card": "学習中カード",
+    "due_card": "期限カード"
   },
   "search": {
     "placeholder": "標準コレクションを検索",
     "enter": "検索"
+  },
+  "image": {
+    "banner_alt": "バナー画像"
   }
 }

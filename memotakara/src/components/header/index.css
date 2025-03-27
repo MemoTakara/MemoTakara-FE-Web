@@ -13,9 +13,10 @@ body {
 }
 
 .header_container {
-  background-color: #fff;
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
   color: #fff;
   padding: 13px 34px;
   border-bottom: 0.75px solid #808080;
@@ -55,11 +56,11 @@ body {
   letter-spacing: 0.1px;
   line-height: 100%;
   align-items: center; /* Căn giữa theo chiều dọc */
-  flex: 1;
   margin: auto 0;
 }
 
 .header_set {
+  flex: 1;
   gap: 10px;
 }
 

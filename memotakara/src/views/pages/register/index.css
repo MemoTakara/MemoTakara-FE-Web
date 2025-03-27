@@ -11,7 +11,7 @@
 
 .register_header {
   text-align: center;
-  font-size: 26px;
+  font-size: var(--title-size);
   font-weight: var(--header-weight-size);
   color: #000;
   margin-bottom: 40px;

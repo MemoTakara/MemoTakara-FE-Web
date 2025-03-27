@@ -57,7 +57,7 @@ const BtnWhite = ({
           style={{ width: "20px", height: "20px", ...iconStyle }}
         />
       )}
-      {username ? `${username}!` : t(`buttons.${textKey}`)}
+      {username ? `${username}` : t(`buttons.${textKey}`)}
     </button>
   );
 };

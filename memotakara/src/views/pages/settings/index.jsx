@@ -1,5 +1,6 @@
 import "./index.css";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   LogoutOutlined,
   UserOutlined,
@@ -29,6 +30,7 @@ const props = {
 };
 
 function Settings() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   //Save button
@@ -62,7 +64,7 @@ function Settings() {
           icon={<LogoutOutlined />}
           onClick={handleLogout}
         >
-          Sign out
+          {t("buttons.logout")}
         </Button>
       </div>
 

@@ -1,12 +1,14 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Form, Input, Checkbox, message } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue";
 import BtnWhite from "@/components/btn/btn-white";
 
 function Register() {
+  const { t } = useTranslation();
   const { register } = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ function Register() {
         values.password_confirmation
       );
       messageApi.success({
-        content: "Registration Successful!",
+        content: t("views.pages.register.noti_success"),
         key,
         duration: 2,
       });
@@ -30,7 +32,8 @@ function Register() {
       }, 5000);
     } catch (error) {
       messageApi.error({
-        content: error.response?.data?.message || "Registration Failed",
+        content:
+          error.response?.data?.message || t("views.pages.register.noti_error"),
         key,
         duration: 2,
       });
@@ -39,7 +42,7 @@ function Register() {
 
   return (
     <div className="register_container">
-      <div className="register_header">Sign up in less than 2 minutes.</div>
+      <div className="register_header">{t("views.pages.register.header")}</div>
       <div className="register_form">
         <Form
           layout="horizontal"
@@ -51,11 +54,17 @@ function Register() {
           {/* email */}
           <Form.Item
             layout="vertical"
-            label="Email"
+            label={t("views.pages.register.email_placeholder")}
             name="email"
             rules={[
-              { type: "email", message: "Invalid email!" },
-              { required: true, message: "Please input your email!" },
+              {
+                type: "email",
+                message: t("views.pages.register.email_invalid"),
+              },
+              {
+                required: true,
+                message: t("views.pages.register.email_required"),
+              },
             ]}
             style={{ height: "60px" }}
           >
@@ -65,12 +74,12 @@ function Register() {
           {/* username */}
           <Form.Item
             layout="vertical"
-            label="Username"
+            label={t("views.pages.register.username_placeholder")}
             name="username"
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: t("views.pages.register.username_required"),
               },
             ]}
             style={{ height: "60px" }}
@@ -81,13 +90,13 @@ function Register() {
           {/* pass */}
           <Form.Item
             layout="vertical"
-            label="Password"
+            label={t("views.pages.register.password_placeholder")}
             name="password"
             style={{ height: "60px" }}
             rules={[
               {
                 required: true,
-                message: "Enter your password!",
+                message: t("views.pages.register.password_required"),
               },
             ]}
             hasFeedback
@@ -98,7 +107,7 @@ function Register() {
           {/* re-enter pass */}
           <Form.Item
             layout="vertical"
-            label="Confirm the password"
+            label={t("views.pages.register.password_confirm_placeholder")}
             name="password_confirmation"
             style={{ height: "60px" }}
             dependencies={["password"]}
@@ -106,7 +115,7 @@ function Register() {
             rules={[
               {
                 required: true,
-                message: "Confirm the password",
+                message: t("views.pages.register.password_confirm_required"),
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
@@ -114,7 +123,9 @@ function Register() {
                     return Promise.resolve();
                   }
                   return Promise.reject(
-                    new Error("Re-entered password is incorrect!")
+                    new Error(
+                      t("views.pages.register.password_confirm_invalid")
+                    )
                   );
                 },
               }),
@@ -124,7 +135,7 @@ function Register() {
           </Form.Item>
 
           {/* checkbox */}
-          <Form.Item style={{ textAlign: "center" }}>
+          {/* <Form.Item style={{ textAlign: "center" }}>
             <Checkbox style={{ fontSize: "16px" }}>
               I agree to{" "}
               <span
@@ -145,13 +156,13 @@ function Register() {
                 Privacy Policy.
               </span>
             </Checkbox>
-          </Form.Item>
+          </Form.Item> */}
 
           {/* sign up */}
           <Form.Item style={{ textAlign: "center" }}>
             {contextHolder}
             <BtnBlue
-              defaultText="SIGN UP"
+              textKey="register"
               style={{
                 width: "400px",
                 fontSize: "var(--header-size)",
@@ -172,10 +183,10 @@ function Register() {
             textAlign: "center",
           }}
         >
-          OR
+          {t("views.pages.register.or")}
         </div>
         <BtnWhite
-          defaultText="Continue with Google"
+          textKey="login_with_google"
           style={{
             width: "400px",
             fontSize: "var(--body-size)",
@@ -188,14 +199,14 @@ function Register() {
 
       {/* login */}
       <div className="switch_to_login" style={{ fontSize: "18px" }}>
-        Already have account?
+        {t("views.pages.register.login")}
         <span>
           <Link
             className="register_link"
             to="/login"
             style={{ textDecoration: "underline" }}
           >
-            Login
+            {t("views.pages.register.login_now")}
           </Link>
         </span>
       </div>
