@@ -3,60 +3,18 @@ import logo from "@/assets/img/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { AutoComplete, Input, Badge, Popconfirm } from "antd";
+import { Badge, Popconfirm } from "antd";
 import { BellOutlined, FireOutlined, BookOutlined } from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
 import BtnLanguage from "@/components/btn/btn-language";
-
-// Search bar
-const getRandomInt = (max, min = 0) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
-const searchResult = (query) =>
-  new Array(getRandomInt(5))
-    .join(".")
-    .split(".")
-    .map((_, idx) => {
-      const category = `${query}${idx}`;
-      return {
-        value: category,
-        label: (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span>
-              Found {query} on{" "}
-              <a
-                href={`https://s.taobao.com/search?q=${query}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {category}
-              </a>
-            </span>
-            <span>{getRandomInt(200, 100)} results</span>
-          </div>
-        ),
-      };
-    });
+import MemoSearch from "@/components/search-bar";
 
 const UserHeader = () => {
   const [active, setActive] = useState("");
   const { t } = useTranslation();
   const { user } = useAuth();
-
-  //Search bar
-  const [optionsSearch, setOptionsSearch] = useState([]);
-  const handleSearch = (value) => {
-    setOptionsSearch(value ? searchResult(value) : []);
-  };
-  const onSelectSearch = (value) => {
-    console.log("onSelectSearch", value);
-  };
 
   //Notifications
   const [notis, setNotis] = useState([
@@ -91,7 +49,7 @@ const UserHeader = () => {
 
   return (
     <div className="header_max">
-      <div class="header_container">
+      <div className="header_container">
         <div className="header_set">
           <Link
             to="/dashboard"
@@ -99,8 +57,8 @@ const UserHeader = () => {
             onClick={() => setActive("dashboard")}
           >
             <div className="header_logo">
-              <img loading="lazy" src={logo} alt="logo" class="img" />
-              <div class="header_name">MemoTakara</div>
+              <img src={logo} alt="logo" className="img" />
+              <div className="header_name">MemoTakara</div>
             </div>
           </Link>
 
@@ -148,23 +106,7 @@ const UserHeader = () => {
         </div>
 
         <div className="header_tab">
-          <AutoComplete
-            popupMatchSelectWidth={252}
-            style={{
-              width: 360,
-            }}
-            options={optionsSearch}
-            onSelect={onSelectSearch}
-            onSearch={handleSearch}
-            size="medium"
-          >
-            <Input.Search
-              size="medium"
-              placeholder={t("search.placeholder")}
-              enterButton={t("search.enter")}
-            />
-          </AutoComplete>
-
+          <MemoSearch />
           <BtnLanguage />
 
           <div id="header_noti_container" onClick={() => toggleNotifications()}>
