@@ -1,5 +1,9 @@
 {
   "components": {
+    "header": {
+      "search_user1": "创建者：",
+      "search_user2": "未知"
+    },
     "footer": {
       "send_email_msg": "订阅我们，获取最新资讯、新闻和其他精彩优惠！",
       "msg_success": "订阅成功！",
@@ -100,7 +104,13 @@
       "settings": {},
       "statistics": {},
       "study_detail": {},
-      "study_sets": {}
+      "study_sets": {
+        "edit-icon": "编辑",
+        "merge-icon": "配对",
+        "flashcard-icon": "闪卡",
+        "test-icon": "测试",
+        "cards": "卡片"
+      }
     }
   },
   "buttons": {

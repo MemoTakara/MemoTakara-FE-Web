@@ -8,14 +8,12 @@
 
   /* Web font sizes */
   --logo-size: 35px;
-  --header-size: 18px;
-  --header-weight-size: 560;
+  --collection-title-size: 28px;
   --title-size: 26px;
-  --body-size: 16px;
-  --body-size-min: 18px;
+  --header-weight-size: 560;
+  --body-size: 18px;
+  --body-size-bigger: 22px;
   --body-size-max: 24px;
-
-  --body-size: var(--body-size-min);
   --small-body-size: 12px;
   --big: 50px;
   --small-size: 14px;
@@ -25,6 +23,7 @@
   --color-light-button-hover: #8bbdee;
   --color-light-background: #f1f2ff;
   --color-light-stroke: #5091cb;
+  --color-card-background: #c5dbee;
 
   --color-mode-1-button: #2a7378;
   --color-mode-1-footer: #3aafa9;
@@ -65,28 +64,6 @@
   --color-header-dark: var(--color-mode-1-button);
   --color-header-light: var(--color-mode-1-element2);
   --color-element-background: var(--color-mode-1-element-background);
-
-  /* Gaps */
-  --gap-21xl: 40px;
-  --gap-11xl: 30px;
-  --gap-mini: 15px;
-  --gap-8xs: 5px;
-
-  /* Paddings */
-  --padding-41xl: 60px;
-  --padding-61xl: 80px;
-  --padding-21xl: 40px;
-  --padding-20xl: 39px;
-  --padding-xl: 20px;
-  --padding-2xs-5: 10.5px;
-  --padding-8xs: 5px;
-  --padding-base: 16px;
-  --padding-9xs: 4px;
-  --padding-lg: 18px;
-
-  /* Border radiuses */
-  --br-81xl: 100px;
-  --br-8xs: 5px;
 }
 
 * {

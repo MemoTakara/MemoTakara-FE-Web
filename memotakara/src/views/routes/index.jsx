@@ -17,7 +17,8 @@ import StudyDetail from "@/views/pages/study_detail";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
-import NotFound from "@/views/error-pages/NotFound"; // Nếu có alias
+import NotFound from "@/views/error-pages/NotFound";
+import PublicList from "@/components/set-item/public-list";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         path: "forgot_password",
         element: <ForgotPassword />,
       },
+      {
+        path: "public-collection",
+        element: <PublicList />,
+      },
+      // {
+      //   path: "study_detail/:id",
+      //   element: <StudyDetail />,
+      // },
     ],
   },
   {
@@ -71,7 +80,7 @@ const router = createBrowserRouter([
             element: <CreateCollection />,
           },
           {
-            path: "study_detail",
+            path: "study_detail/:id",
             element: <StudyDetail />,
           },
         ],

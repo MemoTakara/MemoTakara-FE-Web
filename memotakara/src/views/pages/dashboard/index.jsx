@@ -74,7 +74,6 @@ function Dashboard() {
             className="dashboard_link"
             onClick={() => setActive("")}
             style={{
-              fontStyle: "italic",
               fontSize: "24px",
               fontWeight: "var(--header-weight-size)",
             }}
@@ -94,7 +93,6 @@ function Dashboard() {
             <span
               style={{
                 fontSize: "16px",
-                fontStyle: "italic",
                 fontWeight: "normal",
               }}
             >
@@ -107,7 +105,6 @@ function Dashboard() {
             <span
               style={{
                 fontSize: "16px",
-                fontStyle: "italic",
                 fontWeight: "normal",
               }}
             >
@@ -136,7 +133,7 @@ function Dashboard() {
           <Row gutter={[16, 16]}>
             {recentCollections.map((collection, index) => (
               <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                <div id="dashboard_recent_list_col">
+                <div>
                   <DashboardCard collections={[collection]} />
                 </div>
               </Col>
@@ -151,12 +148,11 @@ function Dashboard() {
             {t("views.pages.dashboard.title2")}
             <span
               style={{
-                fontStyle: "italic",
-                fontSize: "24px",
+                fontFamily: "var(--logo-font)",
                 fontWeight: "var(--header-weight-size)",
               }}
             >
-              @en120
+              MemoTakara
             </span>
           </div>
           <Link //see more
@@ -173,7 +169,7 @@ function Dashboard() {
           <Row gutter={[16, 16]}>
             {recommendList.map((collection, index) => (
               <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                <div id="dashboard_recent_list_col">
+                <div>
                   <DashboardCard collections={[collection]} />
                 </div>
               </Col>
@@ -201,7 +197,7 @@ function Dashboard() {
           <Row gutter={[16, 16]}>
             {popularList.map((collection, index) => (
               <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                <div id="dashboard_recent_list_col">
+                <div>
                   <DashboardCard collections={[collection]} />
                 </div>
               </Col>

@@ -1,5 +1,9 @@
 {
   "components": {
+    "header": {
+      "search_user1": "作成者: ",
+      "search_user2": "不明"
+    },
     "footer": {
       "send_email_msg": "最新情報やお得なオファーを受け取るには、ぜひご登録ください！",
       "msg_success": "登録が完了しました！",
@@ -100,7 +104,13 @@
       "settings": {},
       "statistics": {},
       "study_detail": {},
-      "study_sets": {}
+      "study_sets": {
+        "edit-icon": "編集",
+        "merge-icon": "マッチング",
+        "flashcard-icon": "単語カード",
+        "test-icon": "テスト",
+        "cards": "カード"
+      }
     }
   },
   "buttons": {

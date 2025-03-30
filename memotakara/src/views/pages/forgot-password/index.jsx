@@ -71,7 +71,7 @@ function ForgotPassword() {
                 textKey="continue"
                 style={{
                   width: "400px",
-                  fontSize: "var(--header-size)",
+                  fontSize: "var(--body-size)",
                   fontWeight: "var(--header-weight-size)",
                   borderRadius: "var(--button-border-radius)",
                 }}

@@ -1,5 +1,9 @@
 {
   "components": {
+    "header": {
+      "search_user1": "Người tạo: ",
+      "search_user2": "Không rõ"
+    },
     "footer": {
       "send_email_msg": "Đăng ký để nhận thông tin, tin tức mới nhất và các ưu đãi hấp dẫn từ chúng tôi!",
       "msg_success": "Đăng ký thành công!",
@@ -100,7 +104,13 @@
       "settings": {},
       "statistics": {},
       "study_detail": {},
-      "study_sets": {}
+      "study_sets": {
+        "edit-icon": "chỉnh sửa",
+        "merge-icon": "ghép từ",
+        "flashcard-icon": "thẻ ghi nhớ",
+        "test-icon": "kiểm tra",
+        "cards": "thẻ"
+      }
     }
   },
   "buttons": {
