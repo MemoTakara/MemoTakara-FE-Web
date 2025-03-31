@@ -1,12 +1,6 @@
 import axios from "axios";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// Hàm lấy chi tiết collection
-export const getCollectionDetail = async (id) => {
-  const response = await axios.get(`${API_BASE_URL}/search-public`);
-  return response.data;
-};
-
 // Hàm lấy danh sách public collection
 export const getPublicCollections = async () => {
   try {
@@ -16,6 +10,12 @@ export const getPublicCollections = async () => {
     console.error("Lỗi khi lấy danh sách public collections:", error);
     return [];
   }
+};
+
+// Hàm lấy danh sách collection user sở hữu
+export const getOwnCollections = async () => {
+  const response = await axios.get(`${API_BASE_URL}/collections`);
+  return response.data;
 };
 
 // Hàm tìm kiếm public collection theo tên, tag, tác giả

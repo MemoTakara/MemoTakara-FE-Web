@@ -1,11 +1,11 @@
-// set in folder
+// set in folder (list of own-set)
 import "./index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { getCollectionDetail } from "@/api/collection";
+import { getOwnCollections } from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const SetItem = ({ collectionId }) => {
@@ -15,30 +15,22 @@ const SetItem = ({ collectionId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCollectionDetail = async () => {
+    const fetchCollection = async () => {
       try {
         setLoading(true);
-        const collectionList = await getCollectionDetail(collectionId);
-
-        // Kiểm tra nếu API trả về mảng
-        if (Array.isArray(collectionList)) {
-          // Tìm collection theo ID
-          const foundCollection = collectionList.find(
-            (col) => col.id === collectionId
-          );
-          setCollection(foundCollection || null);
-        } else {
-          setCollection(collectionList); // Trường hợp API trả về object
-        }
+        const collections = await getOwnCollections();
+        setCollection(
+          collections.find((col) => col.id === collectionId) || null
+        );
       } catch (err) {
-        setError(err.message);
+        console.error("Lỗi khi lấy dữ liệu collection:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCollectionDetail();
-  }, [collectionId]);
+    fetchCollection();
+  }, [collectionId, t]);
 
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>; // Hiển thị lỗi nếu có
@@ -52,7 +44,7 @@ const SetItem = ({ collectionId }) => {
         <div className="set-item-header">
           <Link
             className="set-item-collection-name"
-            to={`/study_detail/${collection.id}`}
+            to={`/public-study-set/${collection.id}`}
           >
             {collection.collection_name}
           </Link>

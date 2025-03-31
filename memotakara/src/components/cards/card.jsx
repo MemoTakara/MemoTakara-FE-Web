@@ -1,27 +1,23 @@
 import "./index.css";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { getCollectionDetail } from "@/api/collection"; // Import API lấy chi tiết collection
 import { getFlashcardsByCollection } from "@/api/flashcard"; // Giữ nguyên để lấy flashcards
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/speaker";
 
-const MemoCard = ({ collectionId }) => {
-  const { t } = useTranslation();
+const MemoCard = ({ collectionId, collectionTag, isPublic }) => {
   const [flashcards, setFlashcards] = useState([]);
-  const [collectionTag, setCollectionTag] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCollectionDetail = async () => {
+    if (!collectionId) return; // Chỉ chạy nếu có collectionId
+    const fetchData = async () => {
       try {
-        // Lấy chi tiết collection
-        const collectionDetail = await getCollectionDetail(collectionId);
-        setCollectionTag(collectionDetail.tag); // Lưu tag
-        // Lấy flashcards dựa vào collectionId
+        setLoading(true);
+
+        // Lấy danh sách flashcards của collection
         const flashcardData = await getFlashcardsByCollection(collectionId);
         setFlashcards(flashcardData);
       } catch (err) {
@@ -31,14 +27,14 @@ const MemoCard = ({ collectionId }) => {
       }
     };
 
-    fetchCollectionDetail();
+    fetchData();
   }, [collectionId]);
 
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>;
 
   const mapTagToLang = (tag) => {
-    if (!tag) return "en"; // Nếu tag không tồn tại, trả về ngôn ngữ mặc định
+    if (!tag || typeof tag !== "string") return "en"; // Kiểm tra undefined/null hoặc không phải string
     const normalizedTag = tag.toLowerCase(); // Chuyển tag về chữ thường để dễ so sánh
     if (["english", "tiếng anh"].includes(normalizedTag)) return "en";
     if (["japanese", "tiếng nhật"].includes(normalizedTag)) return "ja";
@@ -70,16 +66,19 @@ const MemoCard = ({ collectionId }) => {
                 text={card.front}
                 lang={mapTagToLang(collectionTag)}
               />
-              <div className="memo-card-link">
-                <FontAwesomeIcon
-                  icon={faTrashCan}
-                  style={{
-                    fontSize: "var(--body-size)",
-                    color: "var(--color-error-button)",
-                    marginLeft: "5px",
-                  }}
-                />
-              </div>
+
+              {!isPublic && ( // Ẩn nút xóa nếu collection là public
+                <div className="memo-card-link">
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    style={{
+                      fontSize: "var(--body-size)",
+                      color: "var(--color-error-button)",
+                      marginLeft: "5px",
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

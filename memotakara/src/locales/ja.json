@@ -14,6 +14,9 @@
       "about_us": "私たちについて",
       "terms_of_condition": "利用規約",
       "help": "ヘルプ/FAQ"
+    },
+    "set-item": {
+      "public-collection-title": "コミュニティコレクションを探索"
     }
   },
   "views": {
@@ -103,11 +106,18 @@
       },
       "settings": {},
       "statistics": {},
-      "study_detail": {},
+      "study_detail": {
+        "no-collection-data": "コレクションデータがありません",
+        "collection-des": "説明: ",
+        "no-description": "説明文がありません",
+        "totalcard": "カード"
+      },
       "study_sets": {
+        "no-collection": "コレクションが存在しません",
         "edit-icon": "編集",
         "merge-icon": "マッチング",
         "flashcard-icon": "単語カード",
+        "typing-icon": "タイピング",
         "test-icon": "テスト",
         "cards": "カード"
       }

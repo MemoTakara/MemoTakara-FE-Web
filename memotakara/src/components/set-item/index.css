@@ -1,3 +1,24 @@
+.public-list-container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  /* height: 100vh; */
+  margin: -30px 12% 30px;
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.public-list-header {
+  text-align: center;
+  font-size: var(--collection-title-size);
+  font-weight: var(--header-weight-size);
+  color: #000;
+  margin-bottom: 40px;
+}
+
 .set-item-container {
   display: flex;
   flex-direction: column;
@@ -12,6 +33,7 @@
   border-radius: 10px;
   border: 3px solid var(--color-stroke);
   padding: 15px 30px;
+  margin-top: 25px;
   box-sizing: border-box;
 }
 

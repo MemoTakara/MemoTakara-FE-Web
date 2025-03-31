@@ -14,6 +14,9 @@
       "about_us": "关于我们",
       "terms_of_condition": "使用条款",
       "help": "帮助/常见问题"
+    },
+    "set-item": {
+      "public-collection-title": "探索社区学习集"
     }
   },
   "views": {
@@ -103,11 +106,18 @@
       },
       "settings": {},
       "statistics": {},
-      "study_detail": {},
+      "study_detail": {
+        "no-collection-data": "暂无合集数据",
+        "collection-des": "描述: ",
+        "no-description": "该合集暂无描述",
+        "totalcard": "张卡片"
+      },
       "study_sets": {
+        "no-collection": "暂无合集",
         "edit-icon": "编辑",
         "merge-icon": "配对",
         "flashcard-icon": "闪卡",
+        "typing-icon": "打字练习",
         "test-icon": "测试",
         "cards": "卡片"
       }

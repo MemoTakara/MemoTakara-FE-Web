@@ -14,6 +14,9 @@
       "about_us": "About us",
       "terms_of_condition": "Terms of Condition",
       "help": "Help/FAQ"
+    },
+    "set-item": {
+      "public-collection-title": "Explore Community Collections"
     }
   },
   "views": {
@@ -114,6 +117,7 @@
         "edit-icon": "edit",
         "merge-icon": "matching",
         "flashcard-icon": "flashcard",
+        "typing-icon": "typing",
         "test-icon": "test",
         "cards": "cards"
       }

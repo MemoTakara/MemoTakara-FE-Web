@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { searchItems } from "@/api/collection";
 
-const MemoSearch = () => {
+const MemoSearch = ({ isGuest }) => {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,7 +48,11 @@ const MemoSearch = () => {
   const onSelectSearch = (value) => {
     console.log("Đã chọn (search):", value);
     // Điều hướng đến trang chi tiết collection
-    navigate(`/study_detail/${value}`);
+    if (isGuest) {
+      navigate(`/public-collection/${value}`);
+    } else {
+      navigate(`/public-study-set/${value}`);
+    }
   };
 
   return (

@@ -8,9 +8,10 @@ import {
   faPencil,
   faCodePullRequest,
   faRepeat,
+  faKeyboard,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
-import { getCollectionDetail } from "@/api/collection";
+import { getOwnCollections } from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const OwnSet = ({ collectionId }) => {
@@ -20,30 +21,22 @@ const OwnSet = ({ collectionId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCollectionDetail = async () => {
+    const fetchCollection = async () => {
       try {
         setLoading(true);
-        const collectionList = await getCollectionDetail(collectionId);
-
-        // Kiểm tra nếu API trả về mảng
-        if (Array.isArray(collectionList)) {
-          // Tìm collection theo ID
-          const foundCollection = collectionList.find(
-            (col) => col.id === collectionId
-          );
-          setCollection(foundCollection || null);
-        } else {
-          setCollection(collectionList); // Trường hợp API trả về object
-        }
+        const collections = await getOwnCollections();
+        setCollection(
+          collections.find((col) => col.id === collectionId) || null
+        );
       } catch (err) {
-        setError(err.message);
+        console.error("Lỗi khi lấy dữ liệu collection:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCollectionDetail();
-  }, [collectionId]);
+    fetchCollection();
+  }, [collectionId, t]);
 
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>; // Hiển thị lỗi nếu có
@@ -59,18 +52,19 @@ const OwnSet = ({ collectionId }) => {
             {collection.collection_name}
           </div>
 
-          <div className="set-item-collection-des">
+          {/* <div className="set-item-collection-des">
             {t("components.header.search_user1")}{" "}
             {collection.user?.role === "admin"
               ? "MemoTakara"
               : collection.user?.username ||
                 t("components.header.search_user2")}
-          </div>
+          </div> */}
 
           <div className="set-item-collection-des">
-            {t("views.pages.study_detail.collection-des")}
-            {collection.description ||
-              t("views.pages.study_detail.no-description")}
+            {t("views.pages.study_detail.collection-des")}{" "}
+            {collection.description
+              ? collection.description
+              : t("views.pages.study_detail.no-description")}
           </div>
         </div>
 
@@ -92,7 +86,10 @@ const OwnSet = ({ collectionId }) => {
       ></div>
 
       <div className="set-item-bottom">
-        <Link to={`/study_detail/${collection.id}`} className="set-item-link">
+        <Link
+          to={`/public-study-set/${collection.id}`}
+          className="set-item-link"
+        >
           <FontAwesomeIcon
             icon={faPencil}
             style={{
@@ -104,7 +101,10 @@ const OwnSet = ({ collectionId }) => {
           {t("views.pages.study_sets.edit-icon")}
         </Link>
 
-        <Link to={`/study_detail/${collection.id}`} className="set-item-link">
+        <Link
+          to={`/public-study-set/${collection.id}`}
+          className="set-item-link"
+        >
           <FontAwesomeIcon
             icon={faCodePullRequest}
             style={{
@@ -115,7 +115,11 @@ const OwnSet = ({ collectionId }) => {
           />
           {t("views.pages.study_sets.merge-icon")}
         </Link>
-        <Link to={`/study_detail/${collection.id}`} className="set-item-link">
+
+        <Link
+          to={`/public-study-set/${collection.id}`}
+          className="set-item-link"
+        >
           <FontAwesomeIcon
             icon={faRepeat}
             style={{
@@ -127,7 +131,25 @@ const OwnSet = ({ collectionId }) => {
           {t("views.pages.study_sets.flashcard-icon")}
         </Link>
 
-        <Link to={`/study_detail/${collection.id}`} className="set-item-link">
+        <Link
+          to={`/public-study-set/${collection.id}`}
+          className="set-item-link"
+        >
+          <FontAwesomeIcon
+            icon={faKeyboard}
+            style={{
+              fontSize: "var(--body-size-max)",
+              color: "var(--color-light-button)",
+              marginBottom: "5px",
+            }}
+          />
+          {t("views.pages.study_sets.typing-icon")}
+        </Link>
+
+        <Link
+          to={`/public-study-set/${collection.id}`}
+          className="set-item-link"
+        >
           <FontAwesomeIcon
             icon={faBook}
             style={{
