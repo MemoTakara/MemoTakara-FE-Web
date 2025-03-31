@@ -29,7 +29,7 @@ function Register() {
       });
       setTimeout(() => {
         navigate("/login");
-      }, 5000);
+      }, 2000);
     } catch (error) {
       messageApi.error({
         content:

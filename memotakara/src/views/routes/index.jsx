@@ -17,6 +17,12 @@ import StudySets from "@/views/pages/study_sets";
 import CreateCollection from "@/views/pages/create_collection";
 import StudyDetail from "@/views/pages/study_detail";
 
+import AdminLayout from "@/components/layout/AdminLayout";
+import UserManagement from "@/views/admin-pages/user";
+import NotificationManagement from "@/views/admin-pages/notification";
+import CollectionManagement from "@/views/admin-pages/collection";
+import FlashcardManagement from "@/views/admin-pages/flashcard";
+
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
 import NotFound from "@/views/error-pages/NotFound";
@@ -88,12 +94,29 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/admin",
-    element: <ProtectedRoute requiredRole="admin" />,
+    path: "",
+    element: <ProtectedRoute requiredRole="admin" />, // Kiểm tra quyền trước khi vào Admin Layout
     children: [
       {
-        index: true,
-        element: <div>Admin Panel - Coming Soon</div>, // Tạm thời hiển thị thông báo
+        element: <AdminLayout />,
+        children: [
+          {
+            path: "users",
+            element: <UserManagement />,
+          },
+          {
+            path: "notifications",
+            element: <NotificationManagement />,
+          },
+          {
+            path: "collections",
+            element: <CollectionManagement />,
+          },
+          {
+            path: "flashcards",
+            element: <FlashcardManagement />,
+          },
+        ],
       },
     ],
   },
