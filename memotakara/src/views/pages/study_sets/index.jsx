@@ -3,8 +3,10 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Tooltip, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import BtnWhite from "@/components/btn/btn-white";
-import BtnBlue from "@/components/btn/btn-blue";
+import SetItem from "@/components/set-item/set-item";
+import MemoCard from "@/components/cards/card";
+import PublicSet from "@/components/set-item/public-set";
+import OwnSet from "@/components/set-item/own-set";
 
 function StudySets() {
   const [active, setActive] = useState("");
@@ -35,12 +37,12 @@ function StudySets() {
   };
   const [set, setSets] = useState([
     {
-      value: "Folders",
+      value: "Public Collection",
       label: "Folders",
       disabled: false,
     },
     {
-      value: "Study sets",
+      value: "Created",
       label: "Study sets",
       disabled: true,
     },
@@ -85,8 +87,10 @@ function StudySets() {
           </Tooltip>
         </Link>
       </div>
-      <BtnWhite defaultText="test btn" />
-      <BtnBlue defaultText="test btn" />
+
+      <SetItem collectionId={1} />
+      <PublicSet collectionId={1} />
+      <OwnSet collectionId={1} />
     </div>
   );
 }

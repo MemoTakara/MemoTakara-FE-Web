@@ -1,16 +1,9 @@
 import "./index.css";
 import GuestHeader from "@/components/header/GuestHeader";
 import Footer from "@/components/footer";
-import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { Outlet } from "react-router-dom";
 
 function GuestLayout() {
-  const { token } = useAuth();
-  if (token) {
-    console.log("navigate in guest layout to dashboard");
-    return <Navigate to="/dashboard" />;
-  }
-
   return (
     <div className="container">
       <div className="header">

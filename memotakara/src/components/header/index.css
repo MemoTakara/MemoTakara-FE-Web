@@ -51,7 +51,7 @@ body {
 .header_set,
 .header_tab {
   display: flex;
-  font-size: var(--header-size);
+  font-size: var(--body-size);
   text-align: center;
   letter-spacing: 0.1px;
   line-height: 100%;

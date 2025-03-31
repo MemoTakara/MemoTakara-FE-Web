@@ -1,0 +1,47 @@
+.memo-card-container {
+  display: flex;
+  background: #fff;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  width: 1084px;
+  /* height: 150px; */
+  text-align: justify;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: 3px solid var(--color-stroke);
+  padding: 15px 30px;
+  margin-top: 25px;
+  box-sizing: border-box;
+}
+
+.meme-card-link {
+  text-decoration: none; /* Xóa gạch dưới từ link nếu cần */
+  color: inherit; /* Giữ nguyên màu chữ */
+  text-align: center;
+  padding: 10px 0;
+  margin: 0 50px;
+}
+
+.memo-card-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  font-size: var(--body-size-bigger);
+}
+
+.memo-card-right {
+  display: flex;
+  justify-content: space-between; /* Đảm bảo các phần tử được căn chỉnh đều */
+  align-items: center;
+  width: 100%;
+  padding: 5px 10px; /* Điều chỉnh padding nếu cần */
+  border-left: 1.5px dashed var(--color-light-button);
+}
+
+.memo-card-icon {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}

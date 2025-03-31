@@ -1,5 +1,9 @@
 {
   "components": {
+    "header": {
+      "search_user1": "作成者: ",
+      "search_user2": "不明"
+    },
     "footer": {
       "send_email_msg": "最新情報やお得なオファーを受け取るには、ぜひご登録ください！",
       "msg_success": "登録が完了しました！",
@@ -10,6 +14,9 @@
       "about_us": "私たちについて",
       "terms_of_condition": "利用規約",
       "help": "ヘルプ/FAQ"
+    },
+    "set-item": {
+      "public-collection-title": "コミュニティコレクションを探索"
     }
   },
   "views": {
@@ -99,8 +106,21 @@
       },
       "settings": {},
       "statistics": {},
-      "study_detail": {},
-      "study_sets": {}
+      "study_detail": {
+        "no-collection-data": "コレクションデータがありません",
+        "collection-des": "説明: ",
+        "no-description": "説明文がありません",
+        "totalcard": "カード"
+      },
+      "study_sets": {
+        "no-collection": "コレクションが存在しません",
+        "edit-icon": "編集",
+        "merge-icon": "マッチング",
+        "flashcard-icon": "単語カード",
+        "typing-icon": "タイピング",
+        "test-icon": "テスト",
+        "cards": "カード"
+      }
     }
   },
   "buttons": {

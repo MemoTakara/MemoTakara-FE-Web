@@ -29,7 +29,7 @@ function LandingPage() {
               marginTop: "18px",
               wordWrap: "break-word",
               whiteSpace: "pre-wrap",
-              fontSize: "var(--header-size)",
+              fontSize: "var(--body-size)",
             }}
           >
             {t("views.pages.landing_page.content2")}
@@ -43,7 +43,16 @@ function LandingPage() {
               <BtnBlue textKey="get_started" />
             </Link>
 
-            <BtnWhite textKey="learn_more" />
+            <Link
+              to="/public-collection"
+              onClick={() => setActive("home")}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <BtnWhite textKey="learn_more" />
+            </Link>
           </div>
         </div>
 

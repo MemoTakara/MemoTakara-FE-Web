@@ -39,7 +39,7 @@ const GuestHeader = () => {
         </div>
 
         <div className="header_tab">
-          <MemoSearch />
+          <MemoSearch isGuest={true} />
           <BtnLanguage />
 
           <Link

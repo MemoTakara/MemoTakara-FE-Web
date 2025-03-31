@@ -106,7 +106,7 @@ const UserHeader = () => {
         </div>
 
         <div className="header_tab">
-          <MemoSearch />
+          <MemoSearch isGuest={false} />
           <BtnLanguage />
 
           <div id="header_noti_container" onClick={() => toggleNotifications()}>

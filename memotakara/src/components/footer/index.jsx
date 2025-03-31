@@ -37,7 +37,7 @@ function Footer() {
   };
 
   return (
-    <div class="footer_container">
+    <div className="footer_container">
       <div className="footer_cols">
         <Link
           to="/dashboard"
@@ -45,8 +45,8 @@ function Footer() {
           onClick={() => setActive("dashboard")}
         >
           <div className="footer_logo">
-            <img loading="lazy" src={logo} alt="logo" class="img" />
-            <div class="footer_name">MemoTakara</div>
+            <img loading="lazy" src={logo} alt="logo" className="img" />
+            <div className="footer_name">MemoTakara</div>
           </div>
         </Link>
 
@@ -122,7 +122,7 @@ function Footer() {
         </div>
       </div>
 
-      <div class="footer_bottom_row">
+      <div className="footer_bottom_row">
         {/* line */}
         <div
           style={{ width: "550px", height: "1px", background: "#000" }}

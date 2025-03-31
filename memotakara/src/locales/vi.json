@@ -1,5 +1,9 @@
 {
   "components": {
+    "header": {
+      "search_user1": "Người tạo: ",
+      "search_user2": "Không rõ"
+    },
     "footer": {
       "send_email_msg": "Đăng ký để nhận thông tin, tin tức mới nhất và các ưu đãi hấp dẫn từ chúng tôi!",
       "msg_success": "Đăng ký thành công!",
@@ -10,6 +14,9 @@
       "about_us": "Về chúng tôi",
       "terms_of_condition": "Điều khoản sử dụng",
       "help": "Trợ giúp/FAQ"
+    },
+    "set-item": {
+      "public-collection-title": "Khám phá bộ sưu tập cộng đồng"
     }
   },
   "views": {
@@ -99,8 +106,21 @@
       },
       "settings": {},
       "statistics": {},
-      "study_detail": {},
-      "study_sets": {}
+      "study_detail": {
+        "no-collection-data": "Không có dữ liệu bộ sưu tập",
+        "collection-des": "Mô tả: ",
+        "no-description": "Bộ sưu tập chưa có mô tả",
+        "totalcard": "thẻ"
+      },
+      "study_sets": {
+        "no-collection": "Không có bộ sưu tập nào",
+        "edit-icon": "chỉnh sửa",
+        "merge-icon": "ghép từ",
+        "flashcard-icon": "thẻ ghi nhớ",
+        "typing-icon": "nhập từ",
+        "test-icon": "kiểm tra",
+        "cards": "thẻ"
+      }
     }
   },
   "buttons": {

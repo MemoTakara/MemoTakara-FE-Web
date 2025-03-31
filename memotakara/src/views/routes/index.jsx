@@ -1,9 +1,11 @@
 import "@/main.css";
 import { createBrowserRouter } from "react-router-dom";
-import UserLayout from "@/components/layout/UserLayout";
-import GuestLayout from "@/components/layout/GuestLayout";
 import ProtectedRoute from "@/views/routes/ProtectedRoute";
 
+import GuestLayout from "@/components/layout/GuestLayout";
+import PublicList from "@/components/set-item/public-set-list";
+
+import UserLayout from "@/components/layout/UserLayout";
 import LandingPage from "@/views/pages/landing_page";
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
@@ -17,7 +19,7 @@ import StudyDetail from "@/views/pages/study_detail";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
-import NotFound from "@/views/error-pages/NotFound"; // Nếu có alias
+import NotFound from "@/views/error-pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
         path: "forgot_password",
         element: <ForgotPassword />,
       },
+      {
+        path: "public-collection",
+        element: <PublicList />,
+      },
+      {
+        path: "public-collection/:id",
+        element: <StudyDetail isPublic={true} />,
+      },
     ],
   },
   {
@@ -48,7 +58,6 @@ const router = createBrowserRouter([
     children: [
       {
         element: <UserLayout />,
-        errorElement: <NotFound />, // Cách xử lý lỗi
         children: [
           {
             path: "dashboard",
@@ -71,8 +80,8 @@ const router = createBrowserRouter([
             element: <CreateCollection />,
           },
           {
-            path: "study_detail",
-            element: <StudyDetail />,
+            path: "public-study-set/:id",
+            element: <StudyDetail isPublic={true} />,
           },
         ],
       },
