@@ -1,13 +1,13 @@
-import axios from "axios";
+import axiosClient from "@/axiosClient";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Lấy danh sách all user
 export const getUsers = async () => {
   try {
-    const response = await API.get(`${API_BASE_URL}/admins/users`);
+    const response = await axiosClient.get(`${API_BASE_URL}/admins/users`);
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách người dùng:", error);
+    console.error("Lỗi khi lấy danh sách người dùng:", error.response || error);
     throw error;
   }
 };
@@ -15,12 +15,15 @@ export const getUsers = async () => {
 // Mở, khóa tài khoản
 export const toggleUserStatus = async (userId) => {
   try {
-    const response = await API.post(
+    const response = await axiosClient.post(
       `${API_BASE_URL}/admins/users/${userId}/toggle-lock`
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi thay đổi trạng thái người dùng:", error);
+    console.error(
+      "Lỗi khi thay đổi trạng thái người dùng:",
+      error.response || error
+    );
     throw error;
   }
 };
@@ -28,10 +31,12 @@ export const toggleUserStatus = async (userId) => {
 // Xóa người dùng
 export const deleteUser = async (userId) => {
   try {
-    const response = await API.delete(`${API_BASE_URL}/admins/user/${userId}`);
+    const response = await axiosClient.delete(
+      `${API_BASE_URL}/admins/user/${userId}`
+    );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi xóa người dùng:", error);
+    console.error("Lỗi khi xóa người dùng:", error.response || error);
     throw error;
   }
 };
@@ -39,13 +44,16 @@ export const deleteUser = async (userId) => {
 // Gửi thông báo
 export const sendNotification = async (userId, message) => {
   try {
-    const response = await API.post(`${API_BASE_URL}/admins/notifications`, {
-      user_id: userId,
-      message,
-    });
+    const response = await axiosClient.post(
+      `${API_BASE_URL}/admins/notifications`,
+      {
+        user_id: userId,
+        message,
+      }
+    );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi gửi thông báo:", error);
+    console.error("Lỗi khi gửi thông báo:", error.response || error);
     throw error;
   }
 };
@@ -53,10 +61,15 @@ export const sendNotification = async (userId, message) => {
 // Lấy list all collection
 export const getCollections = async () => {
   try {
-    const response = await API.get(`${API_BASE_URL}/admins/collections`);
+    const response = await axiosClient.get(
+      `${API_BASE_URL}/admins/collections`
+    );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách collections:", error);
+    console.error(
+      "Lỗi khi lấy danh sách collections:",
+      error.response || error
+    );
     throw error;
   }
 };
@@ -64,13 +77,13 @@ export const getCollections = async () => {
 // Tạo collection
 export const createCollection = async (collectionData) => {
   try {
-    const response = await API.post(
+    const response = await axiosClient.post(
       `${API_BASE_URL}/admins/collections`,
       collectionData
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi tạo collection:", error);
+    console.error("Lỗi khi tạo collection:", error.response || error);
     throw error;
   }
 };
@@ -78,13 +91,13 @@ export const createCollection = async (collectionData) => {
 // Update collection
 export const updateCollection = async (collectionId, collectionData) => {
   try {
-    const response = await API.put(
+    const response = await axiosClient.put(
       `${API_BASE_URL}/admins/collections/${collectionId}`,
       collectionData
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi cập nhật collection:", error);
+    console.error("Lỗi khi cập nhật collection:", error.response || error);
     throw error;
   }
 };
@@ -92,12 +105,23 @@ export const updateCollection = async (collectionId, collectionData) => {
 // Delete collection
 export const deleteCollection = async (collectionId) => {
   try {
-    const response = await API.delete(
+    const response = await axiosClient.delete(
       `${API_BASE_URL}/admins/collections/${collectionId}`
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi xóa collection:", error);
+    console.error("Lỗi khi xóa collection:", error.response || error);
+    throw error;
+  }
+};
+
+// Lấy danh sách flashcard của toàn hệ thống
+export const getAllFlashcards = async (collectionId) => {
+  try {
+    const response = await axiosClient.get(`${API_BASE_URL}/admins/flashcards`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách flashcards:", error.response || error);
     throw error;
   }
 };
@@ -105,12 +129,12 @@ export const deleteCollection = async (collectionId) => {
 // Lấy danh sách flashcard của collection
 export const getFlashcards = async (collectionId) => {
   try {
-    const response = await API.get(
+    const response = await axiosClient.get(
       `${API_BASE_URL}/admins/collections/${collectionId}/flashcards`
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách flashcards:", error);
+    console.error("Lỗi khi lấy danh sách flashcards:", error.response || error);
     throw error;
   }
 };
@@ -118,13 +142,13 @@ export const getFlashcards = async (collectionId) => {
 // Tạo flashcard
 export const addFlashcard = async (collectionId, flashcardData) => {
   try {
-    const response = await API.post(
+    const response = await axiosClient.post(
       `${API_BASE_URL}/admins/collections/${collectionId}/flashcards`,
       flashcardData
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi thêm flashcard:", error);
+    console.error("Lỗi khi thêm flashcard:", error.response || error);
     throw error;
   }
 };
@@ -132,13 +156,13 @@ export const addFlashcard = async (collectionId, flashcardData) => {
 // Update flashcard
 export const updateFlashcard = async (flashcardId, flashcardData) => {
   try {
-    const response = await API.put(
+    const response = await axiosClient.put(
       `${API_BASE_URL}/admins/flashcards/${flashcardId}`,
       flashcardData
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi cập nhật flashcard:", error);
+    console.error("Lỗi khi cập nhật flashcard:", error.response || error);
     throw error;
   }
 };
@@ -146,12 +170,12 @@ export const updateFlashcard = async (flashcardId, flashcardData) => {
 // Delete flashcard
 export const deleteFlashcard = async (flashcardId) => {
   try {
-    const response = await API.delete(
+    const response = await axiosClient.delete(
       `${API_BASE_URL}/admins/flashcards/${flashcardId}`
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi xóa flashcard:", error);
+    console.error("Lỗi khi xóa flashcard:", error.response || error);
     throw error;
   }
 };

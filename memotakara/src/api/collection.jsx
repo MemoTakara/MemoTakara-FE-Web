@@ -1,10 +1,13 @@
 import axios from "axios";
+import axiosClient from "@/axiosClient";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Hàm lấy danh sách public collection
 export const getPublicCollections = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/public-collections`);
+    const response = await axiosClient.get(
+      `${API_BASE_URL}/public-collections`
+    );
     return response.data; // Trả về danh sách collections
   } catch (error) {
     console.error("Lỗi khi lấy danh sách public collections:", error);
@@ -14,7 +17,7 @@ export const getPublicCollections = async () => {
 
 // Hàm lấy danh sách collection user sở hữu
 export const getOwnCollections = async () => {
-  const response = await axios.get(`${API_BASE_URL}/collections`);
+  const response = await axiosClient.get(`${API_BASE_URL}/collections`);
   return response.data;
 };
 
