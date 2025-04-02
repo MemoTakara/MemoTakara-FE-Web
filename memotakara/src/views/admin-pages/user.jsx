@@ -1,12 +1,28 @@
 import { useState, useEffect } from "react";
-import { Table, Button, Space, message } from "antd";
-import { getUsers, toggleUserStatus, deleteUser } from "@/api/admin";
+import {
+  Table,
+  Button,
+  Space,
+  message,
+  Modal,
+  Form,
+  Input,
+  Select,
+} from "antd";
+import {
+  getUsers,
+  createUser,
+  toggleUserStatus,
+  deleteUser,
+} from "@/api/admin";
 import FormattedDate from "@/components/formatted-date";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchUsers();
@@ -21,6 +37,18 @@ const UserManagement = () => {
       messageApi.error("Lỗi khi tải danh sách người dùng");
     }
     setLoading(false);
+  };
+
+  const handleCreateUser = async (user) => {
+    try {
+      await createUser(user);
+      messageApi.success("Thêm mới người dùng thành công");
+      setIsModalVisible(false);
+      form.resetFields();
+      fetchUsers();
+    } catch (error) {
+      messageApi.error("Lỗi khi tạo người dùng");
+    }
   };
 
   const handleToggleUser = async (id) => {
@@ -46,7 +74,7 @@ const UserManagement = () => {
 
   const columns = [
     { title: "ID", dataIndex: "id" },
-    { title: "Tên", dataIndex: "name", render: (text) => text || "(Không có)" },
+    { title: "Tên", dataIndex: "name", render: (text) => text || "NULL" },
     { title: "Username", dataIndex: "username" },
     { title: "Email", dataIndex: "email" },
     { title: "Vai trò", dataIndex: "role" },
@@ -81,7 +109,11 @@ const UserManagement = () => {
   return (
     <div>
       {contextHolder}
-      <Button type="primary" style={{ marginBottom: 16 }}>
+      <Button
+        type="primary"
+        style={{ marginBottom: 16 }}
+        onClick={() => setIsModalVisible(true)}
+      >
         Thêm người dùng
       </Button>
       <Table
@@ -90,6 +122,65 @@ const UserManagement = () => {
         loading={loading}
         rowKey="id"
       />
+      <Modal
+        title="Thêm người dùng mới"
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={[
+          <Button key="cancel" onClick={() => setIsModalVisible(false)}>
+            Huỷ
+          </Button>,
+          <Button
+            key="create"
+            type="primary"
+            htmlType="submit"
+            onClick={handleCreateUser}
+          >
+            Tạo
+          </Button>,
+        ]}
+      >
+        <Form form={form} layout="vertical" onFinish={handleCreateUser}>
+          <Form.Item
+            name="name"
+            label="Tên"
+            rules={[{ type: "string", max: 255 }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="username"
+            label="Username"
+            rules={[{ required: true, message: "Đây là trường bắt buộc" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, type: "email", message: "Email không hợp lệ" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Mật khẩu"
+            rules={[
+              { required: true, min: 8, message: "Mật khẩu tối thiểu 8 ký tự" },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item name="role" label="Vai trò" initialValue="user">
+            <Select>
+              <Option value="user">User</Option>
+              <Option value="admin">Admin</Option>
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

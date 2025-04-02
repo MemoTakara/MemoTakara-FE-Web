@@ -98,6 +98,7 @@
         "password_confirm_required": "请确认密码",
         "password_confirm_placeholder": "确认密码",
         "password_confirm_invalid": "密码确认不匹配！",
+        "password_min_length": "密码长度至少8个字符。",
         "or": "或",
         "login": "已有账号？",
         "login_now": "立即登录！",
@@ -110,7 +111,8 @@
         "no-collection-data": "暂无合集数据",
         "collection-des": "描述: ",
         "no-description": "该合集暂无描述",
-        "totalcard": "张卡片"
+        "totalcard": "张卡片",
+        "error-loading": "加载错误"
       },
       "study_sets": {
         "no-collection": "暂无合集",

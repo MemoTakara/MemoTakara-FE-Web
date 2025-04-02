@@ -1,6 +1,20 @@
 import axiosClient from "@/axiosClient";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+// Hàm yêu cầu đổi mật khẩu
+export const changePassword = async (oldPassword, newPassword) => {
+  try {
+    const response = await axiosClient.post("users/change-password", {
+      old_password: oldPassword,
+      new_password: newPassword,
+      new_password_confirmation: newPassword, // Xác nhận mật khẩu như mật khẩu mới
+    });
+    return response.data; // Trả về dữ liệu thành công
+  } catch (error) {
+    throw error.response?.data; // Ném lỗi đã xảy ra
+  }
+};
+
 // Lấy danh sách all user
 export const getUsers = async () => {
   try {
@@ -8,6 +22,20 @@ export const getUsers = async () => {
     return response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách người dùng:", error.response || error);
+    throw error;
+  }
+};
+
+// Tạo mới user
+export const createUser = async (userData) => {
+  try {
+    const response = await axiosClient.post(
+      `${API_BASE_URL}/admins/users`,
+      userData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi tạo người dùng:", error.response || error);
     throw error;
   }
 };
@@ -37,23 +65,6 @@ export const deleteUser = async (userId) => {
     return response.data;
   } catch (error) {
     console.error("Lỗi khi xóa người dùng:", error.response || error);
-    throw error;
-  }
-};
-
-// Gửi thông báo
-export const sendNotification = async (userId, message) => {
-  try {
-    const response = await axiosClient.post(
-      `${API_BASE_URL}/admins/notifications`,
-      {
-        user_id: userId,
-        message,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Lỗi khi gửi thông báo:", error.response || error);
     throw error;
   }
 };

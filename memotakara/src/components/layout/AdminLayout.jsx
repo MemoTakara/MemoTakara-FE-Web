@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
+import ChangePasswordOverlay from "@/components/change-pass";
 
 const { Header, Sider, Content } = Layout;
 
 const AdminLayout = () => {
   const navigate = useNavigate(); // Khai báo hook useNavigate để điều hướng
   const location = useLocation(); // Lấy đường dẫn hiện tại
+  const [isOverlayOpen, setIsOverlayOpen] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -44,6 +47,23 @@ const AdminLayout = () => {
         >
           MemoTakara
         </div>
+        <button
+          style={{
+            background: colorBgContainer,
+            border: "none",
+            alignItems: "center",
+            height: "100%",
+            paddingRight: "20px",
+            cursor: "pointer",
+          }}
+          onClick={() => setIsOverlayOpen(true)}
+        >
+          Đổi Mật Khẩu
+        </button>
+        <ChangePasswordOverlay
+          isOpen={isOverlayOpen}
+          onClose={() => setIsOverlayOpen(false)}
+        />
         <button
           style={{
             background: colorBgContainer,

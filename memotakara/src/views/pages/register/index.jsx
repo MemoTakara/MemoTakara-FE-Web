@@ -98,6 +98,12 @@ function Register() {
                 required: true,
                 message: t("views.pages.register.password_required"),
               },
+              {
+                min: 8, // Độ dài tối thiểu
+                message: t("views.pages.register.password_min_length", {
+                  length: 8,
+                }), // Thông báo khi không đủ 8 ký tự
+              },
             ]}
             hasFeedback
           >
