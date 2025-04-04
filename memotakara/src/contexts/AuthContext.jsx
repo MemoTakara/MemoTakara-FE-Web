@@ -34,9 +34,7 @@ const AuthProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const response = await axiosClient.get(`${API_BASE_URL}/users`, {
-          headers: { Authorization: `Bearer ${token}` }, // Không cần header này nữa nếu đã cấu hình axiosClient
-        });
+        const response = await axiosClient.get(`${API_BASE_URL}/users`);
         setUser(response.data);
       } catch (error) {
         if (error.response?.status === 401) {

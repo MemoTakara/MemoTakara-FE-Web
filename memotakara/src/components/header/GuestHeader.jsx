@@ -24,7 +24,7 @@ const GuestHeader = () => {
           <Link to="/" className="header_link" onClick={() => setActive("/")}>
             <HeaderSet
               textKey="home"
-              isActive={active === ""}
+              isActive={active === "/"}
               onClick={() => setActive("/")}
             />
           </Link>
@@ -32,7 +32,7 @@ const GuestHeader = () => {
           <Link to="/" className="header_link" onClick={() => setActive("")}>
             <HeaderSet
               textKey="about_us"
-              isActive={active === "/"}
+              // isActive={active === ""}
               // onClick={() => setActive("")}
             />
           </Link>

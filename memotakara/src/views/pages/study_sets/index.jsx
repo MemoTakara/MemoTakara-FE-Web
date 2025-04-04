@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button, Tooltip, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import SetItem from "@/components/set-item/set-item";
-import MemoCard from "@/components/cards/card";
 import PublicSet from "@/components/set-item/public-set";
 import OwnSet from "@/components/set-item/own-set";
 

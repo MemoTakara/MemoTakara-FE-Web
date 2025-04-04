@@ -86,6 +86,10 @@ const router = createBrowserRouter([
             element: <CreateCollection />,
           },
           {
+            path: "public-study-set",
+            element: <PublicList />,
+          },
+          {
             path: "public-study-set/:id",
             element: <StudyDetail isPublic={true} />,
           },

@@ -58,7 +58,7 @@ const MemoSearch = ({ isGuest }) => {
   return (
     <AutoComplete
       style={{
-        width: 250,
+        width: 320,
       }}
       options={options}
       onSelect={onSelectSearch}

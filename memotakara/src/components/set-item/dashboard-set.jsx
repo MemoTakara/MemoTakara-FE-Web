@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 import BtnBlue from "@/components/btn/btn-blue";
 
-const DashboardCard = ({ collections, setCollections }) => {
+const DashboardCard = ({ collections = [], userId }) => {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
 
@@ -27,52 +27,39 @@ const DashboardCard = ({ collections, setCollections }) => {
     <div>
       {collections.map((collection) => (
         <div key={collection.id} className="dashboard_card_container">
-          <div className="dashboard_card_title">{collection.title}</div>
+          <div className="dashboard_card_title">
+            {collection.collection_name}
+          </div>
 
           <div className="dashboard_card_status">
-            <Tooltip //new
-              placement="bottomRight"
-              title={t("tooltip.new_card")}
-              arrow={mergedArrow}
-            >
-              <div className="dashboard_card_status_new">{collection.new}</div>
-            </Tooltip>
-
-            <Tooltip //learning
-              placement="bottomRight"
-              title={t("tooltip.learning_card")}
-              arrow={mergedArrow}
-            >
-              <div className="dashboard_card_status_learn">
-                {collection.learning}
-              </div>
-            </Tooltip>
-
-            <Tooltip //due
-              placement="bottomRight"
-              title={t("tooltip.due_card")}
-              arrow={mergedArrow}
-            >
-              <div className="dashboard_card_status_due">{collection.due}</div>
-            </Tooltip>
+            {collection.flashcards && collection.flashcards.length > 0 && (
+              <Tooltip
+                placement="bottomRight"
+                title={t("tooltip.flashcard_status")}
+                arrow={mergedArrow}
+              >
+                <div className="dashboard_card_status_flashcard">
+                  {collection.flashcards.length} Flashcards
+                </div>
+              </Tooltip>
+            )}
           </div>
 
           <div className="dashboard_card_footer">
-            {/* create by */}
+            {/* created by */}
             <div
               style={{
                 fontStyle: "italic",
                 fontSize: "16px",
-                // fontWeight: "var(--header-weight-size)",
                 alignContent: "center",
                 flex: "1",
               }}
             >
-              {collection.create_by}
+              {collection.created_by}{" "}
+              {/* Thay đổi thành thuộc tính phù hợp với dữ liệu collection */}
             </div>
-
-            <Link //study now
-              to="/study_detail"
+            <Link // Study now
+              to={`/public-study-set/${collection.id}`} // Chuyến đến chi tiết học tập của collection
               className="dashboard_card_link"
               onClick={() => setActive("study_sets")}
             >
@@ -80,7 +67,6 @@ const DashboardCard = ({ collections, setCollections }) => {
                 textKey="study_now"
                 style={{
                   fontSize: "12px",
-                  fontWeight: "var(--header-weight-size)",
                   borderRadius: "15px",
                 }}
               />

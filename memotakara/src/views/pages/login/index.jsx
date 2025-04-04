@@ -1,5 +1,6 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Checkbox, message } from "antd";
@@ -13,6 +14,19 @@ function Login() {
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        // Kiểm tra vai trò và điều hướng
+        if (user?.role === "user") {
+          navigate("/dashboard");
+        } else if (user?.role === "admin") {
+          navigate("/users");
+        }
+      }, 2000);
+    }
+  }, [user, navigate]);
+
   const handleLogin = async (values) => {
     const key = "loginMessage";
     try {
@@ -22,14 +36,6 @@ function Login() {
         key,
         duration: 2,
       });
-      setTimeout(() => {
-        // Kiểm tra vai trò và điều hướng
-        if (user?.role === "user") {
-          navigate("/dashboard");
-        } else if (user?.role === "admin") {
-          navigate("/users");
-        }
-      }, 2000);
     } catch (error) {
       messageApi.error({
         content:

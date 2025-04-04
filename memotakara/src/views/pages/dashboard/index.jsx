@@ -1,5 +1,5 @@
 import "./index.css";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Tooltip } from "antd";
@@ -13,13 +13,33 @@ import {
 } from "@/data/data.jsx";
 import { useAuth } from "@/contexts/AuthContext";
 import BtnBlue from "@/components/btn/btn-blue.jsx";
-import DashboardCard from "@/components/dashboard_card/index.jsx";
+import DashboardCard from "@/components/set-item/dashboard-set";
+import { getPublicCollectionsByUser } from "@/api/collection";
+import { getPublicCollections } from "@/api/collection";
 
 function Dashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [active, setActive] = useState("");
   const { user } = useAuth();
+  const [collections, setCollections] = useState([]); // State to hold collections
+
+  // Gọi API để lấy danh sách public collections của user
+  useEffect(() => {
+    const fetchPublicCollections = async () => {
+      if (user) {
+        // Check if user is defined
+        try {
+          const data = await getPublicCollections(); // Using the API function
+          setCollections(data);
+        } catch (error) {
+          console.error("Failed to fetch public collections:", error);
+        }
+      }
+    };
+
+    fetchPublicCollections();
+  });
 
   //Tooltip
   const [arrow, setArrow] = useState("Show");
@@ -36,7 +56,7 @@ function Dashboard() {
   }, [arrow]);
 
   //Data
-  const [collections, setCollections] = useState(memoData);
+  // const [collections, setCollections] = useState(memoData);
   const recommendList = recommendCollections.slice(0, 3);
   const popularList = popularCollections.slice(0, 3);
 
@@ -89,7 +109,7 @@ function Dashboard() {
 
         <div className="dashboard_cards">
           <div className="dashboard_due">
-            {totalData.due}
+            {/* {totalData.due} */}0
             <span
               style={{
                 fontSize: "16px",
@@ -101,7 +121,7 @@ function Dashboard() {
           </div>
 
           <div className="dashboard_streak">
-            50
+            0
             <span
               style={{
                 fontSize: "16px",
@@ -120,9 +140,9 @@ function Dashboard() {
             {t("views.pages.dashboard.title1")}
           </div>
           <Link //see more
-            to="/create_collection"
+            to="/study_sets"
             className="dashboard_link"
-            onClick={() => setActive("")}
+            onClick={() => setActive("study_sets")}
           >
             <BtnBlue textKey="see_more" />
           </Link>
@@ -131,13 +151,25 @@ function Dashboard() {
         {/* recent list */}
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
-            {recentCollections.map((collection, index) => (
-              <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                <div>
-                  <DashboardCard collections={[collection]} />
-                </div>
-              </Col>
-            ))}
+            {/* {collections.length > 0 ? (
+              collections.map((collection) => (
+                <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                  <div>
+                    <DashboardCard
+                      collections={[collection]}
+                      userId={user.id}
+                    />
+                  </div>
+                </Col>
+              ))
+            ) : ( */}
+            <Col span={24}>
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                {t("views.pages.study_sets.no-collection")}{" "}
+                {/* Thông báo không có collection nào */}
+              </div>
+            </Col>
+            {/* )} */}
           </Row>
         </div>
       </div>
@@ -156,29 +188,42 @@ function Dashboard() {
             </span>
           </div>
           <Link //see more
-            to="/create_collection"
+            to="/public-study-set"
             className="dashboard_link"
-            onClick={() => setActive("")}
+            onClick={() => setActive("study-sets")}
           >
             <BtnBlue textKey="see_more" />
           </Link>
         </div>
 
-        {/* recommend list */}
+        {/* Danh sách các collection công khai */}
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
-            {recommendList.map((collection, index) => (
-              <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                <div>
-                  <DashboardCard collections={[collection]} />
+            {collections.length > 0 ? (
+              collections.slice(0, 3).map(
+                (
+                  collection // Sử dụng slice để lấy 3 phần tử đầu tiên
+                ) => (
+                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                    <div>
+                      <DashboardCard collections={[collection]} userId="1" />
+                    </div>
+                  </Col>
+                )
+              )
+            ) : (
+              <Col span={24}>
+                <div style={{ textAlign: "center", marginTop: "20px" }}>
+                  {t("views.pages.study_sets.no-collection")}{" "}
+                  {/* Thông báo không có collection nào */}
                 </div>
               </Col>
-            ))}
+            )}
           </Row>
         </div>
       </div>
 
-      <div className="dashboard_popular">
+      {/* <div className="dashboard_popular">
         <div className="dashboard_title">
           <div className="dashboard_title_text">
             {t("views.pages.dashboard.title3")}
@@ -192,7 +237,7 @@ function Dashboard() {
           </Link>
         </div>
 
-        {/* popular list */}
+        popular list
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
             {popularList.map((collection, index) => (
@@ -204,7 +249,7 @@ function Dashboard() {
             ))}
           </Row>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

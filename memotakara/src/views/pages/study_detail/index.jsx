@@ -3,10 +3,10 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { getPublicCollections } from "@/api/collection";
+import { getPublicCollections } from "@/api/collection"; // API để lấy danh sách collection công khai
 import LoadingPage from "@/views/error-pages/LoadingPage";
-import PublicSet from "@/components/set-item/public-set";
-import MemoCard from "@/components/cards/card";
+import PublicSet from "@/components/set-item/public-set"; // Component hiển thị thông tin collection
+import MemoCard from "@/components/cards/card"; // Component hiển thị thông tin flashcards
 
 function StudyDetail({ isPublic }) {
   const { t } = useTranslation();
@@ -20,9 +20,9 @@ function StudyDetail({ isPublic }) {
     const fetchCollectionDetail = async () => {
       try {
         setLoading(true);
-        const data = await getPublicCollections();
-        console.log("Dữ liệu nhận được:", data);
+        const data = await getPublicCollections(); // Lấy danh sách các collection công khai
 
+        // Tìm collection theo ID từ params
         const selectedCollection = data.find((col) => String(col.id) === id);
 
         if (!selectedCollection) {
@@ -30,10 +30,10 @@ function StudyDetail({ isPublic }) {
           return;
         }
 
-        setCollection(selectedCollection);
+        setCollection(selectedCollection); // Lưu thông tin collection vào state
       } catch (err) {
         console.error("Lỗi API:", err);
-        setError("Không thể tải thông tin collection");
+        setError(t("views.pages.study_detail.error-loading")); // Thông báo lỗi
       } finally {
         setLoading(false);
       }
@@ -42,6 +42,7 @@ function StudyDetail({ isPublic }) {
     fetchCollectionDetail();
   }, [id, t]);
 
+  // Trở lại giao diện loading hoặc thông báo lỗi nếu có
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>;
   if (!collection) {
@@ -50,11 +51,13 @@ function StudyDetail({ isPublic }) {
 
   return (
     <div className="std-detail-container">
+      {/* Hiển thị thông tin collection */}
       <PublicSet collectionId={collection.id} />
+      {/* Hiển thị danh sách flashcards nếu có */}
       <MemoCard
-        collectionId={collection.id}
+        flashcards={collection.flashcards}
         collectionTag={collection.tag}
-        isPublic={isPublic}
+        isPublic={isPublic} // Không cho phép học trong chế độ công khai
       />
     </div>
   );

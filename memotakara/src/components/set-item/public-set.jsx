@@ -2,13 +2,11 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { getPublicCollections } from "@/api/collection"; // Lấy thông tin về collection và tác giả
-import { getFlashcardsByCollection } from "@/api/flashcard"; // Lấy thông tin flashcards -> tính tổng
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const PublicSet = ({ collectionId }) => {
   const { t } = useTranslation();
   const [collection, setCollection] = useState(null);
-  const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,18 +14,17 @@ const PublicSet = ({ collectionId }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const [collectionList, flashcardData] = await Promise.all([
-          getPublicCollections(),
-          getFlashcardsByCollection(collectionId),
-        ]);
+        const collectionList = await getPublicCollections(); // Lấy danh sách collection công khai
 
+        // Tìm collection theo collectionId
         const foundCollection = collectionList.find(
           (col) => col.id === collectionId
         );
-        setCollection(foundCollection || null);
-        setFlashcards(flashcardData);
+
+        setCollection(foundCollection || null); // Nếu không tìm thấy thì giữ là null
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu collection:", err);
+        setError(t("views.pages.study_detail.error-loading"));
       } finally {
         setLoading(false);
       }
@@ -67,7 +64,8 @@ const PublicSet = ({ collectionId }) => {
         </div>
 
         <div className="set-item-footer set-item-totalcard">
-          {flashcards.length} {t("views.pages.study_detail.totalcard")}
+          {collection.flashcards?.length || 0}{" "}
+          {t("views.pages.study_detail.totalcard")}
         </div>
       </div>
     </div>

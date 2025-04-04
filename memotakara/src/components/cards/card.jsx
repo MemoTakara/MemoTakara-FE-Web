@@ -1,37 +1,12 @@
 import "./index.css";
-import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { getFlashcardsByCollection } from "@/api/flashcard"; // Giữ nguyên để lấy flashcards
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/speaker";
 
-const MemoCard = ({ collectionId, collectionTag, isPublic }) => {
-  const [flashcards, setFlashcards] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    if (!collectionId) return; // Chỉ chạy nếu có collectionId
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-
-        // Lấy danh sách flashcards của collection
-        const flashcardData = await getFlashcardsByCollection(collectionId);
-        setFlashcards(flashcardData);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [collectionId]);
-
-  if (loading) return <LoadingPage />;
-  if (error) return <div>{error}</div>;
+const MemoCard = ({ flashcards, collectionTag, isPublic }) => {
+  if (!flashcards) return <LoadingPage />;
+  if (flashcards.length === 0) return <div>Không có flashcards nào.</div>; // Xử lý khi không có flashcards
 
   const mapTagToLang = (tag) => {
     if (!tag || typeof tag !== "string") return "en"; // Kiểm tra undefined/null hoặc không phải string

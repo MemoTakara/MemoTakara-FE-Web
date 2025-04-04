@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { getPublicCollections } from "@/api/collection"; // Lấy danh sách public collections
-import { getFlashcardsByCollection } from "@/api/flashcard"; // Lấy flashcards theo collection
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const PublicList = () => {
@@ -20,14 +19,11 @@ const PublicList = () => {
         setLoading(true);
         const collectionList = await getPublicCollections();
 
-        // Gửi một request duy nhất lấy toàn bộ flashcards
-        const allFlashcards = await getFlashcardsByCollection();
-
         // Tạo map để đếm số flashcards theo collection_id
         const countMap = {};
-        allFlashcards.forEach((flashcard) => {
-          countMap[flashcard.collection_id] =
-            (countMap[flashcard.collection_id] || 0) + 1;
+        collectionList.forEach((collection) => {
+          const flashcards = collection.flashcards; // Lấy flashcards từ collection đã được tải
+          countMap[collection.id] = flashcards.length; // Đếm số flashcards
         });
 
         setCollections(collectionList);
@@ -98,4 +94,5 @@ const PublicList = () => {
     </div>
   );
 };
+
 export default PublicList;
