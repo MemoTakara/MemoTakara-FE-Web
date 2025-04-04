@@ -98,6 +98,7 @@
         "password_confirm_required": "パスワードを確認してください",
         "password_confirm_placeholder": "パスワードを確認",
         "password_confirm_invalid": "パスワードが一致しません！",
+        "password_min_length": "パスワードは8文字以上必要です。",
         "or": "または",
         "login": "既にアカウントをお持ちですか？",
         "login_now": "今すぐログイン！",
@@ -110,7 +111,8 @@
         "no-collection-data": "コレクションデータがありません",
         "collection-des": "説明: ",
         "no-description": "説明文がありません",
-        "totalcard": "カード"
+        "totalcard": "カード",
+        "error-loading": "読み込みエラー"
       },
       "study_sets": {
         "no-collection": "コレクションが存在しません",

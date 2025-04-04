@@ -98,6 +98,7 @@
         "password_confirm_required": "Vui lòng xác nhận mật khẩu",
         "password_confirm_placeholder": "Xác nhận mật khẩu",
         "password_confirm_invalid": "Mật khẩu xác nhận không khớp!",
+        "password_min_length": "Mật khẩu phải có ít nhất 8 ký tự.",
         "or": "HOẶC",
         "login": "Đã có tài khoản?",
         "login_now": "Đăng nhập ngay!",
@@ -110,7 +111,8 @@
         "no-collection-data": "Không có dữ liệu bộ sưu tập",
         "collection-des": "Mô tả: ",
         "no-description": "Bộ sưu tập chưa có mô tả",
-        "totalcard": "thẻ"
+        "totalcard": "thẻ",
+        "error-loading": "Lỗi tải dữ liệu"
       },
       "study_sets": {
         "no-collection": "Không có bộ sưu tập nào",

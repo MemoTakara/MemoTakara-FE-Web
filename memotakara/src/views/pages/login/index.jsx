@@ -9,7 +9,7 @@ import BtnWhite from "@/components/btn/btn-white";
 
 function Login() {
   const { t } = useTranslation();
-  const { login } = useAuth(); // Lấy hàm login từ context
+  const { login, user } = useAuth(); // Lấy hàm login từ context
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
@@ -23,8 +23,13 @@ function Login() {
         duration: 2,
       });
       setTimeout(() => {
-        navigate("/dashboard");
-      }, 5000);
+        // Kiểm tra vai trò và điều hướng
+        if (user?.role === "user") {
+          navigate("/dashboard");
+        } else if (user?.role === "admin") {
+          navigate("/users");
+        }
+      }, 2000);
     } catch (error) {
       messageApi.error({
         content:

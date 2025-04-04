@@ -1,8 +1,7 @@
-// src/api/notificationApi.js
+import axiosClient from "@/axiosClient";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-import axiosClient from "./axiosClient";
-
-// Hàm gửi thông báo
+// Gửi thông báo
 export const sendNotification = async (values) => {
   try {
     const response = await axiosClient.post("/notifications/send", values);

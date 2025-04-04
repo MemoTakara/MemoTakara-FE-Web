@@ -98,6 +98,7 @@
         "password_confirm_required": "Please confirm your password",
         "password_confirm_placeholder": "Confirm your password",
         "password_confirm_invalid": "Password confirmation does not match!",
+        "password_min_length": "Password must be at least 8 characters.",
         "or": "OR",
         "login": "Already have an account?",
         "login_now": "Login Now!",
@@ -110,7 +111,8 @@
         "no-collection-data": "No collection data.",
         "collection-des": "Description: ",
         "no-description": "Collection has no description.",
-        "totalcard": "cards"
+        "totalcard": "cards",
+        "error-loading": "Error loading"
       },
       "study_sets": {
         "no-collection": "There are no collections.",
