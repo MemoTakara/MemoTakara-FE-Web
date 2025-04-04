@@ -12,7 +12,6 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(
     localStorage.getItem("ACCESS_TOKEN") || null
@@ -34,7 +33,7 @@ const AuthProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        const response = await axiosClient.get(`${API_BASE_URL}/users`);
+        const response = await axiosClient.get("/users");
         setUser(response.data);
       } catch (error) {
         if (error.response?.status === 401) {
@@ -46,12 +45,12 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchUser();
-  }, [token, API_BASE_URL]);
+  }, [token]);
 
   // Đăng nhập (Gửi request đến backend)
   const login = async (email, password) => {
     try {
-      const response = await axiosClient.post(`${API_BASE_URL}/login`, {
+      const response = await axiosClient.post("/login", {
         email,
         password,
       });
@@ -72,7 +71,7 @@ const AuthProvider = ({ children }) => {
   // Đăng ký (Gửi request đến backend)
   const register = async (username, email, password, password_confirmation) => {
     try {
-      const response = await axiosClient.post(`${API_BASE_URL}/register`, {
+      const response = await axiosClient.post("/register", {
         username,
         email,
         password,
@@ -96,7 +95,7 @@ const AuthProvider = ({ children }) => {
     if (!token) return; // Không làm gì nếu không có token
 
     try {
-      await axiosClient.post(`${API_BASE_URL}/logout`, null, {
+      await axiosClient.post("/logout", null, {
         headers: { Authorization: `Bearer ${token}` },
       });
     } catch (error) {
