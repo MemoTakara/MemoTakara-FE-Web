@@ -1,5 +1,4 @@
 import axiosClient from "@/axiosClient";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Hàm yêu cầu đổi mật khẩu
 export const changePassword = async (oldPassword, newPassword) => {
@@ -18,7 +17,7 @@ export const changePassword = async (oldPassword, newPassword) => {
 // Lấy danh sách all user
 export const getUsers = async () => {
   try {
-    const response = await axiosClient.get(`${API_BASE_URL}/admins/users`);
+    const response = await axiosClient.get("/admins/users");
     return response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách người dùng:", error.response || error);
@@ -29,10 +28,7 @@ export const getUsers = async () => {
 // Tạo mới user
 export const createUser = async (userData) => {
   try {
-    const response = await axiosClient.post(
-      `${API_BASE_URL}/admins/users`,
-      userData
-    );
+    const response = await axiosClient.post("/admins/users", userData);
     return response.data;
   } catch (error) {
     console.error("Lỗi khi tạo người dùng:", error.response || error);
@@ -44,7 +40,7 @@ export const createUser = async (userData) => {
 export const toggleUserStatus = async (userId) => {
   try {
     const response = await axiosClient.post(
-      `${API_BASE_URL}/admins/users/${userId}/toggle-lock`
+      "/admins/users/${userId}/toggle-lock"
     );
     return response.data;
   } catch (error) {
@@ -59,9 +55,7 @@ export const toggleUserStatus = async (userId) => {
 // Xóa người dùng
 export const deleteUser = async (userId) => {
   try {
-    const response = await axiosClient.delete(
-      `${API_BASE_URL}/admins/user/${userId}`
-    );
+    const response = await axiosClient.delete("/admins/user/${userId}");
     return response.data;
   } catch (error) {
     console.error("Lỗi khi xóa người dùng:", error.response || error);
@@ -72,9 +66,7 @@ export const deleteUser = async (userId) => {
 // Lấy list all collection
 export const getCollections = async () => {
   try {
-    const response = await axiosClient.get(
-      `${API_BASE_URL}/admins/collections`
-    );
+    const response = await axiosClient.get("/admins/collections");
     return response.data;
   } catch (error) {
     console.error(
@@ -89,7 +81,7 @@ export const getCollections = async () => {
 export const createCollection = async (collectionData) => {
   try {
     const response = await axiosClient.post(
-      `${API_BASE_URL}/admins/collections`,
+      "/admins/collections",
       collectionData
     );
     return response.data;
@@ -103,7 +95,7 @@ export const createCollection = async (collectionData) => {
 export const updateCollection = async (collectionId, collectionData) => {
   try {
     const response = await axiosClient.put(
-      `${API_BASE_URL}/admins/collections/${collectionId}`,
+      "/admins/collections/${collectionId}",
       collectionData
     );
     return response.data;
@@ -117,7 +109,7 @@ export const updateCollection = async (collectionId, collectionData) => {
 export const deleteCollection = async (collectionId) => {
   try {
     const response = await axiosClient.delete(
-      `${API_BASE_URL}/admins/collections/${collectionId}`
+      "/admins/collections/${collectionId}"
     );
     return response.data;
   } catch (error) {
@@ -129,7 +121,7 @@ export const deleteCollection = async (collectionId) => {
 // Lấy danh sách flashcard của toàn hệ thống
 export const getAllFlashcards = async (collectionId) => {
   try {
-    const response = await axiosClient.get(`${API_BASE_URL}/admins/flashcards`);
+    const response = await axiosClient.get("/admins/flashcards");
     return response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách flashcards:", error.response || error);
@@ -141,7 +133,7 @@ export const getAllFlashcards = async (collectionId) => {
 export const getFlashcards = async (collectionId) => {
   try {
     const response = await axiosClient.get(
-      `${API_BASE_URL}/admins/collections/${collectionId}/flashcards`
+      "/admins/collections/${collectionId}/flashcards"
     );
     return response.data;
   } catch (error) {
@@ -154,7 +146,7 @@ export const getFlashcards = async (collectionId) => {
 export const addFlashcard = async (collectionId, flashcardData) => {
   try {
     const response = await axiosClient.post(
-      `${API_BASE_URL}/admins/collections/${collectionId}/flashcards`,
+      "/admins/collections/${collectionId}/flashcards",
       flashcardData
     );
     return response.data;
@@ -168,7 +160,7 @@ export const addFlashcard = async (collectionId, flashcardData) => {
 export const updateFlashcard = async (flashcardId, flashcardData) => {
   try {
     const response = await axiosClient.put(
-      `${API_BASE_URL}/admins/flashcards/${flashcardId}`,
+      "/admins/flashcards/${flashcardId}",
       flashcardData
     );
     return response.data;
@@ -182,7 +174,7 @@ export const updateFlashcard = async (flashcardId, flashcardData) => {
 export const deleteFlashcard = async (flashcardId) => {
   try {
     const response = await axiosClient.delete(
-      `${API_BASE_URL}/admins/flashcards/${flashcardId}`
+      "/admins/flashcards/${flashcardId}"
     );
     return response.data;
   } catch (error) {
