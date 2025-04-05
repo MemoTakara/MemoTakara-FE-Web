@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://3.90.184.100:443/api",
+  baseURL: "https://3.90.184.100:443/api", // Use the proxy server
 });
 
 axiosClient.interceptors.request.use((config) => {

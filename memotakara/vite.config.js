@@ -13,4 +13,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"), // Định nghĩa alias
     },
   },
+  server: {
+    cors: {
+      origin: [
+        "http://localhost:5173", // Địa chỉ frontend thứ nhất
+        "https://memo-takara-fe-web.vercel.app/", // Địa chỉ frontend thứ hai
+      ], // Thêm miền của front-end
+    },
+  },
 });
