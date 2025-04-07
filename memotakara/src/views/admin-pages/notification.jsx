@@ -70,7 +70,7 @@ const NotificationManager = () => {
 
       <Modal
         title="Send Notification"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleModalCancel}
         footer={[
           <Button type="primary" htmlType="submit">

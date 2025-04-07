@@ -1,4 +1,4 @@
-import "./index.css";
+import "./card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from "@/views/error-pages/LoadingPage";

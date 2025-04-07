@@ -12,10 +12,14 @@
 }
 
 .public-list-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   text-align: center;
-  font-size: var(--collection-title-size);
+  width: 100%;
+  font-size: var(--logo-size);
   font-weight: var(--header-weight-size);
-  color: #000;
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 

@@ -1,40 +1,9 @@
 import "./index.css";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getPublicCollections } from "@/api/collection"; // Lấy thông tin về collection và tác giả
-import LoadingPage from "@/views/error-pages/LoadingPage";
 
-const PublicSet = ({ collectionId }) => {
+const PublicSet = ({ collection }) => {
   const { t } = useTranslation();
-  const [collection, setCollection] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const collectionList = await getPublicCollections(); // Lấy danh sách collection công khai
-
-        // Tìm collection theo collectionId
-        const foundCollection = collectionList.find(
-          (col) => col.id === collectionId
-        );
-
-        setCollection(foundCollection || null); // Nếu không tìm thấy thì giữ là null
-      } catch (err) {
-        console.error("Lỗi khi lấy dữ liệu collection:", err);
-        setError(t("views.pages.study_detail.error-loading"));
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [collectionId]);
-
-  if (loading) return <LoadingPage />;
-  if (error) return <div>{error}</div>;
   if (!collection) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
   }

@@ -1,40 +1,93 @@
 import "./index.css";
 import { useState } from "react";
-import { memoData } from "../../../data/data.jsx";
+import { Input, Button, Checkbox, Form, message } from "antd";
+import { createCollection } from "@/api/collection";
 
 function CreateCollection() {
-  const [collections, setCollections] = useState(memoData);
+  const [collectionName, setCollectionName] = useState("");
+  const [description, setDescription] = useState("");
+  const [privacy, setPrivacy] = useState(false);
+  const [tag, setTag] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addNewCollection = () => {
-    const newCollection = {
-      id: collections.length,
-      title: "New Collection",
-      rate: 0,
-      cards: 0,
-      new: 0,
-      learn: 0,
-      due: 0,
-      writing: false,
-      tags: [],
-      front_lang: "en",
-      back_lang: "vi",
-      create_date: "2024-07-14",
-      privacy: "public",
-      create_by: "@newuser",
-      flashcard: [],
+  const handleSubmit = async (values) => {
+    setLoading(true);
+    setError(null); // Reset previous error
+
+    const data = {
+      collection_name: values.collection_name,
+      description: values.description,
+      privacy: values.privacy,
+      tag: values.tag,
     };
-    setCollections([...collections, newCollection]);
+
+    try {
+      const newCollection = await createCollection(data); // Sử dụng API
+      message.success("Collection created successfully!");
+      console.log("Collection created successfully:", newCollection);
+      // Handle successful creation, e.g., redirect or show success message
+    } catch (err) {
+      console.error("Error creating collection:", err);
+      setError("Lỗi khi tạo collection. Vui lòng thử lại.");
+      message.error("Lỗi khi tạo collection. Vui lòng thử lại.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <h1>CreateCollection</h1>
-      <ul>
-        {collections.map((collection) => (
-          <li key={collection.id}>{collection.title}</li>
-        ))}
-      </ul>
-      <button onClick={addNewCollection}>Add New Collection</button>
+    <div className="create-collection-container">
+      <h1>Create a New Collection</h1>
+      <Form onFinish={handleSubmit} layout="vertical">
+        {/* Collection Name */}
+        <Form.Item
+          label="Collection Name"
+          name="collection_name"
+          rules={[
+            { required: true, message: "Please input the collection name!" },
+          ]}
+        >
+          <Input
+            value={collectionName}
+            onChange={(e) => setCollectionName(e.target.value)}
+            placeholder="Enter collection name"
+          />
+        </Form.Item>
+
+        {/* Description */}
+        <Form.Item label="Description" name="description">
+          <Input.TextArea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            rows={4}
+          />
+        </Form.Item>
+
+        {/* Privacy */}
+        <Form.Item name="privacy" valuePropName="checked">
+          <Checkbox checked={privacy} onChange={() => setPrivacy(!privacy)}>
+            Make this collection private
+          </Checkbox>
+        </Form.Item>
+
+        {/* Tag */}
+        <Form.Item label="Tag" name="tag">
+          <Input
+            value={tag}
+            onChange={(e) => setTag(e.target.value)}
+            placeholder="Enter tag"
+          />
+        </Form.Item>
+
+        {/* Submit Button */}
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={loading} block>
+            {loading ? "Creating..." : "Create Collection"}
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

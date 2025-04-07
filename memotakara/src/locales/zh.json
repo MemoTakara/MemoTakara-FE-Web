@@ -16,7 +16,9 @@
       "help": "帮助/常见问题"
     },
     "set-item": {
-      "public-collection-title": "探索社区学习集"
+      "public-collection-title": "探索社区学习集",
+      "filter-all": "全部",
+      "filter-otherUsers": "其他用户"
     }
   },
   "views": {
@@ -112,16 +114,21 @@
         "collection-des": "描述: ",
         "no-description": "该合集暂无描述",
         "totalcard": "卡片",
+        "flashcards-title": "本合集中的卡片:",
         "error-loading": "加载错误"
       },
       "study_sets": {
+        "header": "您的合集列表",
         "no-collection": "暂无合集",
         "edit-icon": "编辑",
         "merge-icon": "配对",
         "flashcard-icon": "闪卡",
         "typing-icon": "打字练习",
         "test-icon": "测试",
-        "cards": "卡片"
+        "cards": "卡片",
+        "confirm-delete": "您确定要删除该合集吗？",
+        "delete-success": "删除成功！",
+        "delete-fail": "删除失败，请重试。"
       }
     }
   },

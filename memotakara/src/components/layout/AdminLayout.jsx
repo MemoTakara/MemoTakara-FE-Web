@@ -31,6 +31,34 @@ const AdminLayout = () => {
     return "1"; // Mặc định active vào User Manager
   })();
 
+  // Menu item
+  const items = [
+    {
+      key: "1",
+      label: <span onClick={() => navigate("/users")}>Quản lý người dùng</span>,
+    },
+    {
+      key: "2",
+      label: (
+        <span onClick={() => navigate("/notifications")}>
+          Quản lý thông báo
+        </span>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <span onClick={() => navigate("/collections")}>Quản lý Collection</span>
+      ),
+    },
+    {
+      key: "4",
+      label: (
+        <span onClick={() => navigate("/flashcards")}>Quản lý Flashcard</span>
+      ),
+    },
+  ];
+
   return (
     <Layout>
       <Header
@@ -80,20 +108,12 @@ const AdminLayout = () => {
       </Header>
       <Layout>
         <Sider>
-          <Menu theme="dark" mode="inline" selectedKeys={[currentKey]}>
-            <Menu.Item key="1" onClick={() => navigate("/users")}>
-              Quản lý người dùng
-            </Menu.Item>
-            <Menu.Item key="2" onClick={() => navigate("/notifications")}>
-              Quản lý thông báo
-            </Menu.Item>
-            <Menu.Item key="3" onClick={() => navigate("/collections")}>
-              Quản lý Collection
-            </Menu.Item>
-            <Menu.Item key="4" onClick={() => navigate("/flashcards")}>
-              Quản lý Flashcard
-            </Menu.Item>
-          </Menu>
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[currentKey]}
+            items={items}
+          />
         </Sider>
         <Content
           style={{

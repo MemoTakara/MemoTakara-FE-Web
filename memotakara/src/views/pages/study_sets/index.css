@@ -1,17 +1,32 @@
 .std-set-container {
   display: flex;
   flex-direction: column;
+  text-align: justify;
+  justify-content: center;
+  align-items: center;
   font-family: var(--body-font);
   font-size: var(--body-size);
   /* height: 100vh; */
   margin: -30px 12% 30px;
-  text-align: justify;
-  justify-content: center;
-  align-items: end;
   padding-bottom: 20px;
 }
 
+.std-set-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  font-size: var(--logo-size);
+  font-weight: var(--header-weight-size);
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+
 .std-set-select {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
   text-decoration: none;
-  color: #000;
 }

@@ -1,6 +1,5 @@
 // set while study
 import "./index.css";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,35 +10,10 @@ import {
   faKeyboard,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
-import { getOwnCollections } from "@/api/collection";
-import LoadingPage from "@/views/error-pages/LoadingPage";
 
-const OwnSet = ({ collectionId }) => {
+const OwnSet = ({ collection }) => {
   const { t } = useTranslation();
-  const [collection, setCollection] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchCollection = async () => {
-      try {
-        setLoading(true);
-        const collections = await getOwnCollections();
-        setCollection(
-          collections.find((col) => col.id === collectionId) || null
-        );
-      } catch (err) {
-        console.error("Lỗi khi lấy dữ liệu collection:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCollection();
-  }, [collectionId, t]);
-
-  if (loading) return <LoadingPage />;
-  if (error) return <div>{error}</div>; // Hiển thị lỗi nếu có
   if (!collection) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>; // Kiểm tra nếu không tìm thấy collection
   }

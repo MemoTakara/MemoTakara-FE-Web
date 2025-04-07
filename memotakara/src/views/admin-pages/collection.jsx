@@ -180,7 +180,7 @@ const CollectionManagement = () => {
       render: (tags) =>
         tags.length ? tags.map((tag) => tag.name).join(", ") : "-",
     },
-    { title: "User ID", dataIndex: "user_id", width: 80 },
+    // { title: "User ID", dataIndex: "user_id", width: 80 },
     {
       title: "Username",
       render: (text, record) => (record.user ? record.user.username : "-"), // Kiểm tra nếu user tồn tại,

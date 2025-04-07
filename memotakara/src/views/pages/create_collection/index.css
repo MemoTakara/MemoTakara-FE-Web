@@ -1,0 +1,11 @@
+.create-collection-container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  /* height: 100vh; */
+  margin: -30px 12% 30px;
+  justify-content: center;
+  /* align-items: center; */
+  padding-bottom: 20px;
+}

@@ -16,7 +16,9 @@
       "help": "Help/FAQ"
     },
     "set-item": {
-      "public-collection-title": "Explore Community Collections"
+      "public-collection-title": "Explore Community Collections",
+      "filter-all": "All",
+      "filter-otherUsers": "Others"
     }
   },
   "views": {
@@ -112,16 +114,21 @@
         "collection-des": "Description: ",
         "no-description": "Collection has no description.",
         "totalcard": "cards",
+        "flashcards-title": "Cards in this collection:",
         "error-loading": "Error loading"
       },
       "study_sets": {
+        "header": "Your collection list",
         "no-collection": "There are no collections.",
         "edit-icon": "edit",
         "merge-icon": "matching",
         "flashcard-icon": "flashcard",
         "typing-icon": "typing",
         "test-icon": "test",
-        "cards": "cards"
+        "cards": "cards",
+        "confirm-delete": "Are you sure you want to delete this collection?",
+        "delete-success": "Deletion successful!",
+        "delete-fail": "Deletion failed. Please try again!"
       }
     }
   },
