@@ -3,7 +3,10 @@ import axiosClient from "@/axiosClient";
 // Gửi thông báo
 export const sendNotification = async (values) => {
   try {
-    const response = await axiosClient.post("/notifications/send", values);
+    const response = await axiosClient.post(
+      "/admins/notifications/send",
+      values
+    );
     return response.data;
   } catch (error) {
     console.error("Lỗi khi gửi thông báo:", error.response || error);
@@ -14,7 +17,7 @@ export const sendNotification = async (values) => {
 // Hàm lấy danh sách thông báo
 export const getNotifications = async () => {
   try {
-    const response = await axiosClient.get("/notifications");
+    const response = await axiosClient.get("/admins/notifications");
     return response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách thông báo:", error.response || error);

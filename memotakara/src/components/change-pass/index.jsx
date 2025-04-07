@@ -23,7 +23,7 @@ const ChangePasswordOverlay = ({ isOpen, onClose }) => {
       {contextHolder}
       <Modal
         title="Đổi Mật Khẩu"
-        visible={isOpen}
+        open={isOpen}
         onCancel={onClose}
         footer={[
           <Button onClick={onClose}>Đóng</Button>,

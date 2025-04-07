@@ -112,9 +112,11 @@
         "collection-des": "Description: ",
         "no-description": "Collection has no description.",
         "totalcard": "cards",
+        "flashcards-title": "Cards in this collection:",
         "error-loading": "Error loading"
       },
       "study_sets": {
+        "header": "Your collection list",
         "no-collection": "There are no collections.",
         "edit-icon": "edit",
         "merge-icon": "matching",

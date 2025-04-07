@@ -14,13 +14,24 @@ export const getPublicCollections = async () => {
 // Lấy danh sách các collection công khai của 1 người dùng xác định
 export const getPublicCollectionsByUser = async (userId) => {
   try {
-    const response = await fetch("/collections/user/${userId}");
+    const response = await fetch(`/collections/user/${userId}`);
     if (!response.ok) {
       throw new Error("Error fetching public collections");
     }
     return await response.json();
   } catch (error) {
     console.error("Error fetching public collections:", error);
+    throw error; // Đẩy lỗi lên để xử lý ở nơi gọi
+  }
+};
+
+// Lấy chi tiết 1 collection theo ID
+export const getCollectionById = async (id) => {
+  try {
+    const response = await axiosClient.get(`/collections/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching collection detail:", error);
     throw error; // Đẩy lỗi lên để xử lý ở nơi gọi
   }
 };

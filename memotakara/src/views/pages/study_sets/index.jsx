@@ -1,5 +1,6 @@
 import "./index.css";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Button, Tooltip, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
@@ -8,6 +9,7 @@ import PublicSet from "@/components/set-item/public-set";
 import OwnSet from "@/components/set-item/own-set";
 
 function StudySets() {
+  const { t } = useTranslation();
   const [active, setActive] = useState("");
 
   //Tooltip
@@ -49,6 +51,7 @@ function StudySets() {
 
   return (
     <div className="std-set-container">
+      <div className="std-set-header">{t("views.pages.study_sets.header")}</div>
       <div className="std-set-select">
         <Select
           defaultValue="Study sets"
@@ -88,8 +91,8 @@ function StudySets() {
       </div>
 
       <SetItem collectionId={1} />
-      <PublicSet collectionId={1} />
-      <OwnSet collectionId={1} />
+      {/* <PublicSet collectionId={1} />
+      <OwnSet collectionId={1} /> */}
     </div>
   );
 }

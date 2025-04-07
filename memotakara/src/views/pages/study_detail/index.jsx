@@ -3,14 +3,16 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { getPublicCollections } from "@/api/collection"; // API để lấy danh sách collection công khai
+import { getCollectionById } from "@/api/collection"; // API để lấy danh sách collection công khai
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import PublicSet from "@/components/set-item/public-set"; // Component hiển thị thông tin collection
 import MemoCard from "@/components/cards/card"; // Component hiển thị thông tin flashcards
+import MemoFlash from "@/components/cards/flashcard";
 
 function StudyDetail({ isPublic }) {
   const { t } = useTranslation();
   const { id } = useParams();
+  console.log("param id: ", id);
 
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,20 +22,12 @@ function StudyDetail({ isPublic }) {
     const fetchCollectionDetail = async () => {
       try {
         setLoading(true);
-        const data = await getPublicCollections(); // Lấy danh sách các collection công khai
-
-        // Tìm collection theo ID từ params
-        const selectedCollection = data.find((col) => String(col.id) === id);
-
-        if (!selectedCollection) {
-          setError(t("views.pages.study_detail.no-collection-data"));
-          return;
-        }
-
-        setCollection(selectedCollection); // Lưu thông tin collection vào state
+        const data = await getCollectionById(id);
+        console.log("data: ", data);
+        setCollection(data);
       } catch (err) {
         console.error("Lỗi API:", err);
-        setError(t("views.pages.study_detail.error-loading")); // Thông báo lỗi
+        setError(t("views.pages.study_detail.error-loading"));
       } finally {
         setLoading(false);
       }
@@ -51,9 +45,17 @@ function StudyDetail({ isPublic }) {
 
   return (
     <div className="std-detail-container">
-      {/* Hiển thị thông tin collection */}
-      <PublicSet collectionId={collection.id} />
-      {/* Hiển thị danh sách flashcards nếu có */}
+      <PublicSet collection={collection} />
+
+      <MemoFlash
+        flashcards={collection.flashcards}
+        collectionTag={collection.tag}
+      />
+
+      <div className="std-detail-flashcards-title">
+        {t("views.pages.study_detail.flashcards-title")}
+      </div>
+
       <MemoCard
         flashcards={collection.flashcards}
         collectionTag={collection.tag}
