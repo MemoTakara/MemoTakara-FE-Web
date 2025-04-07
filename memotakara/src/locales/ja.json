@@ -16,7 +16,9 @@
       "help": "ヘルプ/FAQ"
     },
     "set-item": {
-      "public-collection-title": "コミュニティコレクションを探索"
+      "public-collection-title": "コミュニティコレクションを探索",
+      "filter-all": "すべて",
+      "filter-otherUsers": "他のユーザー"
     }
   },
   "views": {
@@ -112,16 +114,21 @@
         "collection-des": "説明: ",
         "no-description": "説明文がありません",
         "totalcard": "カード",
+        "flashcards-title": "このコレクションのカード:",
         "error-loading": "読み込みエラー"
       },
       "study_sets": {
+        "header": "あなたのコレクションリスト",
         "no-collection": "コレクションが存在しません",
         "edit-icon": "編集",
         "merge-icon": "マッチング",
         "flashcard-icon": "単語カード",
         "typing-icon": "タイピング",
         "test-icon": "テスト",
-        "cards": "カード"
+        "cards": "カード",
+        "confirm-delete": "このコレクションを削除してもよろしいですか？",
+        "delete-success": "削除に成功しました！",
+        "delete-fail": "削除に失敗しました。もう一度お試しください。"
       }
     }
   },

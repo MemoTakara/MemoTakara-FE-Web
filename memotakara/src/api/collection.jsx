@@ -42,6 +42,22 @@ export const getOwnCollections = async () => {
   return response.data;
 };
 
+// Hàm tạo mới collection
+export const createCollection = async (data) => {
+  try {
+    const response = await axiosClient.post("/api/collections", data);
+    return response.data;
+  } catch (err) {
+    throw new Error("Error creating collection");
+  }
+};
+
+// Xóa collection theo ID
+export const deleteCollection = async (id) => {
+  const response = await axiosClient.delete(`/collections/${id}`);
+  return response.data;
+};
+
 // Hàm tìm kiếm public collection theo tên, tag, tác giả
 export const searchItems = async (query) => {
   try {
