@@ -14,7 +14,6 @@ import Dashboard from "@/views/pages/dashboard";
 import Statistics from "@/views/pages/statistics";
 import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
-import CreateCollection from "@/views/pages/create_collection";
 import StudyDetail from "@/views/pages/study_detail";
 
 import AdminLayout from "@/components/layout/AdminLayout";
@@ -50,11 +49,11 @@ const router = createBrowserRouter([
       },
       {
         path: "public-collection",
-        element: <PublicList />,
+        element: <PublicList isPublic={true} />,
       },
       {
         path: "public-collection/:id",
-        element: <StudyDetail isPublic={true} />,
+        element: <StudyDetail isEditFC={false} />,
       },
     ],
   },
@@ -82,16 +81,12 @@ const router = createBrowserRouter([
             element: <StudySets />,
           },
           {
-            path: "create_collection",
-            element: <CreateCollection />,
-          },
-          {
             path: "public-study-set",
-            element: <PublicList />,
+            element: <PublicList isPublic={false} />,
           },
           {
             path: "public-study-set/:id",
-            element: <StudyDetail isPublic={true} />,
+            element: <StudyDetail isEditFC={false} />,
           },
         ],
       },

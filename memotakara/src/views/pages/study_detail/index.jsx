@@ -3,27 +3,29 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { getCollectionById } from "@/api/collection"; // API để lấy danh sách collection công khai
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import PublicSet from "@/components/set-item/public-set"; // Component hiển thị thông tin collection
 import MemoCard from "@/components/cards/card"; // Component hiển thị thông tin flashcards
 import MemoFlash from "@/components/cards/flashcard";
 
-function StudyDetail({ isPublic }) {
+function StudyDetail({ isEditFC }) {
   const { t } = useTranslation();
   const { id } = useParams();
-  console.log("param id: ", id);
 
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Lấy thông tin người dùng từ context
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchCollectionDetail = async () => {
       try {
         setLoading(true);
         const data = await getCollectionById(id);
-        console.log("data: ", data);
         setCollection(data);
       } catch (err) {
         console.error("Lỗi API:", err);
@@ -43,9 +45,23 @@ function StudyDetail({ isPublic }) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>; // Kiểm tra nếu không tìm thấy collection
   }
 
+  const isAuthor = user && user.id === collection.user_id;
+
+  // Hàm để cập nhật collection từ modal
+  const handleUpdateCollection = (updatedCollection) => {
+    setCollection((prevCollection) => ({
+      ...prevCollection,
+      ...updatedCollection,
+    }));
+  };
+
   return (
     <div className="std-detail-container">
-      <PublicSet collection={collection} />
+      <PublicSet
+        collection={collection}
+        isAuthor={isAuthor}
+        onUpdate={handleUpdateCollection}
+      />
 
       <MemoFlash
         flashcards={collection.flashcards}
@@ -59,7 +75,7 @@ function StudyDetail({ isPublic }) {
       <MemoCard
         flashcards={collection.flashcards}
         collectionTag={collection.tag}
-        isPublic={isPublic} // Không cho phép học trong chế độ công khai
+        isEditFC={isEditFC}
       />
     </div>
   );

@@ -15,10 +15,38 @@
       "terms_of_condition": "Terms of Condition",
       "help": "Help/FAQ"
     },
+    "create-collection": {
+      "title": "Create a New Collection",
+      "collection-name": "Collection Name",
+      "name-required": "Please input the collection name!",
+      "name-placeholder": "Enter collection name",
+      "des": "Description",
+      "des-placeholder": "Enter description",
+      "privacy": "Privacy",
+      "privacy-required": "Please select privacy settings!",
+      "privacy-placeholder": "Select privacy",
+      "privacy-public": "Public",
+      "privacy-private": "Private",
+      "tag-placeholder": "Enter tags, separated by commas",
+      "btn-creating": "Creating...",
+      "btn-create": "Create Collection",
+      "create-msg-success": "Collection created successfully!",
+      "create-msg-error": "Error creating collection. Please try again."
+    },
+    "edit-collection": {
+      "title": "Edit collection",
+      "update-success": "Updated successfully!",
+      "update-error": "Error updating.",
+      "btn-update": "Save changes",
+      "btn-updating": "Saving..."
+    },
     "set-item": {
       "public-collection-title": "Explore Community Collections",
       "filter-all": "All",
-      "filter-otherUsers": "Others"
+      "filter-otherUsers": "Others",
+      "edit-icon": "Edit collection",
+      "copy-icon": "Copy",
+      "delete-icon": "Delete"
     }
   },
   "views": {
@@ -39,7 +67,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "Welcome back ",
         "welcome2": "Let's get started with your flashcards due today!",
@@ -120,6 +147,7 @@
       "study_sets": {
         "header": "Your collection list",
         "no-collection": "There are no collections.",
+        "no-create-collection": "You don't own any collection, create a new one!",
         "edit-icon": "edit",
         "merge-icon": "matching",
         "flashcard-icon": "flashcard",

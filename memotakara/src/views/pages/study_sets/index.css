@@ -30,3 +30,7 @@
   width: 100%;
   text-decoration: none;
 }
+
+.std-set-no-collection {
+  font-size: var(--body-size-max);
+}

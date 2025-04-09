@@ -1,12 +1,16 @@
+// hiển thị trong public list và chi tiết của public collection
+// cần chia Public để sao chép collection
 import "./index.css";
 import { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Select } from "antd";
+import { Select, Tooltip } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { getPublicCollections } from "@/api/collection"; // Lấy danh sách public collections
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
-const PublicList = () => {
+const PublicList = ({ isPublic }) => {
   const { t } = useTranslation();
   const [collections, setCollections] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,7 +79,11 @@ const PublicList = () => {
             <div className="set-item-header">
               <Link
                 className="set-item-collection-name"
-                to={`/public-collection/${collection.id}`}
+                to={
+                  isPublic
+                    ? `/public-collection/${collection.id}`
+                    : `/public-study-set/${collection.id}`
+                }
                 style={{ fontSize: "var(--body-size-max)" }}
               >
                 {collection.collection_name}
@@ -102,9 +110,26 @@ const PublicList = () => {
               </div>
             </div>
 
-            <div className="set-item-footer set-item-totalcard">
-              {collection.flashcards?.length || 0}{" "}
-              {t("views.pages.study_detail.totalcard")}
+            <div className="set-item-footer">
+              {!isPublic && (
+                <Tooltip
+                  placement="top"
+                  title={t("components.set-item.copy-icon")}
+                  arrow={true}
+                >
+                  <FontAwesomeIcon
+                    icon={faCopy}
+                    style={{
+                      fontSize: "var(--body-size)",
+                      marginBottom: "5px",
+                    }}
+                  />
+                </Tooltip>
+              )}
+              <div className="set-item-totalcard">
+                {collection.flashcards?.length || 0}{" "}
+                {t("views.pages.study_detail.totalcard")}
+              </div>
             </div>
           </div>
         </div>

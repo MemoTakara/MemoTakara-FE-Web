@@ -15,11 +15,40 @@
       "terms_of_condition": "Điều khoản sử dụng",
       "help": "Trợ giúp/FAQ"
     },
-    "set-item": {
-      "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
-      "filter-all": "Tất cả",
-      "filter-otherUsers": "Người dùng khác"
+
+    "create-collection": {
+      "title": "Tạo bộ sưu tập mới",
+      "collection-name": "Tên bộ sưu tập",
+      "name-required": "Vui lòng nhập tên bộ sưu tập!",
+      "name-placeholder": "Nhập tên bộ sưu tập",
+      "des": "Mô tả",
+      "des-placeholder": "Nhập mô tả",
+      "privacy": "Quyền riêng tư",
+      "privacy-required": "Vui lòng chọn chế độ riêng tư!",
+      "privacy-placeholder": "Chọn chế độ riêng tư",
+      "privacy-public": "Công khai",
+      "privacy-private": "Riêng tư",
+      "tag-placeholder": "Nhập các thẻ (phân cách bằng dấu phẩy)",
+      "btn-creating": "Đang tạo...",
+      "btn-create": "Tạo bộ sưu tập",
+      "create-msg-success": "Tạo bộ sưu tập thành công!",
+      "create-msg-error": "Lỗi khi tạo bộ sưu tập. Vui lòng thử lại."
+    },
+    "edit-collection": {
+      "title": "Chỉnh sửa bộ sưu tập",
+      "update-success": "Cập nhật thành công!",
+      "update-error": "Lỗi khi cập nhật.",
+      "btn-update": "Lưu thay đổi",
+      "btn-updating": "Đang lưu..."
     }
+  },
+  "set-item": {
+    "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
+    "filter-all": "Tất cả",
+    "filter-otherUsers": "Người dùng khác",
+    "edit-icon": "Sửa bộ sưu tập",
+    "copy-icon": "Sao chép",
+    "delete-icon": "Xóa"
   },
   "views": {
     "error-pages": {
@@ -39,7 +68,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "Chào mừng trở lại ",
         "welcome2": "Hãy bắt đầu với các thẻ ghi nhớ đến hạn hôm nay!",
@@ -120,6 +148,7 @@
       "study_sets": {
         "header": "Danh sách bộ sưu tập của bạn",
         "no-collection": "Không có bộ sưu tập nào",
+        "no-create-collection": "Bạn chưa có bộ sưu tập nào, hãy tạo mới nhé!",
         "edit-icon": "chỉnh sửa",
         "merge-icon": "ghép từ",
         "flashcard-icon": "thẻ ghi nhớ",

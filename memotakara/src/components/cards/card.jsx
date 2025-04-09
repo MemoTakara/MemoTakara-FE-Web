@@ -4,7 +4,7 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/speaker";
 
-const MemoCard = ({ flashcards, collectionTag, isPublic }) => {
+const MemoCard = ({ flashcards, collectionTag, isEditFC }) => {
   if (!flashcards) return <LoadingPage />;
   if (flashcards.length === 0) return <div>Không có flashcards nào.</div>; // Xử lý khi không có flashcards
 
@@ -42,7 +42,7 @@ const MemoCard = ({ flashcards, collectionTag, isPublic }) => {
                 lang={mapTagToLang(collectionTag)}
               />
 
-              {!isPublic && ( // Ẩn nút xóa nếu collection là public
+              {isEditFC && (
                 <div className="memo-card-link">
                   <FontAwesomeIcon
                     icon={faTrashCan}

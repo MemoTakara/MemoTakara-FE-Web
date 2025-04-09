@@ -45,10 +45,23 @@ export const getOwnCollections = async () => {
 // Hàm tạo mới collection
 export const createCollection = async (data) => {
   try {
-    const response = await axiosClient.post("/api/collections", data);
+    const response = await axiosClient.post("/collections", data);
     return response.data;
   } catch (err) {
     throw new Error("Error creating collection");
+  }
+};
+
+// Hàm update thông tin của collection
+export const updateCollection = async (collectionId, collectionData) => {
+  try {
+    const response = await axiosClient.put(
+      `/collections/${collectionId}`,
+      collectionData
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error("Error updating collection");
   }
 };
 
@@ -66,5 +79,25 @@ export const searchItems = async (query) => {
   } catch (error) {
     console.error("Lỗi khi tìm kiếm:", error);
     return [];
+  }
+};
+
+// Duplicate collection
+export const duplicateCollection = async (collectionId) => {
+  try {
+    const response = await axiosClient.post(
+      `/collections/${collectionId}/duplicate`
+    );
+    return {
+      success: true,
+      message: response.data.message,
+      newCollectionId: response.data.new_collection_id,
+    };
+  } catch (error) {
+    console.error("Error duplicating collection:", error);
+    return {
+      success: false,
+      message: error.response?.data?.error || "Failed to duplicate collection",
+    };
   }
 };

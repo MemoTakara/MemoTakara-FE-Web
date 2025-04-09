@@ -1,5 +1,5 @@
 import "./index.css";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
@@ -8,20 +8,6 @@ import BtnBlue from "@/components/btn/btn-blue";
 const DashboardCard = ({ collections = [], userId }) => {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
-
-  //Tooltip
-  const [arrow, setArrow] = useState("Show");
-  const mergedArrow = useMemo(() => {
-    if (arrow === "Hide") {
-      return false;
-    }
-    if (arrow === "Show") {
-      return true;
-    }
-    return {
-      pointAtCenter: true,
-    };
-  }, [arrow]);
 
   return (
     <div>
@@ -36,7 +22,7 @@ const DashboardCard = ({ collections = [], userId }) => {
               <Tooltip
                 placement="bottomRight"
                 title={t("tooltip.flashcard_status")}
-                arrow={mergedArrow}
+                arrow={true}
               >
                 <div className="dashboard_card_status_flashcard">
                   {collection.flashcards.length} Flashcards

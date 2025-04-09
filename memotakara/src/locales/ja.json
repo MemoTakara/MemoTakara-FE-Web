@@ -15,10 +15,38 @@
       "terms_of_condition": "利用規約",
       "help": "ヘルプ/FAQ"
     },
+    "create-collection": {
+      "title": "新しいコレクションを作成",
+      "collection-name": "コレクション名",
+      "name-required": "コレクション名を入力してください！",
+      "name-placeholder": "コレクション名を入力",
+      "des": "説明",
+      "des-placeholder": "説明を入力",
+      "privacy": "公開設定",
+      "privacy-required": "公開設定を選択してください！",
+      "privacy-placeholder": "公開設定を選択",
+      "privacy-public": "公開",
+      "privacy-private": "非公開",
+      "tag-placeholder": "タグを入力（カンマ区切り）",
+      "btn-creating": "作成中...",
+      "btn-create": "コレクションを作成",
+      "create-msg-success": "コレクションを作成しました！",
+      "create-msg-error": "コレクションの作成に失敗しました。もう一度お試しください。"
+    },
+    "edit-collection": {
+      "title": "コレクションを編集",
+      "update-success": "更新に成功しました！",
+      "update-error": "更新に失敗しました。",
+      "btn-update": "変更を保存",
+      "btn-updating": "保存中..."
+    },
     "set-item": {
       "public-collection-title": "コミュニティコレクションを探索",
       "filter-all": "すべて",
-      "filter-otherUsers": "他のユーザー"
+      "filter-otherUsers": "他のユーザー",
+      "edit-icon": "編集",
+      "copy-icon": "コピー",
+      "delete-icon": "削除"
     }
   },
   "views": {
@@ -39,7 +67,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "おかえりなさい ",
         "welcome2": "今日の期限付きフラッシュカードから始めましょう！",
@@ -120,6 +147,7 @@
       "study_sets": {
         "header": "あなたのコレクションリスト",
         "no-collection": "コレクションが存在しません",
+        "no-create-collection": "コレクションがありません。新しく作成しましょう！",
         "edit-icon": "編集",
         "merge-icon": "マッチング",
         "flashcard-icon": "単語カード",

@@ -1,6 +1,6 @@
 import "./index.css";
-import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
@@ -12,17 +12,18 @@ import {
   popularCollections,
 } from "@/data/data.jsx";
 import { useAuth } from "@/contexts/AuthContext";
-import BtnBlue from "@/components/btn/btn-blue.jsx";
-import DashboardCard from "@/components/set-item/dashboard-set";
 import { getPublicCollectionsByUser } from "@/api/collection";
 import { getPublicCollections } from "@/api/collection";
+import BtnBlue from "@/components/btn/btn-blue.jsx";
+import DashboardCard from "@/components/set-item/dashboard-set";
+import MemoCreateCollection from "@/components/create-collection/MemoCreateCollection";
 
 function Dashboard() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const [active, setActive] = useState("");
   const { user } = useAuth();
   const [collections, setCollections] = useState([]); // State to hold collections
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Gọi API để lấy danh sách public collections của user
   useEffect(() => {
@@ -39,21 +40,11 @@ function Dashboard() {
     };
 
     fetchPublicCollections();
-  });
+  }, [user]);
 
-  //Tooltip
-  const [arrow, setArrow] = useState("Show");
-  const mergedArrow = useMemo(() => {
-    if (arrow === "Hide") {
-      return false;
-    }
-    if (arrow === "Show") {
-      return true;
-    }
-    return {
-      pointAtCenter: true,
-    };
-  }, [arrow]);
+  const handleCreateCollection = (newCollection) => {
+    setCollections((prev) => [...prev, newCollection]);
+  };
 
   //Data
   // const [collections, setCollections] = useState(memoData);
@@ -62,29 +53,31 @@ function Dashboard() {
 
   return (
     <div className="dashboard_container">
-      <Link //create new collection
-        to="/create_collection"
-        className="dashboard_link"
-        onClick={() => setActive("")}
+      <Tooltip
+        placement="bottomRight"
+        title={t("components.create-collection.title")}
+        arrow={true}
       >
-        <Tooltip
-          placement="bottomRight"
-          title={t("tooltip.create_collection")}
-          arrow={mergedArrow}
-        >
-          <Button
-            shape="circle"
-            style={{
-              height: "50px",
-              width: "50px",
-              marginBottom: "10px",
-              background: "var(--color-button)",
-            }}
-            id="dashboard_btn"
-            icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
-          />
-        </Tooltip>
-      </Link>
+        <Button
+          shape="circle"
+          style={{
+            height: "50px",
+            width: "50px",
+            marginBottom: "10px",
+            background: "var(--color-button)",
+          }}
+          id="dashboard_btn"
+          icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
+          onClick={() => setIsModalVisible(true)} // Mở modal
+        />
+      </Tooltip>
+
+      {/* Sử dụng modal tạo collection */}
+      <MemoCreateCollection
+        isVisible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onCreate={handleCreateCollection}
+      />
 
       <div className="dashboard_sayhi">
         <div id="dashboard_sayhi_text">
@@ -200,17 +193,13 @@ function Dashboard() {
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
             {collections.length > 0 ? (
-              collections.slice(0, 3).map(
-                (
-                  collection // Sử dụng slice để lấy 3 phần tử đầu tiên
-                ) => (
-                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                    <div>
-                      <DashboardCard collections={[collection]} userId="1" />
-                    </div>
-                  </Col>
-                )
-              )
+              collections.slice(0, 3).map((collection) => (
+                <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                  <div>
+                    <DashboardCard collections={[collection]} userId="1" />
+                  </div>
+                </Col>
+              ))
             ) : (
               <Col span={24}>
                 <div style={{ textAlign: "center", marginTop: "20px" }}>

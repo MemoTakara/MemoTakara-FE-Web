@@ -82,15 +82,21 @@
 }
 
 .set-item-footer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  text-align: end;
+  align-items: center;
   width: 10%;
   height: 100%;
   margin-top: 15px;
+  padding-left: 10px;
+}
+
+.set-item-icon {
+  justify-content: flex-end;
 }
 
 .set-item-totalcard {
+  font-size: 16px;
+  text-align: center;
   background-color: var(--color-card-background);
   border-radius: 20px;
   padding: 8px;
