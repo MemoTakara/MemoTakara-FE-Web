@@ -177,7 +177,8 @@
     "login_with_google": "Continue with Google",
     "back_to_login": "Back to Login",
     "see_more": "See More",
-    "study_now": "Study Now"
+    "study_now": "Study Now",
+    "see-details": "See Details"
   },
   "search": {
     "placeholder": "Search standard collection",

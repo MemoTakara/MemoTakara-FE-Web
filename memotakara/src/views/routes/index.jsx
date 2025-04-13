@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "public-collection/:id",
-        element: <StudyDetail isEditFC={false} />,
+        element: <StudyDetail isPublic={true} isEditFC={false} />,
       },
     ],
   },
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
           },
           {
             path: "public-study-set/:id",
-            element: <StudyDetail isEditFC={false} />,
+            element: <StudyDetail isPublic={false} isEditFC={false} />,
           },
         ],
       },

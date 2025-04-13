@@ -4,16 +4,9 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  memoData,
-  totalData,
-  recentCollections,
-  recommendCollections,
-  popularCollections,
-} from "@/data/data.jsx";
 import { useAuth } from "@/contexts/AuthContext";
-import { getPublicCollectionsByUser } from "@/api/collection";
 import { getPublicCollections } from "@/api/collection";
+import { getRecentCollections } from "@/api/recentCollection";
 import BtnBlue from "@/components/btn/btn-blue.jsx";
 import DashboardCard from "@/components/set-item/dashboard-set";
 import MemoCreateCollection from "@/components/create-collection/MemoCreateCollection";
@@ -22,34 +15,32 @@ function Dashboard() {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
   const { user } = useAuth();
-  const [collections, setCollections] = useState([]); // State to hold collections
+  const [collections, setCollections] = useState([]); // public collections
+  const [recentViewed, setRecentViewed] = useState([]); // recently viewed collections
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // Gọi API để lấy danh sách public collections của user
   useEffect(() => {
-    const fetchPublicCollections = async () => {
+    const fetchCollections = async () => {
       if (user) {
-        // Check if user is defined
         try {
-          const data = await getPublicCollections(); // Using the API function
-          setCollections(data);
+          const [publicData, recentData] = await Promise.all([
+            getPublicCollections(),
+            getRecentCollections(user.id),
+          ]);
+          setCollections(publicData);
+          setRecentViewed(recentData);
         } catch (error) {
-          console.error("Failed to fetch public collections:", error);
+          console.error("Failed to fetch collections:", error);
         }
       }
     };
 
-    fetchPublicCollections();
+    fetchCollections();
   }, [user]);
 
   const handleCreateCollection = (newCollection) => {
     setCollections((prev) => [...prev, newCollection]);
   };
-
-  //Data
-  // const [collections, setCollections] = useState(memoData);
-  const recommendList = recommendCollections.slice(0, 3);
-  const popularList = popularCollections.slice(0, 3);
 
   return (
     <div className="dashboard_container">
@@ -85,7 +76,7 @@ function Dashboard() {
           <Link
             to="/study_sets"
             className="dashboard_link"
-            onClick={() => setActive("")}
+            onClick={() => setActive("study_sets")}
             style={{
               fontSize: "24px",
               fontWeight: "var(--header-weight-size)",
@@ -127,6 +118,7 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* Recently viewed collections */}
       <div className="dashboard_recent">
         <div className="dashboard_title">
           <div className="dashboard_title_text">
@@ -141,32 +133,26 @@ function Dashboard() {
           </Link>
         </div>
 
-        {/* recent list */}
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
-            {/* {collections.length > 0 ? (
-              collections.map((collection) => (
+            {recentViewed.length > 0 ? (
+              recentViewed.map((collection) => (
                 <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                  <div>
-                    <DashboardCard
-                      collections={[collection]}
-                      userId={user.id}
-                    />
-                  </div>
+                  <DashboardCard collection={collection} setAuthor={true} />
                 </Col>
               ))
-            ) : ( */}
-            <Col span={24}>
-              <div style={{ textAlign: "center", marginTop: "20px" }}>
-                {t("views.pages.study_sets.no-collection")}{" "}
-                {/* Thông báo không có collection nào */}
-              </div>
-            </Col>
-            {/* )} */}
+            ) : (
+              <Col span={24}>
+                <div style={{ textAlign: "center", marginTop: "20px" }}>
+                  {t("views.pages.study_sets.no-collection")}
+                </div>
+              </Col>
+            )}
           </Row>
         </div>
       </div>
 
+      {/* Public recommended collections */}
       <div className="dashboard_recommend">
         <div className="dashboard_title">
           <div className="dashboard_title_text">
@@ -189,22 +175,18 @@ function Dashboard() {
           </Link>
         </div>
 
-        {/* Danh sách các collection công khai */}
         <div style={{ padding: 20 }}>
           <Row gutter={[16, 16]}>
             {collections.length > 0 ? (
               collections.slice(0, 3).map((collection) => (
                 <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                  <div>
-                    <DashboardCard collections={[collection]} userId="1" />
-                  </div>
+                  <DashboardCard collection={collection} setAuthor={false} />
                 </Col>
               ))
             ) : (
               <Col span={24}>
                 <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  {t("views.pages.study_sets.no-collection")}{" "}
-                  {/* Thông báo không có collection nào */}
+                  {t("views.pages.study_sets.no-collection")}
                 </div>
               </Col>
             )}

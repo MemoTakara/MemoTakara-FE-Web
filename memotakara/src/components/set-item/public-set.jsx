@@ -8,7 +8,7 @@ import { faCopy, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { duplicateCollection } from "@/api/collection";
 import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
 
-const PublicSet = ({ collection, isAuthor, onUpdate }) => {
+const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,7 +64,10 @@ const PublicSet = ({ collection, isAuthor, onUpdate }) => {
           <div>
             <FontAwesomeIcon
               icon={faCopy}
-              style={{ fontSize: "var(--body-size)", marginRight: 8 }}
+              style={{
+                fontSize: "var(--body-size)",
+                marginRight: 8,
+              }}
             />
             {t("components.set-item.copy-icon")}
           </div>
@@ -100,22 +103,24 @@ const PublicSet = ({ collection, isAuthor, onUpdate }) => {
         </div>
 
         <div className="set-item-footer">
-          <Dropdown
-            menu={{
-              items: menuItems,
-              onClick: handleMenuClick,
-            }}
-            placement="bottomRight"
-            trigger={["click"]}
-          >
-            <EllipsisOutlined
-              style={{
-                fontSize: "var(--body-size-max)",
-                marginBottom: "5px",
-                cursor: "pointer",
+          {!isPublic && (
+            <Dropdown
+              menu={{
+                items: menuItems,
+                onClick: handleMenuClick,
               }}
-            />
-          </Dropdown>
+              placement="bottomRight"
+              trigger={["click"]}
+            >
+              <EllipsisOutlined
+                style={{
+                  fontSize: "var(--body-size-max)",
+                  marginBottom: "5px",
+                  cursor: "pointer",
+                }}
+              />
+            </Dropdown>
+          )}
 
           <div className="set-item-totalcard">
             {collection.flashcards?.length || 0}{" "}

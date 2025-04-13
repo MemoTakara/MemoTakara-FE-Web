@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://3.90.184.100:443/api",
+  baseURL: "https://memotakara.online/api",
+  // baseURL: "https://3.90.184.100:443/api",
   // baseURL: "http://127.0.0.1:8000/api",
 });
 

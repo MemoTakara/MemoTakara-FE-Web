@@ -11,17 +11,25 @@ export const getPublicCollections = async () => {
   }
 };
 
+// Hàm lấy chi tiết của một public collection theo ID
+export const getPublicCollectionDetail = async (id) => {
+  try {
+    const response = await axiosClient.get(`/public-collections/${id}`);
+    return response.data; // Trả về chi tiết của collection
+  } catch (error) {
+    console.error("Lỗi khi lấy chi tiết public collection:", error);
+    return null; // Hoặc bạn có thể trả giá trị khác nếu cần
+  }
+};
+
 // Lấy danh sách các collection công khai của 1 người dùng xác định
 export const getPublicCollectionsByUser = async (userId) => {
   try {
-    const response = await fetch(`/collections/user/${userId}`);
-    if (!response.ok) {
-      throw new Error("Error fetching public collections");
-    }
-    return await response.json();
+    const response = await axiosClient.get(`/collections/user/${userId}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching public collections:", error);
-    throw error; // Đẩy lỗi lên để xử lý ở nơi gọi
+    throw error;
   }
 };
 

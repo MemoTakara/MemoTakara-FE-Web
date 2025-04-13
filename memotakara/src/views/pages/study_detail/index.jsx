@@ -4,29 +4,35 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { getCollectionById } from "@/api/collection"; // API để lấy danh sách collection công khai
+import { postRecentCollection } from "@/api/recentCollection";
+import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import PublicSet from "@/components/set-item/public-set"; // Component hiển thị thông tin collection
 import MemoCard from "@/components/cards/card"; // Component hiển thị thông tin flashcards
 import MemoFlash from "@/components/cards/flashcard";
 
-function StudyDetail({ isEditFC }) {
+function StudyDetail({ isPublic, isEditFC }) {
   const { t } = useTranslation();
   const { id } = useParams();
+  const { user } = useAuth();
 
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Lấy thông tin người dùng từ context
-  const { user } = useAuth();
-
   useEffect(() => {
     const fetchCollectionDetail = async () => {
       try {
         setLoading(true);
-        const data = await getCollectionById(id);
+        const data = user
+          ? await getCollectionById(id)
+          : await getPublicCollectionDetail(id);
         setCollection(data);
+
+        // Nếu là public hoặc là owner, thì lưu lịch sử
+        if (user && (data.privacy === 1 || user.id === data.user_id)) {
+          await postRecentCollection(data.id);
+        }
       } catch (err) {
         console.error("Lỗi API:", err);
         setError(t("views.pages.study_detail.error-loading"));
@@ -59,6 +65,7 @@ function StudyDetail({ isEditFC }) {
     <div className="std-detail-container">
       <PublicSet
         collection={collection}
+        isPublic={isPublic}
         isAuthor={isAuthor}
         onUpdate={handleUpdateCollection}
       />

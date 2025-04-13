@@ -122,12 +122,13 @@ const PublicList = ({ isPublic }) => {
                     style={{
                       fontSize: "var(--body-size)",
                       marginBottom: "5px",
+                      cursor: "pointer",
                     }}
                   />
                 </Tooltip>
               )}
               <div className="set-item-totalcard">
-                {collection.flashcards?.length || 0}{" "}
+                {collection.flashcards_count || 0}{" "}
                 {t("views.pages.study_detail.totalcard")}
               </div>
             </div>
