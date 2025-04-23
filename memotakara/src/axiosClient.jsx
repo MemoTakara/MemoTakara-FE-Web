@@ -1,14 +1,18 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "https://memotakara.online/api",
+  // baseURL: "https://memotakara.online/api",
   // baseURL: "https://3.90.184.100:443/api",
-  // baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "http://127.0.0.1:8000/api",
 });
 
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("ACCESS_TOKEN");
-  config.headers.Authorization = `Bearer ${token}`;
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   config.headers.Accept = "application/json";
   return config;
 });

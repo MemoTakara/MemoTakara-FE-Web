@@ -8,7 +8,9 @@ import {
   Form,
   Input,
   Select,
+  Upload,
 } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   getAllFlashcards,
   addFlashcard,
@@ -59,15 +61,21 @@ const FlashcardManagement = () => {
     }
   };
 
+  // Tìm kiếm theo front, back hoặc tên collection
   const handleSearch = (value) => {
     setSearchText(value);
-    const filteredData = flashcards.filter(
-      (flashcard) =>
-        flashcard.front.toLowerCase().includes(value.toLowerCase()) ||
-        (flashcard.collection?.collection_name || "")
-          .toLowerCase()
-          .includes(value.toLowerCase())
-    );
+    const keyword = value.trim().toLowerCase();
+    const filteredData = flashcards.filter((flashcard) => {
+      const front = flashcard.front?.toLowerCase() || "";
+      const back = flashcard.back?.toLowerCase() || "";
+      const collName =
+        flashcard.collection?.collection_name?.toLowerCase() || "";
+      return (
+        front.includes(keyword) ||
+        back.includes(keyword) ||
+        collName.includes(keyword)
+      );
+    });
     setFilteredFlashcards(filteredData);
   };
 
@@ -85,13 +93,23 @@ const FlashcardManagement = () => {
       if (!values.collectionId) {
         throw new Error("collectionId không được để trống");
       }
-      const flashcardData = {
-        collection_id: values.collectionId,
-        front: values.front,
-        back: values.back,
-        pronunciation: values.pronunciation,
-      };
-      await addFlashcard(values.collectionId, flashcardData);
+
+      const formData = new FormData();
+      formData.append("collection_id", values.collectionId);
+      formData.append("front", values.front);
+      formData.append("back", values.back);
+      if (values.pronunciation)
+        formData.append("pronunciation", values.pronunciation);
+      if (values.kanji) formData.append("kanji", values.kanji);
+      formData.append("status", values.status || "new"); // Đảm bảo trạng thái được gửi
+
+      const audioFile = values.audio_file?.[0]?.originFileObj;
+      const imageFile = values.image?.[0]?.originFileObj;
+
+      if (audioFile) formData.append("audio_file", audioFile);
+      if (imageFile) formData.append("image", imageFile);
+
+      await addFlashcard(values.collectionId, formData);
       messageApi.success("Thêm flashcard thành công");
       fetchFlashcards();
       setIsModalVisible(false);
@@ -112,7 +130,22 @@ const FlashcardManagement = () => {
 
   const handleUpdate = async (values) => {
     try {
-      await updateFlashcard(currentFlashcard.id, values);
+      const formData = new FormData();
+      formData.append("collection_id", values.collectionId);
+      formData.append("front", values.front);
+      formData.append("back", values.back);
+      if (values.pronunciation)
+        formData.append("pronunciation", values.pronunciation);
+      if (values.kanji) formData.append("kanji", values.kanji);
+      formData.append("status", values.status || "new");
+
+      const audioFile = values.audio_file?.[0]?.originFileObj;
+      const imageFile = values.image?.[0]?.originFileObj;
+
+      if (audioFile) formData.append("audio_file", audioFile);
+      if (imageFile) formData.append("image", imageFile);
+
+      await updateFlashcard(currentFlashcard.id, formData);
       messageApi.success("Cập nhật flashcard thành công");
       fetchFlashcards();
       setIsModalVisible(false);
@@ -142,18 +175,23 @@ const FlashcardManagement = () => {
   };
 
   const columns = [
-    { title: "ID", dataIndex: "id", width: 80 },
+    {
+      title: "ID",
+      dataIndex: "id",
+      width: 80,
+      sorter: (a, b) => a.id - b.id,
+    },
     {
       title: "Mặt trước",
       dataIndex: "front",
       fixed: "left",
       width: 100,
-      sorter: (a, b) => a.front.localeCompare(b.front),
+      // sorter: (a, b) => a.front.localeCompare(b.front),
     },
     {
       title: "Mặt sau",
       dataIndex: "back",
-      sorter: (a, b) => a.back.localeCompare(b.back),
+      // sorter: (a, b) => a.back.localeCompare(b.back),
     },
     { title: "Phát âm", dataIndex: "pronunciation" },
     { title: "Kanji", dataIndex: "kanji", render: (text) => text || "-" },
@@ -163,7 +201,25 @@ const FlashcardManagement = () => {
       render: (text) => text || "-",
     },
     { title: "Hình ảnh", dataIndex: "image", render: (text) => text || "-" },
-    { title: "Trạng thái", dataIndex: "status" },
+    {
+      title: "Trạng thái",
+      dataIndex: "statuses",
+      width: 120,
+      filters: [
+        { text: "new", value: "new" },
+        { text: "learning", value: "learning" },
+        { text: "re-learning", value: "re-learning" },
+        { text: "young", value: "young" },
+        { text: "mastered", value: "mastered" },
+      ],
+      onFilter: (value, record) => {
+        // Lọc theo status đầu tiên trong mảng statuses
+        const status = record.statuses?.[0]?.status;
+        return status === value;
+      },
+      render: (statuses) =>
+        statuses && statuses.length > 0 ? statuses[0].status : "-",
+    },
     {
       title: "Ngày tạo",
       dataIndex: "created_at",
@@ -181,7 +237,7 @@ const FlashcardManagement = () => {
     {
       title: "Bộ sưu tập",
       dataIndex: "collection",
-      render: (text) => text?.collection_name || "-",
+      render: (collection) => collection?.collection_name || "-",
       filters: collections.map((collection) => ({
         text: collection.collection_name,
         value: collection.id,
@@ -225,7 +281,7 @@ const FlashcardManagement = () => {
       <div
         style={{
           display: "flex",
-          alignItem: "center",
+          alignItems: "center",
           justifyContent: "space-between",
         }}
       >
@@ -238,7 +294,7 @@ const FlashcardManagement = () => {
         </Button>
 
         <Input.Search
-          placeholder="Tìm kiếm theo tên collection"
+          placeholder="Tìm kiếm theo tên collection, từ vựng"
           onSearch={handleSearch}
           onChange={(e) => handleSearch(e.target.value)}
           style={{ marginBottom: 16, width: 300 }}
@@ -273,10 +329,7 @@ const FlashcardManagement = () => {
             label="Chọn collection"
             rules={[{ required: true, message: "Vui lòng chọn collection" }]}
           >
-            <Select
-              placeholder="Chọn collection"
-              value={currentFlashcard?.collection?.id}
-            >
+            <Select placeholder="Chọn collection">
               {collections.map((collection) => (
                 <Option key={collection.id} value={collection.id}>
                   {collection.collection_name}
@@ -304,11 +357,25 @@ const FlashcardManagement = () => {
           <Form.Item name="kanji" label="Kanji">
             <Input />
           </Form.Item>
-          <Form.Item name="audio_file" label="Tập tin âm thanh">
-            <Input type="file" />
+          <Form.Item
+            name="audio_file"
+            label="Tập tin âm thanh"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+          >
+            <Upload beforeUpload={() => false} maxCount={1}>
+              <Button icon={<UploadOutlined />}>Chọn âm thanh</Button>
+            </Upload>
           </Form.Item>
-          <Form.Item name="image" label="Hình ảnh">
-            <Input type="file" />
+          <Form.Item
+            name="image"
+            label="Hình ảnh"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+          >
+            <Upload beforeUpload={() => false} maxCount={1} listType="picture">
+              <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
+            </Upload>
           </Form.Item>
           <Form.Item name="status" label="Trạng thái">
             <Select>

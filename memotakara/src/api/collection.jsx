@@ -82,7 +82,7 @@ export const deleteCollection = async (id) => {
 // Hàm tìm kiếm public collection theo tên, tag, tác giả
 export const searchItems = async (query) => {
   try {
-    const response = await axiosClient.get("/search-public?query=${query}");
+    const response = await axiosClient.get(`/search-public?query=${query}`);
     return response.data; // Trả về kết quả tìm kiếm
   } catch (error) {
     console.error("Lỗi khi tìm kiếm:", error);

@@ -28,7 +28,7 @@ export const getUsers = async () => {
 // Tạo mới user
 export const createUser = async (userData) => {
   try {
-    const response = await axiosClient.post("/admins/users", userData);
+    const response = await axiosClient.post(`/admins/users`, userData);
     return response.data;
   } catch (error) {
     console.error("Lỗi khi tạo người dùng:", error.response || error);
@@ -40,7 +40,7 @@ export const createUser = async (userData) => {
 export const toggleUserStatus = async (userId) => {
   try {
     const response = await axiosClient.post(
-      "/admins/users/${userId}/toggle-lock"
+      `/admins/users/${userId}/toggle-lock`
     );
     return response.data;
   } catch (error) {
@@ -55,7 +55,7 @@ export const toggleUserStatus = async (userId) => {
 // Xóa người dùng
 export const deleteUser = async (userId) => {
   try {
-    const response = await axiosClient.delete("/admins/user/${userId}");
+    const response = await axiosClient.delete(`/admins/user/${userId}`);
     return response.data;
   } catch (error) {
     console.error("Lỗi khi xóa người dùng:", error.response || error);
@@ -95,7 +95,7 @@ export const createCollection = async (collectionData) => {
 export const updateCollection = async (collectionId, collectionData) => {
   try {
     const response = await axiosClient.put(
-      "/admins/collections/${collectionId}",
+      `/admins/collections/${collectionId}`,
       collectionData
     );
     return response.data;
@@ -109,7 +109,7 @@ export const updateCollection = async (collectionId, collectionData) => {
 export const deleteCollection = async (collectionId) => {
   try {
     const response = await axiosClient.delete(
-      "/admins/collections/${collectionId}"
+      `/admins/collections/${collectionId}`
     );
     return response.data;
   } catch (error) {
@@ -133,7 +133,7 @@ export const getAllFlashcards = async (collectionId) => {
 export const getFlashcards = async (collectionId) => {
   try {
     const response = await axiosClient.get(
-      "/admins/collections/${collectionId}/flashcards"
+      `/admins/collections/${collectionId}/flashcards`
     );
     return response.data;
   } catch (error) {
@@ -143,11 +143,16 @@ export const getFlashcards = async (collectionId) => {
 };
 
 // Tạo flashcard
-export const addFlashcard = async (collectionId, flashcardData) => {
+export const addFlashcard = async (collectionId, formData) => {
   try {
     const response = await axiosClient.post(
-      "/admins/collections/${collectionId}/flashcards",
-      flashcardData
+      `/admins/collections/${collectionId}/flashcards`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -157,11 +162,19 @@ export const addFlashcard = async (collectionId, flashcardData) => {
 };
 
 // Update flashcard
-export const updateFlashcard = async (flashcardId, flashcardData) => {
+export const updateFlashcard = async (flashcardId, formData) => {
   try {
-    const response = await axiosClient.put(
-      "/admins/flashcards/${flashcardId}",
-      flashcardData
+    // Laravel không hỗ trợ PUT với FormData trực tiếp, nên cần dùng POST + _method
+    formData.append("_method", "PUT");
+
+    const response = await axiosClient.post(
+      `/admins/flashcards/${flashcardId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -174,7 +187,7 @@ export const updateFlashcard = async (flashcardId, flashcardData) => {
 export const deleteFlashcard = async (flashcardId) => {
   try {
     const response = await axiosClient.delete(
-      "/admins/flashcards/${flashcardId}"
+      `/admins/flashcards/${flashcardId}`
     );
     return response.data;
   } catch (error) {

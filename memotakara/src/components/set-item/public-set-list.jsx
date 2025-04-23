@@ -4,10 +4,11 @@ import "./index.css";
 import { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Select, Tooltip } from "antd";
+import { Select, Tooltip, Pagination } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { getPublicCollections } from "@/api/collection"; // Lấy danh sách public collections
+import { LOCAL_STORAGE_KEYS } from "@/constants/localStorageKeys";
+import { getPublicCollections } from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 
 const PublicList = ({ isPublic }) => {
@@ -16,6 +17,13 @@ const PublicList = ({ isPublic }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    // Lấy từ localStorage nếu có
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.MEMO_ITEMS_PER_PAGE);
+    return saved ? parseInt(saved, 10) : 10;
+  });
 
   useEffect(() => {
     const fetchPublicCollections = async () => {
@@ -35,6 +43,11 @@ const PublicList = ({ isPublic }) => {
     fetchPublicCollections();
   }, []);
 
+  // Reset về trang đầu khi filter thay đổi
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter]);
+
   // Lọc danh sách collections khi filter thay đổi
   const filteredCollections = useMemo(() => {
     if (filter === "memoTakara") {
@@ -45,25 +58,18 @@ const PublicList = ({ isPublic }) => {
     return collections; // Hiển thị tất cả khi filter là 'all'
   }, [collections, filter]);
 
+  // Chia trang danh sách
+  const paginatedCollections = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredCollections.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredCollections, currentPage, itemsPerPage]);
+
   const handleFilterChange = (value) => {
     setFilter(value);
   };
 
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>;
-  if (filteredCollections.length === 0) {
-    return (
-      <div className="public-list-container">
-        <div className="public-list-header">
-          {t("components.set-item.public-collection-title")}
-        </div>
-
-        <SelectFilter onChange={handleFilterChange} />
-
-        <div>{t("views.pages.study_detail.no-collection-data")}</div>
-      </div>
-    );
-  }
 
   return (
     <div className="public-list-container">
@@ -73,68 +79,92 @@ const PublicList = ({ isPublic }) => {
 
       <SelectFilter onChange={handleFilterChange} />
 
-      {filteredCollections.map((collection) => (
-        <div key={collection.id} className="set-item-container">
-          <div className="set-item-above">
-            <div className="set-item-header">
-              <Link
-                className="set-item-collection-name"
-                to={
-                  isPublic
-                    ? `/public-collection/${collection.id}`
-                    : `/public-study-set/${collection.id}`
-                }
-                style={{ fontSize: "var(--body-size-max)" }}
-              >
-                {collection.collection_name}
-              </Link>
+      {filteredCollections.length === 0 ? (
+        <div>{t("views.pages.study_detail.no-collection-data")}</div>
+      ) : (
+        <>
+          {paginatedCollections.map((collection) => (
+            <div key={collection.id} className="set-item-container">
+              <div className="set-item-above">
+                <div className="set-item-header">
+                  <Link
+                    className="set-item-collection-name"
+                    to={
+                      isPublic
+                        ? `/public-collection/${collection.id}`
+                        : `/public-study-set/${collection.id}`
+                    }
+                    style={{ fontSize: "var(--body-size-max)" }}
+                  >
+                    {collection.collection_name}
+                  </Link>
 
-              <div
-                className="set-item-collection-des"
-                style={{ fontSize: "16px" }}
-              >
-                {t("components.header.search_user1")}{" "}
-                {collection.user?.role === "admin"
-                  ? "MemoTakara"
-                  : collection.user?.username ||
-                    t("components.header.search_user2")}
-              </div>
+                  <div
+                    className="set-item-collection-des"
+                    style={{ fontSize: "16px" }}
+                  >
+                    {t("components.header.search_user1")}{" "}
+                    {collection.user?.role === "admin"
+                      ? "MemoTakara"
+                      : collection.user?.username ||
+                        t("components.header.search_user2")}
+                  </div>
 
-              <div
-                className="set-item-collection-des"
-                style={{ fontSize: "16px" }}
-              >
-                {t("views.pages.study_detail.collection-des")}{" "}
-                {collection.description ||
-                  t("views.pages.study_detail.no-description")}
+                  <div
+                    className="set-item-collection-des"
+                    style={{ fontSize: "16px" }}
+                  >
+                    {t("views.pages.study_detail.collection-des")}{" "}
+                    {collection.description ||
+                      t("views.pages.study_detail.no-description")}
+                  </div>
+                </div>
+
+                <div className="set-item-footer">
+                  {!isPublic && (
+                    <Tooltip
+                      placement="top"
+                      title={t("components.set-item.copy-icon")}
+                      arrow={true}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCopy}
+                        style={{
+                          fontSize: "var(--body-size)",
+                          marginBottom: "5px",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                  <div className="set-item-totalcard">
+                    {collection.flashcards_count || 0}{" "}
+                    {t("views.pages.study_detail.totalcard")}
+                  </div>
+                </div>
               </div>
             </div>
+          ))}
 
-            <div className="set-item-footer">
-              {!isPublic && (
-                <Tooltip
-                  placement="top"
-                  title={t("components.set-item.copy-icon")}
-                  arrow={true}
-                >
-                  <FontAwesomeIcon
-                    icon={faCopy}
-                    style={{
-                      fontSize: "var(--body-size)",
-                      marginBottom: "5px",
-                      cursor: "pointer",
-                    }}
-                  />
-                </Tooltip>
-              )}
-              <div className="set-item-totalcard">
-                {collection.flashcards_count || 0}{" "}
-                {t("views.pages.study_detail.totalcard")}
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+          <Pagination
+            current={currentPage}
+            pageSize={itemsPerPage}
+            total={filteredCollections.length}
+            onChange={(page) => setCurrentPage(page)}
+            onShowSizeChange={(current, size) => {
+              setItemsPerPage(size);
+              setCurrentPage(1);
+              localStorage.setItem(
+                LOCAL_STORAGE_KEYS.MEMO_ITEMS_PER_PAGE,
+                size
+              );
+            }}
+            showSizeChanger
+            pageSizeOptions={["5", "10", "15", "20"]}
+            style={{ marginTop: 24, textAlign: "center" }}
+          />
+        </>
+      )}
     </div>
   );
 };
