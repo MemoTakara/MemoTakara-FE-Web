@@ -19,17 +19,17 @@ function StudySets() {
   const [setOptions, setSetOptions] = useState([
     {
       value: "all",
-      label: "All",
+      label: t("components.set-item.filter-all"),
       disabled: true,
     },
     {
       value: "public",
-      label: "Public Collection",
+      label: t("views.pages.study_sets.filter-public"),
       disabled: false,
     },
     {
       value: "private",
-      label: "Private Collection",
+      label: t("views.pages.study_sets.filter-private"),
       disabled: false,
     },
   ]);

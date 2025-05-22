@@ -8,10 +8,12 @@ const MemoSearch = ({ isGuest }) => {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
   // Search bar - Gọi API khi nhập từ khóa
   const handleSearch = async (value) => {
+    setInputValue(value); // update input khi gõ
     if (!value) {
       setOptions([]);
       return;
@@ -36,6 +38,7 @@ const MemoSearch = ({ isGuest }) => {
             </div>
           </div>
         ),
+        displayName: item.collection_name, // Thêm tên để dùng lại sau
       }));
 
       setOptions(formattedOptions);
@@ -46,12 +49,16 @@ const MemoSearch = ({ isGuest }) => {
   };
 
   const onSelectSearch = (value) => {
-    console.log("Đã chọn (search):", value);
-    // Điều hướng đến trang chi tiết collection
-    if (isGuest) {
-      navigate(`/public-collection/${value}`);
-    } else {
-      navigate(`/public-study-set/${value}`);
+    const selected = options.find((option) => option.value === value);
+
+    if (selected) {
+      setInputValue(selected.displayName); // Show lại tên sau khi click
+
+      if (isGuest) {
+        navigate(`/public-collection/${value}`);
+      } else {
+        navigate(`/public-study-set/${value}`);
+      }
     }
   };
 
@@ -63,6 +70,8 @@ const MemoSearch = ({ isGuest }) => {
       options={options}
       onSelect={onSelectSearch}
       onSearch={handleSearch}
+      value={inputValue} // controlled input
+      onChange={(value) => setInputValue(value)} // update input thủ công
     >
       <Input.Search
         size="medium"

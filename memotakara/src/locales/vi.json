@@ -15,7 +15,6 @@
       "terms_of_condition": "Điều khoản sử dụng",
       "help": "Trợ giúp/FAQ"
     },
-
     "create-collection": {
       "title": "Tạo bộ sưu tập mới",
       "collection-name": "Tên bộ sưu tập",
@@ -40,15 +39,15 @@
       "update-error": "Lỗi khi cập nhật.",
       "btn-update": "Lưu thay đổi",
       "btn-updating": "Đang lưu..."
+    },
+    "set-item": {
+      "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
+      "filter-all": "Tất cả",
+      "filter-otherUsers": "Người dùng khác",
+      "edit-icon": "Sửa bộ sưu tập",
+      "copy-icon": "Sao chép",
+      "delete-icon": "Xóa"
     }
-  },
-  "set-item": {
-    "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
-    "filter-all": "Tất cả",
-    "filter-otherUsers": "Người dùng khác",
-    "edit-icon": "Sửa bộ sưu tập",
-    "copy-icon": "Sao chép",
-    "delete-icon": "Xóa"
   },
   "views": {
     "error-pages": {
@@ -157,7 +156,9 @@
         "cards": "thẻ",
         "confirm-delete": "Bạn có chắc chắn muốn xoá collection này không?",
         "delete-success": "Xoá thành công!",
-        "delete-fail": "Xoá thất bại. Vui lòng thử lại!"
+        "delete-fail": "Xoá thất bại. Vui lòng thử lại!",
+        "filter-public": "Bộ sưu tập công khai",
+        "filter-private": "Bộ sưu tập riêng tư"
       }
     }
   },
@@ -178,7 +179,8 @@
     "login_with_google": "Tiếp tục với Google",
     "back_to_login": "Quay lại trang Đăng nhập",
     "see_more": "Xem thêm",
-    "study_now": "Học ngay"
+    "study_now": "Học ngay",
+    "see-details": "Xem chi tiết"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

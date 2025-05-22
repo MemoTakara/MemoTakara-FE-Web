@@ -123,7 +123,8 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
           )}
 
           <div className="set-item-totalcard">
-            {collection.flashcards?.length || 0}{" "}
+            {collection.flashcards?.length || 0}
+            <br />
             {t("views.pages.study_detail.totalcard")}
           </div>
         </div>

@@ -156,7 +156,9 @@
         "cards": "卡片",
         "confirm-delete": "您确定要删除该合集吗？",
         "delete-success": "删除成功！",
-        "delete-fail": "删除失败，请重试。"
+        "delete-fail": "删除失败，请重试。",
+        "filter-public": "公开合集",
+        "filter-private": "私密合集"
       }
     }
   },
@@ -177,7 +179,8 @@
     "login_with_google": "使用Google账号登录",
     "back_to_login": "返回登录",
     "see_more": "查看更多",
-    "study_now": "立即学习"
+    "study_now": "立即学习",
+    "see-details": "查看详情"
   },
   "tooltip": {
     "edit": "编辑",

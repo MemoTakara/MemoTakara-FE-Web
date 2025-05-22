@@ -1,8 +1,10 @@
 // public collection nhưng chưa sở hữu, chỉ được XEM thôi, KHÔNG có học
 import "./index.css";
 import { useEffect, useState } from "react";
+import { Pagination } from "antd";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { LOCAL_STORAGE_KEYS } from "@/constants/localStorageKeys";
 import { useAuth } from "@/contexts/AuthContext";
 import { postRecentCollection } from "@/api/recentCollection";
 import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
@@ -19,6 +21,12 @@ function StudyDetail({ isPublic, isEditFC }) {
   const [collection, setCollection] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(() => {
+    // Lấy từ localStorage nếu có
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.MEMO_ITEMS_PER_PAGE);
+    return saved ? parseInt(saved, 10) : 10;
+  }); // Người dùng có thể thay đổi số lượng/trang
 
   useEffect(() => {
     const fetchCollectionDetail = async () => {
@@ -61,6 +69,12 @@ function StudyDetail({ isPublic, isEditFC }) {
     }));
   };
 
+  const flashcards = collection?.flashcards || [];
+  const paginatedFlashcards = flashcards.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="std-detail-container">
       <PublicSet
@@ -80,9 +94,24 @@ function StudyDetail({ isPublic, isEditFC }) {
       </div>
 
       <MemoCard
-        flashcards={collection.flashcards}
+        flashcards={paginatedFlashcards}
         collectionTag={collection.tag}
         isEditFC={isEditFC}
+      />
+
+      <Pagination
+        current={currentPage}
+        pageSize={itemsPerPage}
+        total={flashcards.length}
+        onChange={(page) => setCurrentPage(page)}
+        onShowSizeChange={(current, size) => {
+          setItemsPerPage(size);
+          setCurrentPage(1); // reset về trang đầu nếu thay đổi size
+          localStorage.setItem(LOCAL_STORAGE_KEYS.MEMO_ITEMS_PER_PAGE, size); // lưu lại lựa chọn
+        }}
+        showSizeChanger
+        pageSizeOptions={["5", "10", "15", "20"]}
+        style={{ marginTop: 24, textAlign: "center" }}
       />
     </div>
   );

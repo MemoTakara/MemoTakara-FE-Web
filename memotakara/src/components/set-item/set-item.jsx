@@ -72,7 +72,7 @@ const SetItem = ({ collection, onDelete, onUpdate }) => {
           <div
             style={{ fontSize: "20px", color: "var(--color-text-disabled)" }}
           >
-            {collection.flashcards?.length || 0}{" "}
+            {collection.flashcards_count || 0}{" "}
             {t("views.pages.study_detail.totalcard")}
           </div>
         </div>
