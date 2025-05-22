@@ -28,7 +28,7 @@ function Register() {
         duration: 2,
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate("/dashboard");
       }, 2000);
     } catch (error) {
       messageApi.error({

@@ -156,7 +156,9 @@
         "cards": "カード",
         "confirm-delete": "このコレクションを削除してもよろしいですか？",
         "delete-success": "削除に成功しました！",
-        "delete-fail": "削除に失敗しました。もう一度お試しください。"
+        "delete-fail": "削除に失敗しました。もう一度お試しください。",
+        "filter-public": "公開コレクション",
+        "filter-private": "非公開コレクション"
       }
     }
   },
@@ -177,7 +179,8 @@
     "login_with_google": "Googleで続ける",
     "back_to_login": "ログイン画面に戻る",
     "see_more": "もっと見る",
-    "study_now": "今すぐ学習"
+    "study_now": "今すぐ学習",
+    "see-details": "詳細を見る"
   },
   "tooltip": {
     "edit": "編集",

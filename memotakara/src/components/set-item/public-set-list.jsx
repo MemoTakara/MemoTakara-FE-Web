@@ -138,7 +138,8 @@ const PublicList = ({ isPublic }) => {
                     </Tooltip>
                   )}
                   <div className="set-item-totalcard">
-                    {collection.flashcards_count || 0}{" "}
+                    {collection.flashcards_count || 0}
+                    <br />
                     {t("views.pages.study_detail.totalcard")}
                   </div>
                 </div>
@@ -170,6 +171,8 @@ const PublicList = ({ isPublic }) => {
 };
 
 const SelectFilter = ({ onChange }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className="public-list-sort-select"
@@ -180,9 +183,12 @@ const SelectFilter = ({ onChange }) => {
         style={{ width: 150, marginBottom: "20px" }}
         onChange={onChange}
         options={[
-          { label: "Tất cả", value: "all" },
+          { label: t("components.set-item.filter-all"), value: "all" },
           { label: "MemoTakara", value: "memoTakara" },
-          { label: "Người dùng khác", value: "otherUsers" },
+          {
+            label: t("components.set-item.filter-otherUsers"),
+            value: "otherUsers",
+          },
         ]}
       />
     </div>

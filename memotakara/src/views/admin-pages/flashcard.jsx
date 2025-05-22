@@ -11,6 +11,7 @@ import {
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import config from "@/config";
 import {
   getAllFlashcards,
   addFlashcard,
@@ -34,6 +35,12 @@ const FlashcardManagement = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
   const [searchText, setSearchText] = useState("");
+  const [audioFile, setAudioFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [audioFileList, setAudioFileList] = useState([]);
+  const [imageFileList, setImageFileList] = useState([]);
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   useEffect(() => {
     fetchFlashcards();
@@ -90,10 +97,6 @@ const FlashcardManagement = () => {
 
   const handleAdd = async (values) => {
     try {
-      if (!values.collectionId) {
-        throw new Error("collectionId không được để trống");
-      }
-
       const formData = new FormData();
       formData.append("collection_id", values.collectionId);
       formData.append("front", values.front);
@@ -101,15 +104,17 @@ const FlashcardManagement = () => {
       if (values.pronunciation)
         formData.append("pronunciation", values.pronunciation);
       if (values.kanji) formData.append("kanji", values.kanji);
-      formData.append("status", values.status || "new"); // Đảm bảo trạng thái được gửi
+      formData.append("status", values.status || "new");
 
-      const audioFile = values.audio_file?.[0]?.originFileObj;
-      const imageFile = values.image?.[0]?.originFileObj;
+      // Sử dụng biến state (fileList) thay vì lấy từ form values
+      if (audioFileList.length > 0 && audioFileList[0].originFileObj) {
+        formData.append("audio_file", audioFileList[0].originFileObj);
+      }
+      if (imageFileList.length > 0 && imageFileList[0].originFileObj) {
+        formData.append("image", imageFileList[0].originFileObj);
+      }
 
-      if (audioFile) formData.append("audio_file", audioFile);
-      if (imageFile) formData.append("image", imageFile);
-
-      await addFlashcard(values.collectionId, formData);
+      await addFlashcard(formData);
       messageApi.success("Thêm flashcard thành công");
       fetchFlashcards();
       setIsModalVisible(false);
@@ -120,10 +125,43 @@ const FlashcardManagement = () => {
 
   const handleEdit = (record) => {
     setCurrentFlashcard(record);
+
+    // Chỉ đặt các giá trị cơ bản, không bao gồm file
     form.setFieldsValue({
-      ...record,
       collectionId: record.collection?.id,
-    });
+      front: record.front,
+      back: record.back,
+      pronunciation: record.pronunciation,
+      kanji: record.kanji,
+      status: record.statuses?.[0]?.status || "new",
+    }); // Hiển thị file âm thanh nếu có
+    if (record.audio_file) {
+      setAudioFileList([
+        {
+          uid: "-1",
+          name: record.audio_file,
+          status: "done",
+          url: `${config.storageBaseUrl}/storage/${record.audio_file}`,
+        },
+      ]);
+    } else {
+      setAudioFileList([]);
+    }
+
+    // Hiển thị hình ảnh nếu có
+    if (record.image) {
+      setImageFileList([
+        {
+          uid: "-1",
+          name: record.image,
+          status: "done",
+          url: `${config.storageBaseUrl}/storage/${record.image}`,
+        },
+      ]);
+    } else {
+      setImageFileList([]);
+    }
+
     setIsEditMode(true);
     setIsModalVisible(true);
   };
@@ -139,11 +177,13 @@ const FlashcardManagement = () => {
       if (values.kanji) formData.append("kanji", values.kanji);
       formData.append("status", values.status || "new");
 
-      const audioFile = values.audio_file?.[0]?.originFileObj;
-      const imageFile = values.image?.[0]?.originFileObj;
-
-      if (audioFile) formData.append("audio_file", audioFile);
-      if (imageFile) formData.append("image", imageFile);
+      // Sử dụng biến state (fileList) thay vì lấy từ form values
+      if (audioFileList.length > 0 && audioFileList[0].originFileObj) {
+        formData.append("audio_file", audioFileList[0].originFileObj);
+      }
+      if (imageFileList.length > 0 && imageFileList[0].originFileObj) {
+        formData.append("image", imageFileList[0].originFileObj);
+      }
 
       await updateFlashcard(currentFlashcard.id, formData);
       messageApi.success("Cập nhật flashcard thành công");
@@ -152,7 +192,7 @@ const FlashcardManagement = () => {
       setIsEditMode(false);
       setCurrentFlashcard(null);
     } catch (error) {
-      messageApi.error("Lỗi khi cập nhật flashcard");
+      messageApi.error("Lỗi khi cập nhật flashcard: " + (error.message || ""));
     }
   };
 
@@ -172,6 +212,24 @@ const FlashcardManagement = () => {
     setCurrentFlashcard(null);
     form.resetFields();
     setIsModalVisible(true);
+  };
+
+  const handleAudioChange = ({ fileList }) => {
+    setAudioFileList(fileList);
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      setAudioFile(fileList[0].originFileObj);
+    } else {
+      setAudioFile(null);
+    }
+  };
+
+  const handleImageChange = ({ fileList }) => {
+    setImageFileList(fileList);
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      setImageFile(fileList[0].originFileObj);
+    } else {
+      setImageFile(null);
+    }
   };
 
   const columns = [
@@ -198,9 +256,40 @@ const FlashcardManagement = () => {
     {
       title: "Tập tin âm thanh",
       dataIndex: "audio_file",
-      render: (text) => text || "-",
+      render: (text) =>
+        text ? (
+          <audio controls style={{ width: 150 }}>
+            <source src={`${config.storageBaseUrl}/storage/${text}`} />
+            Trình duyệt không hỗ trợ audio.
+          </audio>
+        ) : (
+          "-"
+        ),
     },
-    { title: "Hình ảnh", dataIndex: "image", render: (text) => text || "-" },
+    {
+      title: "Hình ảnh",
+      dataIndex: "image",
+      width: 150,
+      render: (text) =>
+        text ? (
+          <img
+            src={`${config.storageBaseUrl}/storage/${text}`}
+            alt="flashcard"
+            style={{
+              width: 80,
+              height: "auto",
+              objectFit: "cover",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              setPreviewImage(`${config.storageBaseUrl}/storage/${text}`);
+              setPreviewVisible(true);
+            }}
+          />
+        ) : (
+          "-"
+        ),
+    },
     {
       title: "Trạng thái",
       dataIndex: "statuses",
@@ -275,6 +364,17 @@ const FlashcardManagement = () => {
     },
   ];
 
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setIsEditMode(false);
+    setCurrentFlashcard(null);
+    form.resetFields();
+    setAudioFile(null);
+    setImageFile(null);
+    setAudioFileList([]);
+    setImageFileList([]);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -311,12 +411,7 @@ const FlashcardManagement = () => {
       <Modal
         title={isEditMode ? "Chỉnh sửa Flashcard" : "Thêm Flashcard"}
         open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false);
-          setIsEditMode(false);
-          setCurrentFlashcard(null);
-          form.resetFields();
-        }}
+        onCancel={closeModal}
         onOk={() => form.submit()}
       >
         <Form
@@ -357,26 +452,32 @@ const FlashcardManagement = () => {
           <Form.Item name="kanji" label="Kanji">
             <Input />
           </Form.Item>
-          <Form.Item
-            name="audio_file"
-            label="Tập tin âm thanh"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-          >
-            <Upload beforeUpload={() => false} maxCount={1}>
+
+          <Form.Item label="Tập tin âm thanh" name="audio_file">
+            <Upload
+              accept=".mp3,.wav,.m4a,.ogg,.flac"
+              maxCount={1}
+              beforeUpload={() => false}
+              onChange={handleAudioChange}
+              fileList={audioFileList}
+            >
               <Button icon={<UploadOutlined />}>Chọn âm thanh</Button>
             </Upload>
           </Form.Item>
-          <Form.Item
-            name="image"
-            label="Hình ảnh"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
-          >
-            <Upload beforeUpload={() => false} maxCount={1} listType="picture">
+
+          <Form.Item label="Hình ảnh" name="image">
+            <Upload
+              accept="image/*"
+              maxCount={1}
+              beforeUpload={() => false}
+              onChange={handleImageChange}
+              listType="picture"
+              fileList={imageFileList}
+            >
               <Button icon={<UploadOutlined />}>Chọn hình ảnh</Button>
             </Upload>
           </Form.Item>
+
           <Form.Item name="status" label="Trạng thái">
             <Select>
               <Option value="new">New</Option>
@@ -387,6 +488,14 @@ const FlashcardManagement = () => {
             </Select>
           </Form.Item>
         </Form>
+      </Modal>
+
+      <Modal
+        open={previewVisible}
+        footer={null}
+        onCancel={() => setPreviewVisible(false)}
+      >
+        <img alt="preview" style={{ width: "100%" }} src={previewImage} />
       </Modal>
     </div>
   );

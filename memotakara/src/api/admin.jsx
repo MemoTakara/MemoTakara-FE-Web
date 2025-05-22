@@ -143,10 +143,10 @@ export const getFlashcards = async (collectionId) => {
 };
 
 // Tạo flashcard
-export const addFlashcard = async (collectionId, formData) => {
+export const addFlashcard = async (formData) => {
   try {
     const response = await axiosClient.post(
-      `/admins/collections/${collectionId}/flashcards`,
+      `/admins/collections/flashcards`,
       formData,
       {
         headers: {
@@ -164,8 +164,10 @@ export const addFlashcard = async (collectionId, formData) => {
 // Update flashcard
 export const updateFlashcard = async (flashcardId, formData) => {
   try {
-    // Laravel không hỗ trợ PUT với FormData trực tiếp, nên cần dùng POST + _method
-    formData.append("_method", "PUT");
+    // Chỉ thêm _method nếu chưa có
+    if (!formData.has("_method")) {
+      formData.append("_method", "PUT");
+    }
 
     const response = await axiosClient.post(
       `/admins/flashcards/${flashcardId}`,
@@ -178,7 +180,7 @@ export const updateFlashcard = async (flashcardId, formData) => {
     );
     return response.data;
   } catch (error) {
-    console.error("Lỗi khi cập nhật flashcard:", error.response || error);
+    console.error("Lỗi khi cập nhật flashcard:", error.response?.data || error);
     throw error;
   }
 };
