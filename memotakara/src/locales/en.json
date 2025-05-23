@@ -47,6 +47,10 @@
       "edit-icon": "Edit collection",
       "copy-icon": "Copy",
       "delete-icon": "Delete"
+    },
+    "cards": {
+      "card": "Card",
+      "no-fc-due": "No flashcards are due to learn!"
     }
   },
   "views": {
@@ -141,7 +145,7 @@
         "collection-des": "Description: ",
         "no-description": "Collection has no description.",
         "totalcard": "cards",
-        "flashcards-title": "Cards in this collection:",
+        "flashcards-title": "Cards in this collection",
         "error-loading": "Error loading"
       },
       "study_sets": {
@@ -180,7 +184,11 @@
     "back_to_login": "Back to Login",
     "see_more": "See More",
     "study_now": "Study Now",
-    "see-details": "See Details"
+    "see-details": "See Details",
+    "again": "Again",
+    "hard": "Hard",
+    "good": "Good",
+    "easy": "Easy"
   },
   "tooltip": {
     "edit": "Edit",

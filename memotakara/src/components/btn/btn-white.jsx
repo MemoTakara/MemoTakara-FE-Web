@@ -8,6 +8,7 @@ const BtnWhite = ({
   iconAlt = "",
   iconStyle = {},
   username,
+  onClick,
 }) => {
   const { t } = useTranslation();
   const [isClicked, setIsClicked] = useState(false);
@@ -15,6 +16,7 @@ const BtnWhite = ({
 
   const handleClick = () => {
     setIsClicked(!isClicked);
+    if (onClick) onClick();
   };
 
   const btnWhiteStyle = {

@@ -1,44 +1,89 @@
 import "./flashcard.css";
-import { useState } from "react";
-import { Card, Button } from "antd";
+import { useEffect, useState } from "react";
+import { Card, Button, Tooltip } from "antd";
+import { useTranslation } from "react-i18next";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { reviewFlashcard, getCollectionProgress } from "@/api/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/speaker";
+import BtnWhite from "@/components/btn/btn-white";
 
-const MemoFlash = ({ flashcards, collectionTag }) => {
+const MemoFlash = ({
+  isStudy,
+  flashcards,
+  collectionId,
+  collectionTag,
+  progress,
+  onUpdateProgress,
+}) => {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0); // Quản lý thẻ hiện tại
   const [flipped, setFlipped] = useState(false); // Trạng thái lật thẻ
+  const [summary, setSummary] = useState({ new: 0, learning: 0, due: 0 });
+
+  useEffect(() => {
+    if (progress) {
+      setSummary(progress);
+    }
+  }, [progress]);
 
   if (!flashcards) return <LoadingPage />;
-  if (flashcards.length === 0) return <div>Không có flashcards nào.</div>;
+  if (!flashcards || flashcards.length === 0)
+    return <div>{t("components.cards.no-fc-due")}</div>;
 
   const mapTagToLang = (tag) => {
-    if (!tag || typeof tag !== "string") return "en";
-    const normalizedTag = tag.toLowerCase();
-    if (["english", "tiếng anh"].includes(normalizedTag)) return "en";
-    if (["japanese", "tiếng nhật"].includes(normalizedTag)) return "ja";
-    if (["chinese", "tiếng trung"].includes(normalizedTag)) return "zh";
-    return "en";
+    const tagMap = {
+      english: "en",
+      "tiếng anh": "en",
+      japanese: "ja",
+      "tiếng nhật": "ja",
+      chinese: "zh",
+      "tiếng trung": "zh",
+    };
+    return tagMap[tag?.toLowerCase()] || "en";
   };
 
-  // Hàm để xử lý nút "Nhớ" hoặc "Quên"
-  const handleRemember = (status) => {
+  // Học bằng flashcard
+  const handleReview = async (quality) => {
     const cardId = flashcards[currentIndex].id;
-    console.log(`Thẻ ${cardId} được đánh dấu là: ${status}`);
-    // Gọi đến API ở backend để cập nhật trạng thái
-    // fetch('/api/update-card-status', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ cardId, status }),
-    //   headers: { 'Content-Type': 'application/json' }
-    // });
-    // Chuyển sang thẻ tiếp theo
-    setFlipped(false); // Đặt lại trạng thái lật
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length); // Thay đổi thẻ
+    try {
+      await reviewFlashcard({ flashcard_id: cardId, quality });
+
+      // Cập nhật lại tiến độ
+      if (onUpdateProgress) {
+        const updatedProgress = await getCollectionProgress(collectionId);
+        onUpdateProgress(updatedProgress);
+      }
+
+      // Chuyển sang thẻ tiếp theo
+      setFlipped(false);
+      setCurrentIndex((i) => (i + 1) % flashcards.length);
+    } catch (error) {
+      console.error("Lỗi khi gửi review:", error);
+    }
+    console.log("summary", summary);
   };
 
   const card = flashcards[currentIndex];
 
+  // Hàm chuyển sang thẻ trước
+  const prevCard = () => {
+    setFlipped(false);
+    setCurrentIndex((i) => (i === 0 ? flashcards.length - 1 : i - 1));
+  };
+
+  // Hàm chuyển sang thẻ tiếp theo
+  const nextCard = () => {
+    setFlipped(false);
+    setCurrentIndex((i) => (i + 1) % flashcards.length);
+  };
+
   return (
     <div className="memo-flash-container">
+      <button className="fc-btn-prev" onClick={prevCard}>
+        <LeftOutlined />
+      </button>
+
       <Card className="memo-flash-card" onClick={() => setFlipped(!flipped)}>
         <div className={`memo-flash-inner ${flipped ? "flipped" : ""}`}>
           <div
@@ -106,11 +151,55 @@ const MemoFlash = ({ flashcards, collectionTag }) => {
         </div>
       </Card>
 
-      <div className="memo-flash-status">
-        <Button onClick={() => handleRemember("forgotten")}>Quên</Button>
-        {`${currentIndex + 1}/${flashcards.length}`}
-        <Button onClick={() => handleRemember("remembered")}>Nhớ</Button>
-      </div>
+      <button className="fc-btn-next" onClick={nextCard}>
+        <RightOutlined />
+      </button>
+
+      {isStudy ? (
+        <>
+          <div className="memo-flash-status">
+            <BtnWhite textKey="again" onClick={() => handleReview("again")} />
+            <BtnWhite textKey="hard" onClick={() => handleReview("hard")} />
+            <BtnWhite textKey="good" onClick={() => handleReview("good")} />
+            <BtnWhite textKey="easy" onClick={() => handleReview("easy")} />
+          </div>
+
+          <div className="memo-flash-status">
+            <Tooltip //new
+              placement="bottomRight"
+              title={t("tooltip.new_card")}
+              arrow={true}
+            >
+              <div className="dashboard_card_status_new">{summary.new}</div>
+            </Tooltip>
+
+            <Tooltip //learning
+              placement="bottomRight"
+              title={t("tooltip.learning_card")}
+              arrow={true}
+            >
+              <div className="dashboard_card_status_learn">
+                {summary.learning}
+              </div>
+            </Tooltip>
+
+            <Tooltip //due
+              placement="bottomRight"
+              title={t("tooltip.due_card")}
+              arrow={true}
+            >
+              <div className="dashboard_card_status_due">{summary.due}</div>
+            </Tooltip>
+          </div>
+        </>
+      ) : (
+        <div className="memo-flash-status">
+          <div>
+            {t("components.cards.card")} {currentIndex + 1} /{" "}
+            {flashcards.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
