@@ -3,6 +3,8 @@ import "@/views/pages/study_detail/index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShuffle, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { postRecentCollection } from "@/api/recentCollection";
 import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
@@ -10,6 +12,8 @@ import { getCollectionProgress, getDueFlashcards } from "@/api/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoFlash from "@/components/cards/flashcard";
 import OwnSet from "@/components/set-item/own-set";
+import BtnWhite from "@/components/btn/btn-white";
+import { Button } from "antd";
 
 function StudyFlashcard({ isPublic, isEditFC }) {
   const { t } = useTranslation();
@@ -18,12 +22,16 @@ function StudyFlashcard({ isPublic, isEditFC }) {
 
   const [collection, setCollection] = useState(null);
   const [flashcardsDue, setFlashcardsDue] = useState([]);
+  const [originalFlashcards, setOriginalFlashcards] = useState([]);
   const [progress, setProgress] = useState({ new: 0, learning: 0, due: 0 });
+  const [isShuffled, setIsShuffled] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -32,6 +40,8 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         const data = user
           ? await getCollectionById(id)
           : await getPublicCollectionDetail(id);
+
+        if (cancelled) return;
 
         setCollection(data);
 
@@ -42,36 +52,61 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         const flashcards = user
           ? await getDueFlashcards(id)
           : data.flashcards || [];
-        setFlashcardsDue(flashcards);
 
-        const progressData = await getCollectionProgress(id);
+        if (cancelled) return;
+
+        setFlashcardsDue(Array.isArray(flashcards) ? flashcards : []);
+        setOriginalFlashcards(Array.isArray(flashcards) ? flashcards : []);
+
+        const progressData = user
+          ? await getCollectionProgress(id)
+          : { new: 0, learning: 0, due: flashcards.length };
+
+        if (cancelled) return;
+
         setProgress(progressData);
       } catch (err) {
         console.error("Lỗi API:", err);
-        setError(t("views.pages.study_detail.error-loading"));
+        if (!cancelled) {
+          setError(t("views.pages.study_detail.error-loading"));
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     fetchData();
+
+    return () => {
+      cancelled = true;
+    };
   }, [id, t, user]);
 
   // Trở lại giao diện loading hoặc thông báo lỗi nếu có
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>;
   if (!collection) {
-    return <div>{t("views.pages.study_detail.no-collection-data")}</div>; // Kiểm tra nếu không tìm thấy collection
+    return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
   }
 
   const isAuthor = user && user.id === collection.user_id;
 
   // Hàm để cập nhật collection từ modal
   const handleUpdateCollection = (updatedCollection) => {
-    setCollection((prevCollection) => ({
-      ...prevCollection,
+    setCollection((prev) => ({
+      ...prev,
       ...updatedCollection,
     }));
+  };
+
+  const toggleShuffle = () => {
+    if (isShuffled) {
+      setFlashcardsDue(originalFlashcards);
+    } else {
+      const shuffled = [...flashcardsDue].sort(() => Math.random() - 0.5);
+      setFlashcardsDue(shuffled);
+    }
+    setIsShuffled(!isShuffled);
   };
 
   return (
@@ -81,6 +116,26 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         isAuthor={isAuthor}
         onUpdate={handleUpdateCollection}
       />
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: "12px",
+        }}
+      >
+        <Button onClick={toggleShuffle}>
+          {isShuffled ? (
+            <>
+              <FontAwesomeIcon icon={faRotate} /> {t("buttons.default")}
+            </>
+          ) : (
+            <>
+              <FontAwesomeIcon icon={faShuffle} /> {t("buttons.shuffle")}
+            </>
+          )}
+        </Button>
+      </div>
 
       <MemoFlash
         isStudy={true}
