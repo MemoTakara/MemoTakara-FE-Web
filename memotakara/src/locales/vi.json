@@ -47,6 +47,10 @@
       "edit-icon": "Sửa bộ sưu tập",
       "copy-icon": "Sao chép",
       "delete-icon": "Xóa"
+    },
+    "cards": {
+      "card": "Thẻ",
+      "no-fc-due": "Không có thẻ nào cần ôn tập!"
     }
   },
   "views": {
@@ -141,7 +145,7 @@
         "collection-des": "Mô tả: ",
         "no-description": "Bộ sưu tập chưa có mô tả",
         "totalcard": "thẻ",
-        "flashcards-title": "Thẻ trong bộ sưu tập này:",
+        "flashcards-title": "Thẻ trong bộ sưu tập này",
         "error-loading": "Lỗi tải dữ liệu"
       },
       "study_sets": {
@@ -180,7 +184,11 @@
     "back_to_login": "Quay lại trang Đăng nhập",
     "see_more": "Xem thêm",
     "study_now": "Học ngay",
-    "see-details": "Xem chi tiết"
+    "see-details": "Xem chi tiết",
+    "again": "Xem lại",
+    "hard": "Khó nhớ",
+    "good": "Tốt",
+    "easy": "Dễ"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

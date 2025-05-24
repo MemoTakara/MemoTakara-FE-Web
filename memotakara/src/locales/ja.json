@@ -47,6 +47,10 @@
       "edit-icon": "編集",
       "copy-icon": "コピー",
       "delete-icon": "削除"
+    },
+    "cards": {
+      "card": "カード",
+      "no-fc-due": "復習期限のカードはありません！"
     }
   },
   "views": {
@@ -141,7 +145,7 @@
         "collection-des": "説明: ",
         "no-description": "説明文がありません",
         "totalcard": "カード",
-        "flashcards-title": "このコレクションのカード:",
+        "flashcards-title": "このコレクションのカード",
         "error-loading": "読み込みエラー"
       },
       "study_sets": {
@@ -180,7 +184,11 @@
     "back_to_login": "ログイン画面に戻る",
     "see_more": "もっと見る",
     "study_now": "今すぐ学習",
-    "see-details": "詳細を見る"
+    "see-details": "詳細を見る",
+    "again": "もう一度",
+    "hard": "難しい",
+    "good": "良い",
+    "easy": "簡単"
   },
   "tooltip": {
     "edit": "編集",

@@ -47,6 +47,10 @@
       "edit-icon": "编辑合集",
       "copy-icon": "复制",
       "delete-icon": "删除"
+    },
+    "cards": {
+      "card": "卡片",
+      "no-fc-due": "没有需要学习的卡片！"
     }
   },
   "views": {
@@ -141,7 +145,7 @@
         "collection-des": "描述: ",
         "no-description": "该合集暂无描述",
         "totalcard": "卡片",
-        "flashcards-title": "本合集中的卡片:",
+        "flashcards-title": "本合集中的卡片",
         "error-loading": "加载错误"
       },
       "study_sets": {
@@ -180,7 +184,11 @@
     "back_to_login": "返回登录",
     "see_more": "查看更多",
     "study_now": "立即学习",
-    "see-details": "查看详情"
+    "see-details": "查看详情",
+    "again": "不记得",
+    "hard": "困难",
+    "good": "良好",
+    "easy": "记得"
   },
   "tooltip": {
     "edit": "编辑",

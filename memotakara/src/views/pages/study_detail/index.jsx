@@ -12,6 +12,7 @@ import LoadingPage from "@/views/error-pages/LoadingPage";
 import PublicSet from "@/components/set-item/public-set"; // Component hiển thị thông tin collection
 import MemoCard from "@/components/cards/card"; // Component hiển thị thông tin flashcards
 import MemoFlash from "@/components/cards/flashcard";
+import OwnSet from "@/components/set-item/own-set";
 
 function StudyDetail({ isPublic, isEditFC }) {
   const { t } = useTranslation();
@@ -77,20 +78,31 @@ function StudyDetail({ isPublic, isEditFC }) {
 
   return (
     <div className="std-detail-container">
-      <PublicSet
-        collection={collection}
-        isPublic={isPublic}
-        isAuthor={isAuthor}
-        onUpdate={handleUpdateCollection}
-      />
+      {isPublic ? (
+        <PublicSet
+          collection={collection}
+          isPublic={isPublic}
+          isAuthor={isAuthor}
+          onUpdate={handleUpdateCollection}
+        />
+      ) : (
+        <OwnSet
+          collection={collection}
+          isAuthor={isAuthor}
+          onUpdate={handleUpdateCollection}
+        />
+      )}
 
       <MemoFlash
         flashcards={collection.flashcards}
+        collectionId={collection.id}
         collectionTag={collection.tag}
       />
 
       <div className="std-detail-flashcards-title">
-        {t("views.pages.study_detail.flashcards-title")}
+        {`${t("views.pages.study_detail.flashcards-title")} (${
+          flashcards.length
+        }):`}
       </div>
 
       <MemoCard

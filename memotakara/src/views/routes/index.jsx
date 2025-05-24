@@ -15,6 +15,7 @@ import Statistics from "@/views/pages/statistics";
 import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
 import StudyDetail from "@/views/pages/study_detail";
+import StudyFlashcard from "@/views/pages/study/flashcard";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import UserManagement from "@/views/admin-pages/user";
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
           {
             path: "public-study-set/:id",
             element: <StudyDetail isPublic={false} isEditFC={false} />,
+          },
+          {
+            path: "collection-study/flashcard/:id",
+            element: <StudyFlashcard isPublic={false} isEditFC={false} />,
           },
         ],
       },

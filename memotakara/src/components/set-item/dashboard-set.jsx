@@ -1,13 +1,30 @@
 import "./index.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
+import { getCollectionProgress } from "@/api/flashcard";
 import BtnBlue from "@/components/btn/btn-blue";
 
 const DashboardCard = ({ collection, setAuthor }) => {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
+  const [progress, setProgress] = useState({ new: 0, learning: 0, due: 0 });
+
+  useEffect(() => {
+    if (!setAuthor) return;
+
+    const fetchProgress = async () => {
+      try {
+        const data = await getCollectionProgress(collection.id);
+        setProgress(data);
+      } catch (err) {
+        console.error("Lỗi khi lấy tiến độ:", err);
+      }
+    };
+
+    fetchProgress();
+  }, [collection.id, setAuthor]);
 
   return (
     <div className="dashboard_card_container">
@@ -16,30 +33,30 @@ const DashboardCard = ({ collection, setAuthor }) => {
       {setAuthor && (
         <div>
           <div className="dashboard_card_status">
-            <Tooltip //new
+            <Tooltip // new
               placement="bottomRight"
               title={t("tooltip.new_card")}
               arrow={true}
             >
-              <div className="dashboard_card_status_new">
-                {collection.flashcard}
-              </div>
+              <div className="dashboard_card_status_new">{progress.new}</div>
             </Tooltip>
 
-            <Tooltip //learning
+            <Tooltip // learning
               placement="bottomRight"
               title={t("tooltip.learning_card")}
               arrow={true}
             >
-              <div className="dashboard_card_status_learn">0</div>
+              <div className="dashboard_card_status_learn">
+                {progress.learning}
+              </div>
             </Tooltip>
 
-            <Tooltip //due
+            <Tooltip // due
               placement="bottomRight"
               title={t("tooltip.due_card")}
               arrow={true}
             >
-              <div className="dashboard_card_status_due">0</div>
+              <div className="dashboard_card_status_due">{progress.due}</div>
             </Tooltip>
           </div>
         </div>

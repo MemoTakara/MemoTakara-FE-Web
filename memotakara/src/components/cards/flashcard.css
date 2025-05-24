@@ -4,6 +4,30 @@
   text-align: justify;
   padding-top: 30px;
   padding-bottom: 20px;
+  position: relative;
+  max-width: 500;
+  margin: auto;
+}
+
+.fc-btn-prev,
+.fc-btn-next {
+  position: absolute;
+  top: 50%;
+  background-color: transparent;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fc-btn-prev {
+  left: 0;
+  transform: translate(-90%, -50%);
+}
+
+.fc-btn-next {
+  right: 0;
+  transform: translate(90%, -50%);
 }
 
 .memo-flash-card {
@@ -28,7 +52,7 @@
 .memo-flash-front,
 .memo-flash-back {
   position: absolute;
-  width: 600px !important; /* Chiều rộng của thẻ */
+  width: 300px !important; /* Chiều rộng của thẻ */
   height: 400px !important; /* Chiều cao của thẻ */
   backface-visibility: hidden;
   display: flex;
@@ -74,8 +98,8 @@
 /* Phần trạng thái */
 .memo-flash-status {
   display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  margin-top: 10px;
-  width: 100%;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
 }
