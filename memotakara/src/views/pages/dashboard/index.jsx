@@ -78,15 +78,17 @@ function Dashboard() {
             className="dashboard_link"
             onClick={() => setActive("study_sets")}
             style={{
-              fontSize: "24px",
+              fontSize: "var(--body-size-bigger)",
               fontWeight: "var(--header-weight-size)",
+              color: "var(--color-light-button)",
+              fontStyle: "italic",
             }}
           >
             @{user?.username}
           </Link>
           {","}
           <br />
-          <span style={{ fontSize: "20px" }}>
+          <span style={{ fontSize: "var(--body-size)" }}>
             {t("views.pages.dashboard.welcome2")}
           </span>
         </div>

@@ -82,14 +82,13 @@
       },
       "forgot-password": {
         "header": "パスワードをお忘れの方",
-        "enter_code": "パスワード再設定コードを入力",
-        "code_required": "パスワード再設定用のコードを入力してください",
-        "des1": "メールアドレスを入力して、コードを受け取ってください。",
-        "des2": "システムから送信されたコードを入力してください",
-        "des3": "メールアドレスがわからない場合は、サポートチームまでお問い合わせください。",
-        "resend_code": "コードを再送する",
+        "des": "メールアドレスを入力して、コードを受け取ってください。",
         "noti_success": "パスワード再設定リンクを送信しました！",
-        "noti_error": "メールアドレスが見つかりませんでした。正しいアドレスを入力してください。"
+        "noti_error": "メールアドレスが見つかりませんでした。正しいアドレスを入力してください。",
+        "wait_for": "後ほど再送信",
+        "reset": "パスワードをリセット",
+        "reset-success": "パスワードが再設定されました！",
+        "reset-error": "エラーが発生しました。"
       },
       "landing_page": {
         "content1": "記憶力と認知能力の向上",
@@ -143,7 +142,22 @@
         "noti_error1": "アカウントがロックされています",
         "noti_error2": "既に存在するユーザーです"
       },
-      "settings": {},
+      "settings": {
+        "setting": "設定",
+        "account": "アカウント",
+        "password": "パスワード",
+        "notifications": "通知",
+        "appearance": "外観",
+        "name_placeholder": "名前を入力",
+        "new-pass-placeholder": "新しいパスワードを入力",
+        "current-pass-error": "現在のパスワードが正しくありません。",
+        "pass-error": "新しいパスワードは現在のものと異なる必要があります。",
+        "no-change": "更新する変更がありません。",
+        "email-holder": "あなたのメールアドレス",
+        "link-error": "Googleアカウントと連携できません",
+        "unlink-success": "Google連携を解除しました。",
+        "unlink-error": "連携解除に失敗しました。"
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "コレクションデータがありません",
@@ -196,7 +210,9 @@
     "good": "良い",
     "easy": "簡単",
     "shuffle": "シャッフル",
-    "default": "デフォルト"
+    "default": "デフォルト",
+    "link-google": "Googleと連携",
+    "unlink-google": "Google連携を解除"
   },
   "tooltip": {
     "edit": "編集",

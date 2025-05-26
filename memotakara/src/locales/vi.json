@@ -82,14 +82,13 @@
       },
       "forgot-password": {
         "header": "Quên mật khẩu",
-        "enter_code": "Nhập mã để đặt lại mật khẩu",
-        "code_required": "Vui lòng nhập mã được gửi để đặt lại mật khẩu",
-        "des1": "Nhập email của bạn để nhận mã đặt lại mật khẩu.",
-        "des2": "Nhập mã hệ thống đã gửi đến email của bạn",
-        "des3": "Nếu không nhớ email, vui lòng liên hệ đội hỗ trợ của chúng tôi.",
-        "resend_code": "Gửi lại mã",
+        "des": "Nhập email của bạn để nhận mã đặt lại mật khẩu.",
         "noti_success": "Đã gửi liên kết đặt lại mật khẩu thành công!",
-        "noti_error": "Không tìm thấy email. Vui lòng kiểm tra lại email và thử lại."
+        "noti_error": "Không tìm thấy email. Vui lòng kiểm tra lại email và thử lại.",
+        "wait_for": "Gửi lại yêu cầu sau",
+        "reset": "Đặt lại mật khẩu",
+        "reset-success": "Đặt lại mật khẩu thành công!",
+        "reset-error": "Đã xảy ra lỗi."
       },
       "landing_page": {
         "content1": "Nâng cao trí nhớ, nhận thức",
@@ -143,7 +142,22 @@
         "noti_error1": "Tài khoản đã bị khóa",
         "noti_error2": "Tài khoản đã tồn tại"
       },
-      "settings": {},
+      "settings": {
+        "setting": "Cài đặt",
+        "account": "Tài khoản",
+        "password": "Mật khẩu",
+        "notifications": "Thông báo",
+        "appearance": "Giao diện",
+        "name_placeholder": "Nhập tên của bạn",
+        "new-pass-placeholder": "Nhập mật khẩu mới",
+        "current-pass-error": "Mật khẩu hiện tại không đúng.",
+        "pass-error": "Mật khẩu mới không được giống mật khẩu cũ.",
+        "no-change": "Không có thay đổi nào để cập nhật.",
+        "email-holder": "Email của bạn",
+        "link-error": "Không thể liên kết với tài khoản Google",
+        "unlink-success": "Đã hủy liên kết Google.",
+        "unlink-error": "Hủy liên kết thất bại."
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "Không có dữ liệu bộ sưu tập",
@@ -196,7 +210,9 @@
     "good": "Tốt",
     "easy": "Dễ",
     "shuffle": "Ngẫu nhiên",
-    "default": "Mặc định"
+    "default": "Mặc định",
+    "link-google": "Liên kết Google",
+    "unlink-google": "Hủy liên kết Google"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

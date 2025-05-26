@@ -82,14 +82,13 @@
       },
       "forgot-password": {
         "header": "忘记密码",
-        "enter_code": "输入密码重置验证码",
-        "code_required": "请输入发送至您邮箱的密码重置验证码",
-        "des1": "输入您的邮箱以获取密码重置验证码。",
-        "des2": "输入系统发送至您邮箱的验证码",
-        "des3": "如果您不记得邮箱，请联系我们的客服团队。",
-        "resend_code": "重新发送验证码",
+        "des": "输入您的邮箱以获取密码重置验证码。",
         "noti_success": "密码重置链接发送成功！",
-        "noti_error": "未找到该邮箱，请检查后重试。"
+        "noti_error": "未找到该邮箱，请检查后重试。",
+        "wait_for": "等待后可重发",
+        "reset": "重置密码",
+        "reset-success": "密码重置成功！",
+        "reset-error": "发生错误。"
       },
       "landing_page": {
         "content1": "增强记忆力与认知能力",
@@ -143,7 +142,22 @@
         "noti_error1": "用户账号已锁定",
         "noti_error2": "用户已存在"
       },
-      "settings": {},
+      "settings": {
+        "setting": "设置",
+        "account": "账户",
+        "password": "密码",
+        "notifications": "通知",
+        "appearance": "外观",
+        "name_placeholder": "输入您的姓名",
+        "new-pass-placeholder": "输入新密码",
+        "current-pass-error": "当前密码不正确。",
+        "pass-error": "新密码不能与旧密码相同。",
+        "no-change": "没有可更新的更改。",
+        "email-holder": "您的邮箱",
+        "link-error": "无法关联Google账户",
+        "unlink-success": "已解除Google关联。",
+        "unlink-error": "解除关联失败。"
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "暂无合集数据",
@@ -196,7 +210,9 @@
     "good": "良好",
     "easy": "记得",
     "shuffle": "随机",
-    "default": "默认"
+    "default": "默认",
+    "link-google": "关联Google账号",
+    "unlink-google": "解除Google关联"
   },
   "tooltip": {
     "edit": "编辑",

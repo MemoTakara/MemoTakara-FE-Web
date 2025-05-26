@@ -3,7 +3,6 @@ import "@/views/pages/study_detail/index.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShuffle, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { postRecentCollection } from "@/api/recentCollection";
@@ -12,8 +11,7 @@ import { getCollectionProgress, getDueFlashcards } from "@/api/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoFlash from "@/components/cards/flashcard";
 import OwnSet from "@/components/set-item/own-set";
-import BtnWhite from "@/components/btn/btn-white";
-import { Button } from "antd";
+import ToggleWhite from "@/components/btn/toggle-white";
 
 function StudyFlashcard({ isPublic, isEditFC }) {
   const { t } = useTranslation();
@@ -117,24 +115,14 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         onUpdate={handleUpdateCollection}
       />
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginBottom: "12px",
-        }}
-      >
-        <Button onClick={toggleShuffle}>
-          {isShuffled ? (
-            <>
-              <FontAwesomeIcon icon={faRotate} /> {t("buttons.default")}
-            </>
-          ) : (
-            <>
-              <FontAwesomeIcon icon={faShuffle} /> {t("buttons.shuffle")}
-            </>
-          )}
-        </Button>
+      <div className="std-fc-toggle-btn">
+        <ToggleWhite
+          textKeyDefault="default"
+          textKeyClicked="shuffle"
+          iconDefault={faRotate}
+          iconClicked={faShuffle}
+          onClick={toggleShuffle}
+        />
       </div>
 
       <MemoFlash

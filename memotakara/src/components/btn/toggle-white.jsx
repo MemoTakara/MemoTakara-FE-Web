@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const BtnWhite = ({
-  textKey,
-  disabled,
+const ToggleWhite = ({
+  textKeyDefault,
+  textKeyClicked,
   style,
-  iconSrc,
-  iconAlt = "",
-  iconStyle = {},
-  username,
+  iconDefault,
+  iconClicked,
   onClick,
 }) => {
   const { t } = useTranslation();
@@ -16,10 +15,8 @@ const BtnWhite = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = () => {
-    if (!disabled) {
-      setIsClicked(!isClicked);
-      if (onClick) onClick();
-    }
+    setIsClicked(!isClicked);
+    if (onClick) onClick();
   };
 
   const btnWhiteStyle = {
@@ -28,18 +25,18 @@ const BtnWhite = ({
     justifyContent: "center",
     gap: "8px", // Khoảng cách giữa icon và text
 
-    backgroundColor: disabled
-      ? "var(--color-btn-disabled)"
-      : isHovered
+    backgroundColor: isHovered
       ? "var(--color-light-button-hover)" // Hover
+      : isClicked
+      ? "var(--color-light-background)" // Khi active
       : "#fff", // Mặc định,
-    color: disabled ? "var(--color-text-disabled)" : "var(--color-text)",
+    color: "var(--color-text)",
 
     padding: "10px",
     borderRadius: "var(--button-border-radius)",
-    border: disabled ? "1px solid #999" : "1px solid var(--color-light-button)",
+    border: "1px solid var(--color-light-button)",
 
-    cursor: disabled ? "not-allowed" : "pointer",
+    cursor: "pointer",
 
     fontSize: "var(--small-size)",
 
@@ -53,19 +50,21 @@ const BtnWhite = ({
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      disabled={disabled}
       style={btnWhiteStyle}
     >
-      {iconSrc && (
-        <img
-          src={iconSrc}
-          alt={iconAlt}
-          style={{ width: "20px", height: "20px", ...iconStyle }}
-        />
+      {isClicked ? (
+        <>
+          {iconClicked && <FontAwesomeIcon icon={iconClicked} />}
+          {t(`buttons.${textKeyClicked}`)}
+        </>
+      ) : (
+        <>
+          {iconDefault && <FontAwesomeIcon icon={iconDefault} />}
+          {t(`buttons.${textKeyDefault}`)}
+        </>
       )}
-      {username ? `${username}` : t(`buttons.${textKey}`)}
     </button>
   );
 };
 
-export default BtnWhite;
+export default ToggleWhite;
