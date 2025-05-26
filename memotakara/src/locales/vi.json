@@ -116,8 +116,10 @@
         "password_placeholder": "Nhập mật khẩu của bạn",
         "password_confirm_invalid": "Mật khẩu xác nhận không khớp!",
         "noti_success": "Đăng nhập thành công!",
-        "noti_error1": "Lỗi xác thực: Email hoặc mật khẩu không đúng!",
-        "noti_error2": "Đăng nhập thất bại. Vui lòng thử lại."
+        "noti_error": "Đăng nhập thất bại. Vui lòng thử lại.",
+        "noti_error1": "Không tìm thấy email, bạn đã đăng ký tài khoản chưa?",
+        "noti_error2": "Mật khẩu không hợp lệ",
+        "noti_error3": "Tài khoản đang bị khóa"
       },
       "register": {
         "header": "Tạo tài khoản! Vui lòng nhập thông tin của bạn.",
@@ -125,6 +127,7 @@
         "email_required": "Vui lòng nhập email!",
         "email_placeholder": "Nhập email của bạn",
         "username_required": "Vui lòng nhập tên người dùng!",
+        "username_invalid": "Tên người dùng chỉ được chứa chữ cái, số và dấu gạch dưới.",
         "username_placeholder": "Nhập tên người dùng",
         "password_required": "Vui lòng nhập mật khẩu",
         "password_placeholder": "Nhập mật khẩu",
@@ -136,7 +139,9 @@
         "login": "Đã có tài khoản?",
         "login_now": "Đăng nhập ngay!",
         "noti_success": "Đăng ký thành công!",
-        "noti_error": "Đăng ký thất bại. Vui lòng thử lại."
+        "noti_error": "Đăng ký không thành công. Vui lòng thử lại.",
+        "noti_error1": "Tài khoản đã bị khóa",
+        "noti_error2": "Tài khoản đã tồn tại"
       },
       "settings": {},
       "statistics": {},
@@ -168,6 +173,7 @@
   },
   "buttons": {
     "submit": "Gửi",
+    "save": "Lưu",
     "cancel": "Hủy",
     "continue": "Tiếp tục",
     "login": "Đăng nhập",
@@ -188,7 +194,9 @@
     "again": "Xem lại",
     "hard": "Khó nhớ",
     "good": "Tốt",
-    "easy": "Dễ"
+    "easy": "Dễ",
+    "shuffle": "Ngẫu nhiên",
+    "default": "Mặc định"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

@@ -116,8 +116,10 @@
         "password_placeholder": "パスワードを入力",
         "password_confirm_invalid": "パスワードが一致しません！",
         "noti_success": "ログイン成功！",
-        "noti_error1": "認証エラー：メールアドレスまたはパスワードが正しくありません！",
-        "noti_error2": "ログインに失敗しました。もう一度お試しください。"
+        "noti_error": "ログインに失敗しました。もう一度お試しください。",
+        "noti_error1": "メールアドレスが見つかりません。アカウント登録はお済みですか？",
+        "noti_error2": "パスワードが正しくありません",
+        "noti_error3": "アカウントが有効化されていません"
       },
       "register": {
         "header": "アカウント作成！情報を入力してください。",
@@ -125,6 +127,7 @@
         "email_required": "メールアドレスを入力してください！",
         "email_placeholder": "メールアドレスを入力",
         "username_required": "ユーザー名を入力してください！",
+        "username_invalid": "ユーザー名は英数字とアンダースコアのみ使用できます",
         "username_placeholder": "ユーザー名を入力",
         "password_required": "パスワードを入力してください",
         "password_placeholder": "パスワードを入力",
@@ -136,7 +139,9 @@
         "login": "既にアカウントをお持ちですか？",
         "login_now": "今すぐログイン！",
         "noti_success": "登録が完了しました！",
-        "noti_error": "登録に失敗しました。もう一度お試しください。"
+        "noti_error": "登録に失敗しました。もう一度お試しください。",
+        "noti_error1": "アカウントがロックされています",
+        "noti_error2": "既に存在するユーザーです"
       },
       "settings": {},
       "statistics": {},
@@ -168,6 +173,7 @@
   },
   "buttons": {
     "submit": "送信",
+    "save": "保存",
     "cancel": "キャンセル",
     "continue": "次へ",
     "login": "ログイン",
@@ -188,7 +194,9 @@
     "again": "もう一度",
     "hard": "難しい",
     "good": "良い",
-    "easy": "簡単"
+    "easy": "簡単",
+    "shuffle": "シャッフル",
+    "default": "デフォルト"
   },
   "tooltip": {
     "edit": "編集",

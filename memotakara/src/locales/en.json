@@ -82,14 +82,13 @@
       },
       "forgot-password": {
         "header": "Forgot Password",
-        "enter_code": "Enter code to reset password",
-        "code_required": "Please enter code sent to reset password",
-        "des1": "Enter your email to receive a password reset code.",
-        "des2": "Enter the code sent to your email by the system",
-        "des3": "If you don't remember your email, please contact our support team.",
-        "resend_code": "Resend code",
+        "des": "Enter your email to receive a password reset link.",
         "noti_success": "Password reset link sent successfully!",
-        "noti_error": "Email not found. Please check your email and try again."
+        "noti_error": "Email not found. Please check your email and try again.",
+        "wait_for": "Resend request after",
+        "reset": "Reset password",
+        "reset-success": "Password has been reset!",
+        "reset-error": "An error occurred."
       },
       "landing_page": {
         "content1": "Enhance memory, cognition",
@@ -116,8 +115,10 @@
         "password_placeholder": "Enter your password",
         "password_confirm_invalid": "Password confirmation does not match!",
         "noti_success": "Login Successful!",
-        "noti_error1": "Unauthorized: Incorrect email or password!",
-        "noti_error2": "Login Failed. Please try again."
+        "noti_error": "Login Failed. Please try again.",
+        "noti_error1": "Email not found, have you registered an account yet?",
+        "noti_error2": "Invalid password",
+        "noti_error3": "User account not active"
       },
       "register": {
         "header": "Create an account! Please enter your details.",
@@ -125,6 +126,7 @@
         "email_required": "Please input your email!",
         "email_placeholder": "Enter your email",
         "username_required": "Please input your username!",
+        "username_invalid": "Username must contain only letters, numbers, and underscores.",
         "username_placeholder": "Enter your username",
         "password_required": "Please enter your password",
         "password_placeholder": "Enter your password",
@@ -136,9 +138,21 @@
         "login": "Already have an account?",
         "login_now": "Login Now!",
         "noti_success": "Registration Successful!",
-        "noti_error": "Registration Failed. Please try again."
+        "noti_error": "Registration Failed. Please try again.",
+        "noti_error1": "User account is locked",
+        "noti_error2": "User already exists"
       },
-      "settings": {},
+      "settings": {
+        "setting": "Settings",
+        "account": "Account",
+        "password": "Password",
+        "notifications": "Notifications",
+        "appearance": "Appearance",
+        "name_placeholder": "Enter your name",
+        "new-pass-placeholder": "Enter your new password",
+        "current-pass-error": "The current password is incorrect.",
+        "pass-error": "The new password cannot be the same as the old password."
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "No collection data.",
@@ -168,6 +182,7 @@
   },
   "buttons": {
     "submit": "Submit",
+    "save": "Save",
     "cancel": "Cancel",
     "continue": "Continue",
     "login": "Login",
