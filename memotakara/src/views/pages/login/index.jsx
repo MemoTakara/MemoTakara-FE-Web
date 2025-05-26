@@ -10,7 +10,7 @@ import BtnWhite from "@/components/btn/btn-white";
 
 function Login() {
   const { t } = useTranslation();
-  const { login, user } = useAuth(); // Lấy hàm login từ context
+  const { login, user, getGoogleRedirect } = useAuth(); // Lấy hàm login từ context
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
@@ -37,14 +37,51 @@ function Login() {
         duration: 2,
       });
     } catch (error) {
+      let errorMessage;
+      switch (error.response?.data?.message) {
+        case "Email not found":
+          errorMessage = t("views.pages.login.noti_error1");
+          break;
+        case "Invalid password":
+          errorMessage = t("views.pages.login.noti_error2");
+          break;
+        case "User account not active":
+          errorMessage = t("views.pages.login.noti_error3");
+          break;
+        default:
+          errorMessage = t("views.pages.login.noti_error");
+          break;
+      }
       messageApi.error({
-        content:
-          error.response?.status === 401
-            ? t("views.pages.login.noti_error1")
-            : t("views.pages.login.noti_error2"),
+        content: errorMessage,
         key,
         duration: 2,
       });
+    }
+  };
+
+  const googleRedirect = async () => {
+    const key = "loginMessage";
+    try {
+      const response = await getGoogleRedirect();
+      window.location.href = response;
+      console.log("Login: Get Google redirects successfully!");
+    } catch {
+      let errorMessage;
+      switch (error.response?.data?.message) {
+        case "User account not active":
+          errorMessage = t("views.pages.login.noti_error3");
+          break;
+        default:
+          errorMessage = t("views.pages.login.noti_error");
+          break;
+      }
+      messageApi.error({
+        content: errorMessage,
+        key,
+        duration: 2,
+      });
+      console.error("Login: Error get Google redirect");
     }
   };
 
@@ -144,6 +181,7 @@ function Login() {
           }}
           iconSrc={google_icon}
           iconAlt="Google icon"
+          onClick={googleRedirect}
         />
       </div>
 

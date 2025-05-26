@@ -68,6 +68,20 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const getGoogleRedirect = async () => {
+    try {
+      const response = await axiosClient.get("/auth/google/redirect");
+      // console.log("response: ", response.data.redirect_url);
+      return response.data.redirect_url;
+    } catch (error) {
+      console.error(
+        "Can't get Google redirect",
+        error.response?.data?.message || error.message
+      );
+      throw error;
+    }
+  };
+
   // Đăng ký (Gửi request đến backend)
   const register = async (username, email, password, password_confirmation) => {
     try {
@@ -80,10 +94,7 @@ const AuthProvider = ({ children }) => {
       updateToken(response.data.token);
       setUser(response.data.user);
     } catch (error) {
-      console.error(
-        "Registration failed:",
-        error.response?.data?.message || error.message
-      );
+      console.error("Registration failed:", error.response?.data);
 
       // Ném lỗi để handleRegister() xử lý
       throw error;
@@ -110,7 +121,17 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider
+      value={{
+        updateToken,
+        user,
+        token,
+        login,
+        getGoogleRedirect,
+        register,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

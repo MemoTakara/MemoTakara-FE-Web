@@ -9,7 +9,9 @@ import UserLayout from "@/components/layout/UserLayout";
 import LandingPage from "@/views/pages/landing_page";
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
+import GooglePage from "@/views/pages/login/google";
 import ForgotPassword from "@/views/pages/forgot-password";
+import ResetPassword from "@/views/pages/forgot-password/reset-pass";
 import Dashboard from "@/views/pages/dashboard";
 import Statistics from "@/views/pages/statistics";
 import Settings from "@/views/pages/settings";
@@ -45,8 +47,16 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "google",
+        element: <GooglePage />,
+      },
+      {
         path: "forgot_password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "reset-password",
+        element: <ResetPassword />,
       },
       {
         path: "public-collection",
