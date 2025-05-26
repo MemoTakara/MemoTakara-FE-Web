@@ -64,13 +64,7 @@ const DashboardCard = ({ collection, setAuthor }) => {
 
       {setAuthor ? (
         <div className="dashboard_card_footer">
-          <div
-            className="set-item-collection-des"
-            style={{
-              flex: "1",
-              fontSize: "16px",
-            }}
-          >
+          <div className="set-item-collection-des">
             {t("components.header.search_user1")}{" "}
             {collection.user?.role === "admin"
               ? "MemoTakara"
@@ -87,8 +81,8 @@ const DashboardCard = ({ collection, setAuthor }) => {
             <BtnBlue
               textKey="study_now"
               style={{
-                fontSize: "12px",
-                borderRadius: "15px",
+                fontSize: "var(--small-size)",
+                borderRadius: "var(--small-btn-radius)",
               }}
             />
           </Link>
@@ -104,8 +98,8 @@ const DashboardCard = ({ collection, setAuthor }) => {
             <BtnBlue
               textKey="see-details"
               style={{
-                fontSize: "12px",
-                borderRadius: "15px",
+                fontSize: "var(--small-size)",
+                borderRadius: "var(--small-btn-radius)",
               }}
             />
           </Link>

@@ -31,7 +31,7 @@
 
 #dashboard_sayhi_text {
   flex: 1;
-  font-size: 30px;
+  font-size: var(--collection-title-size);
 }
 
 .dashboard_cards {

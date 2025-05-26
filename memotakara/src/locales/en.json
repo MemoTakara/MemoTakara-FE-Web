@@ -151,7 +151,12 @@
         "name_placeholder": "Enter your name",
         "new-pass-placeholder": "Enter your new password",
         "current-pass-error": "The current password is incorrect.",
-        "pass-error": "The new password cannot be the same as the old password."
+        "pass-error": "The new password cannot be the same as the old password.",
+        "no-change": "There are no changes to update.",
+        "email-holder": "Your email",
+        "link-error": "Cannot link to Google account",
+        "unlink-success": "Google link removed.",
+        "unlink-error": "Unlink failed."
       },
       "statistics": {},
       "study_detail": {
@@ -205,7 +210,9 @@
     "good": "Good",
     "easy": "Easy",
     "shuffle": "Shuffle",
-    "default": "Default"
+    "default": "Default",
+    "link-google": "Link to Google",
+    "unlink-google": "Unlink Google"
   },
   "tooltip": {
     "edit": "Edit",
