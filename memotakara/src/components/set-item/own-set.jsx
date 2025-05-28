@@ -1,25 +1,94 @@
 // set while study
 import "./index.css";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Dropdown, message } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCopy,
   faPencil,
   faCodePullRequest,
   faRepeat,
   faKeyboard,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
+import { duplicateCollection } from "@/api/collection";
+import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
 
-const OwnSet = ({ collection }) => {
+const OwnSet = ({ collection, isAuthor, onUpdate }) => {
   const { t } = useTranslation();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   if (!collection) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>; // Kiểm tra nếu không tìm thấy collection
   }
 
+  const handleDuplicate = async () => {
+    const result = await duplicateCollection(collection.id);
+
+    if (result.success) {
+      messageApi.success(result.message);
+    } else {
+      messageApi.error(result.message);
+    }
+  };
+
+  const handleMenuClick = ({ key }) => {
+    if (key === "edit") {
+      setIsModalVisible(true);
+    } else if (key === "copy") {
+      handleDuplicate();
+    }
+  };
+
+  const handleUpdate = (updatedCollection) => {
+    // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
+    onUpdate(updatedCollection);
+  };
+
+  const menuItems = useMemo(
+    () => [
+      ...(isAuthor
+        ? [
+            {
+              key: "edit",
+              label: (
+                <div>
+                  <FontAwesomeIcon
+                    icon={faPencil}
+                    style={{ fontSize: "var(--body-size)", marginRight: 8 }}
+                  />
+                  {t("components.set-item.edit-icon")}
+                </div>
+              ),
+            },
+          ]
+        : []),
+      {
+        key: "copy",
+        label: (
+          <div>
+            <FontAwesomeIcon
+              icon={faCopy}
+              style={{
+                fontSize: "var(--body-size)",
+                marginRight: 8,
+              }}
+            />
+            {t("components.set-item.copy-icon")}
+          </div>
+        ),
+      },
+    ],
+    [isAuthor, t]
+  );
+
   return (
     <div className="set-item-container">
+      {contextHolder}
       <div className="set-item-above">
         <div className="set-item-header">
           <div className="set-item-collection-name">
@@ -42,10 +111,29 @@ const OwnSet = ({ collection }) => {
           </div>
         </div>
 
-        {/* tổng số flashcard */}
-        <div className="set-item-footer set-item-totalcard">
-          {collection.flashcards ? collection.flashcards.length : 0}{" "}
-          {t("views.pages.study_detail.totalcard")}
+        <div className="set-item-footer">
+          <Dropdown
+            menu={{
+              items: menuItems,
+              onClick: handleMenuClick,
+            }}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <EllipsisOutlined
+              style={{
+                fontSize: "var(--body-size-max)",
+                marginBottom: "5px",
+                cursor: "pointer",
+              }}
+            />
+          </Dropdown>
+
+          {/* <div className="set-item-totalcard">
+            {collection.flashcards?.length || 0}
+            <br />
+            {t("views.pages.study_detail.totalcard")}
+          </div> */}
         </div>
       </div>
 
@@ -65,21 +153,6 @@ const OwnSet = ({ collection }) => {
           className="set-item-link"
         >
           <FontAwesomeIcon
-            icon={faPencil}
-            style={{
-              fontSize: "var(--body-size-max)",
-              color: "var(--color-light-button)",
-              marginBottom: "5px",
-            }}
-          />
-          {t("views.pages.study_sets.edit-icon")}
-        </Link>
-
-        <Link
-          to={`/public-study-set/${collection.id}`}
-          className="set-item-link"
-        >
-          <FontAwesomeIcon
             icon={faCodePullRequest}
             style={{
               fontSize: "var(--body-size-max)",
@@ -91,7 +164,7 @@ const OwnSet = ({ collection }) => {
         </Link>
 
         <Link
-          to={`/public-study-set/${collection.id}`}
+          to={`/collection-study/flashcard/${collection.id}`}
           className="set-item-link"
         >
           <FontAwesomeIcon
@@ -135,6 +208,14 @@ const OwnSet = ({ collection }) => {
           {t("views.pages.study_sets.test-icon")}
         </Link>
       </div>
+
+      {/* Modal Edit Collection */}
+      <MemoEditCollection
+        isVisible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onUpdate={handleUpdate}
+        collection={collection}
+      />
     </div>
   );
 };

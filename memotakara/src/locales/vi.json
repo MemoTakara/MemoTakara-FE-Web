@@ -15,10 +15,42 @@
       "terms_of_condition": "Điều khoản sử dụng",
       "help": "Trợ giúp/FAQ"
     },
+    "create-collection": {
+      "title": "Tạo bộ sưu tập mới",
+      "collection-name": "Tên bộ sưu tập",
+      "name-required": "Vui lòng nhập tên bộ sưu tập!",
+      "name-placeholder": "Nhập tên bộ sưu tập",
+      "des": "Mô tả",
+      "des-placeholder": "Nhập mô tả",
+      "privacy": "Quyền riêng tư",
+      "privacy-required": "Vui lòng chọn chế độ riêng tư!",
+      "privacy-placeholder": "Chọn chế độ riêng tư",
+      "privacy-public": "Công khai",
+      "privacy-private": "Riêng tư",
+      "tag-placeholder": "Nhập các thẻ (phân cách bằng dấu phẩy)",
+      "btn-creating": "Đang tạo...",
+      "btn-create": "Tạo bộ sưu tập",
+      "create-msg-success": "Tạo bộ sưu tập thành công!",
+      "create-msg-error": "Lỗi khi tạo bộ sưu tập. Vui lòng thử lại."
+    },
+    "edit-collection": {
+      "title": "Chỉnh sửa bộ sưu tập",
+      "update-success": "Cập nhật thành công!",
+      "update-error": "Lỗi khi cập nhật.",
+      "btn-update": "Lưu thay đổi",
+      "btn-updating": "Đang lưu..."
+    },
     "set-item": {
       "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
       "filter-all": "Tất cả",
-      "filter-otherUsers": "Người dùng khác"
+      "filter-otherUsers": "Người dùng khác",
+      "edit-icon": "Sửa bộ sưu tập",
+      "copy-icon": "Sao chép",
+      "delete-icon": "Xóa"
+    },
+    "cards": {
+      "card": "Thẻ",
+      "no-fc-due": "Không có thẻ nào cần ôn tập!"
     }
   },
   "views": {
@@ -39,7 +71,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "Chào mừng trở lại ",
         "welcome2": "Hãy bắt đầu với các thẻ ghi nhớ đến hạn hôm nay!",
@@ -51,14 +82,13 @@
       },
       "forgot-password": {
         "header": "Quên mật khẩu",
-        "enter_code": "Nhập mã để đặt lại mật khẩu",
-        "code_required": "Vui lòng nhập mã được gửi để đặt lại mật khẩu",
-        "des1": "Nhập email của bạn để nhận mã đặt lại mật khẩu.",
-        "des2": "Nhập mã hệ thống đã gửi đến email của bạn",
-        "des3": "Nếu không nhớ email, vui lòng liên hệ đội hỗ trợ của chúng tôi.",
-        "resend_code": "Gửi lại mã",
+        "des": "Nhập email của bạn để nhận mã đặt lại mật khẩu.",
         "noti_success": "Đã gửi liên kết đặt lại mật khẩu thành công!",
-        "noti_error": "Không tìm thấy email. Vui lòng kiểm tra lại email và thử lại."
+        "noti_error": "Không tìm thấy email. Vui lòng kiểm tra lại email và thử lại.",
+        "wait_for": "Gửi lại yêu cầu sau",
+        "reset": "Đặt lại mật khẩu",
+        "reset-success": "Đặt lại mật khẩu thành công!",
+        "reset-error": "Đã xảy ra lỗi."
       },
       "landing_page": {
         "content1": "Nâng cao trí nhớ, nhận thức",
@@ -85,8 +115,10 @@
         "password_placeholder": "Nhập mật khẩu của bạn",
         "password_confirm_invalid": "Mật khẩu xác nhận không khớp!",
         "noti_success": "Đăng nhập thành công!",
-        "noti_error1": "Lỗi xác thực: Email hoặc mật khẩu không đúng!",
-        "noti_error2": "Đăng nhập thất bại. Vui lòng thử lại."
+        "noti_error": "Đăng nhập thất bại. Vui lòng thử lại.",
+        "noti_error1": "Không tìm thấy email, bạn đã đăng ký tài khoản chưa?",
+        "noti_error2": "Mật khẩu không hợp lệ",
+        "noti_error3": "Tài khoản đang bị khóa"
       },
       "register": {
         "header": "Tạo tài khoản! Vui lòng nhập thông tin của bạn.",
@@ -94,6 +126,7 @@
         "email_required": "Vui lòng nhập email!",
         "email_placeholder": "Nhập email của bạn",
         "username_required": "Vui lòng nhập tên người dùng!",
+        "username_invalid": "Tên người dùng chỉ được chứa chữ cái, số và dấu gạch dưới.",
         "username_placeholder": "Nhập tên người dùng",
         "password_required": "Vui lòng nhập mật khẩu",
         "password_placeholder": "Nhập mật khẩu",
@@ -105,21 +138,39 @@
         "login": "Đã có tài khoản?",
         "login_now": "Đăng nhập ngay!",
         "noti_success": "Đăng ký thành công!",
-        "noti_error": "Đăng ký thất bại. Vui lòng thử lại."
+        "noti_error": "Đăng ký không thành công. Vui lòng thử lại.",
+        "noti_error1": "Tài khoản đã bị khóa",
+        "noti_error2": "Tài khoản đã tồn tại"
       },
-      "settings": {},
+      "settings": {
+        "setting": "Cài đặt",
+        "account": "Tài khoản",
+        "password": "Mật khẩu",
+        "notifications": "Thông báo",
+        "appearance": "Giao diện",
+        "name_placeholder": "Nhập tên của bạn",
+        "new-pass-placeholder": "Nhập mật khẩu mới",
+        "current-pass-error": "Mật khẩu hiện tại không đúng.",
+        "pass-error": "Mật khẩu mới không được giống mật khẩu cũ.",
+        "no-change": "Không có thay đổi nào để cập nhật.",
+        "email-holder": "Email của bạn",
+        "link-error": "Không thể liên kết với tài khoản Google",
+        "unlink-success": "Đã hủy liên kết Google.",
+        "unlink-error": "Hủy liên kết thất bại."
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "Không có dữ liệu bộ sưu tập",
         "collection-des": "Mô tả: ",
         "no-description": "Bộ sưu tập chưa có mô tả",
         "totalcard": "thẻ",
-        "flashcards-title": "Thẻ trong bộ sưu tập này:",
+        "flashcards-title": "Thẻ trong bộ sưu tập này",
         "error-loading": "Lỗi tải dữ liệu"
       },
       "study_sets": {
         "header": "Danh sách bộ sưu tập của bạn",
         "no-collection": "Không có bộ sưu tập nào",
+        "no-create-collection": "Bạn chưa có bộ sưu tập nào, hãy tạo mới nhé!",
         "edit-icon": "chỉnh sửa",
         "merge-icon": "ghép từ",
         "flashcard-icon": "thẻ ghi nhớ",
@@ -128,12 +179,15 @@
         "cards": "thẻ",
         "confirm-delete": "Bạn có chắc chắn muốn xoá collection này không?",
         "delete-success": "Xoá thành công!",
-        "delete-fail": "Xoá thất bại. Vui lòng thử lại!"
+        "delete-fail": "Xoá thất bại. Vui lòng thử lại!",
+        "filter-public": "Bộ sưu tập công khai",
+        "filter-private": "Bộ sưu tập riêng tư"
       }
     }
   },
   "buttons": {
     "submit": "Gửi",
+    "save": "Lưu",
     "cancel": "Hủy",
     "continue": "Tiếp tục",
     "login": "Đăng nhập",
@@ -149,7 +203,16 @@
     "login_with_google": "Tiếp tục với Google",
     "back_to_login": "Quay lại trang Đăng nhập",
     "see_more": "Xem thêm",
-    "study_now": "Học ngay"
+    "study_now": "Học ngay",
+    "see-details": "Xem chi tiết",
+    "again": "Xem lại",
+    "hard": "Khó nhớ",
+    "good": "Tốt",
+    "easy": "Dễ",
+    "shuffle": "Ngẫu nhiên",
+    "default": "Mặc định",
+    "link-google": "Liên kết Google",
+    "unlink-google": "Hủy liên kết Google"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

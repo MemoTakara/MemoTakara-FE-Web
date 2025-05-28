@@ -1,79 +1,110 @@
 import "./index.css";
-import { useMemo, useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
+import { getCollectionProgress } from "@/api/flashcard";
 import BtnBlue from "@/components/btn/btn-blue";
 
-const DashboardCard = ({ collections = [], userId }) => {
+const DashboardCard = ({ collection, setAuthor }) => {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
+  const [progress, setProgress] = useState({ new: 0, learning: 0, due: 0 });
 
-  //Tooltip
-  const [arrow, setArrow] = useState("Show");
-  const mergedArrow = useMemo(() => {
-    if (arrow === "Hide") {
-      return false;
-    }
-    if (arrow === "Show") {
-      return true;
-    }
-    return {
-      pointAtCenter: true,
+  useEffect(() => {
+    if (!setAuthor) return;
+
+    const fetchProgress = async () => {
+      try {
+        const data = await getCollectionProgress(collection.id);
+        setProgress(data);
+      } catch (err) {
+        console.error("Lỗi khi lấy tiến độ:", err);
+      }
     };
-  }, [arrow]);
+
+    fetchProgress();
+  }, [collection.id, setAuthor]);
 
   return (
-    <div>
-      {collections.map((collection) => (
-        <div key={collection.id} className="dashboard_card_container">
-          <div className="dashboard_card_title">
-            {collection.collection_name}
-          </div>
+    <div className="dashboard_card_container">
+      <div className="dashboard_card_title">{collection.collection_name}</div>
 
+      {setAuthor && (
+        <div>
           <div className="dashboard_card_status">
-            {collection.flashcards && collection.flashcards.length > 0 && (
-              <Tooltip
-                placement="bottomRight"
-                title={t("tooltip.flashcard_status")}
-                arrow={mergedArrow}
-              >
-                <div className="dashboard_card_status_flashcard">
-                  {collection.flashcards.length} Flashcards
-                </div>
-              </Tooltip>
-            )}
-          </div>
+            <Tooltip // new
+              placement="bottomRight"
+              title={t("tooltip.new_card")}
+              arrow={true}
+            >
+              <div className="dashboard_card_status_new">{progress.new}</div>
+            </Tooltip>
 
-          <div className="dashboard_card_footer">
-            {/* created by */}
-            <div
-              style={{
-                fontStyle: "italic",
-                fontSize: "16px",
-                alignContent: "center",
-                flex: "1",
-              }}
+            <Tooltip // learning
+              placement="bottomRight"
+              title={t("tooltip.learning_card")}
+              arrow={true}
             >
-              {collection.created_by}{" "}
-              {/* Thay đổi thành thuộc tính phù hợp với dữ liệu collection */}
-            </div>
-            <Link // Study now
-              to={`/public-study-set/${collection.id}`} // Chuyến đến chi tiết học tập của collection
-              className="dashboard_card_link"
-              onClick={() => setActive("study_sets")}
+              <div className="dashboard_card_status_learn">
+                {progress.learning}
+              </div>
+            </Tooltip>
+
+            <Tooltip // due
+              placement="bottomRight"
+              title={t("tooltip.due_card")}
+              arrow={true}
             >
-              <BtnBlue
-                textKey="study_now"
-                style={{
-                  fontSize: "12px",
-                  borderRadius: "15px",
-                }}
-              />
-            </Link>
+              <div className="dashboard_card_status_due">{progress.due}</div>
+            </Tooltip>
           </div>
         </div>
-      ))}
+      )}
+
+      {setAuthor ? (
+        <div className="dashboard_card_footer">
+          <div className="set-item-collection-des">
+            {t("components.header.search_user1")}{" "}
+            {collection.user?.role === "admin"
+              ? "MemoTakara"
+              : collection.user?.username ||
+                t("components.header.search_user2")}
+          </div>
+
+          <Link
+            to={`/public-study-set/${collection.id}`}
+            className="dashboard_card_link"
+            onClick={() => setActive("study_sets")}
+            style={{ marginLeft: "auto" }} // Để nút nằm ở bên phải
+          >
+            <BtnBlue
+              textKey="study_now"
+              style={{
+                fontSize: "var(--small-size)",
+                borderRadius: "var(--small-btn-radius)",
+              }}
+            />
+          </Link>
+        </div>
+      ) : (
+        <div className="dashboard_card_footer">
+          <Link
+            to={`/public-study-set/${collection.id}`}
+            className="dashboard_card_link"
+            onClick={() => setActive("study_sets")}
+            style={{ marginLeft: "auto" }} // Để nút nằm ở bên phải
+          >
+            <BtnBlue
+              textKey="see-details"
+              style={{
+                fontSize: "var(--small-size)",
+                borderRadius: "var(--small-btn-radius)",
+              }}
+            />
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

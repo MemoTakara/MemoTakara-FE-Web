@@ -1,77 +1,89 @@
 .setting_container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-family: var(--body-font);
   font-size: var(--body-size);
   /* height: 100vh; */
-  margin: -30px 15% 30px;
+  margin: auto;
   text-align: justify;
-  justify-content: center;
-  align-items: start;
   padding-bottom: 20px;
 }
 
-.setting_title {
+.setting-sidebar {
   display: flex;
-  width: 100%;
-  gap: 80%;
-  align-items: center;
-  margin-bottom: 30px;
+  flex-direction: column;
+  background: var(--color-light-background);
+  width: 14%;
+  height: auto;
 }
 
-.setting_title_text {
-  font-size: 40px;
+.setting-title {
+  font-size: var(--logo-size);
   font-weight: var(--header-weight-size);
+  text-align: right;
+  margin-bottom: 12%;
 }
 
-.setting_btn {
-  background: var(--color-button);
-  color: #fff;
-  font-size: var(--body-font);
-  font-weight: var(--header-weight-size);
-  padding-bottom: 5px;
+.setting-sidebar-item {
+  margin: 5% 0;
+  border: none;
+  text-align: right;
+  background: var(--color-light-background);
+  font-size: 20px;
+  cursor: pointer;
 }
 
-#setting_btn_signout {
+.setting-content {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 75%;
+  justify-content: flex-start;
+  margin-left: 5%;
+  padding: 5%;
+}
+
+#setting-btn-signout {
   background: #fff;
   color: var(--color-error-button);
-  border-radius: 35px;
+  border-radius: var(--big-btn-radius);
   border: 1px solid var(--color-error-button);
   font-size: 20px;
-  padding: 20px 15px;
+  font-weight: var(--header-weight-size);
+  padding: 2.4%;
+  width: 18%;
+  align-self: flex-end;
+  margin-bottom: 5%;
 }
 
-#setting_btn_signout:hover {
+#setting-btn-signout:hover {
   background: var(--color-error-button-hover);
 }
 
-.setting_item {
-  /* display: flex; */
+.setting-item {
   width: 100%;
-  /* gap: 80%; */
-  padding-left: 10px;
-  padding-right: 45px;
+  padding: 0 2%;
   align-items: center;
+  margin-bottom: 5%;
 }
 
-.setting_item_title {
+.setting-item-title {
   display: flex;
   width: 100%;
-  gap: 80%;
   align-items: center;
+  border-bottom: 1px solid var(--color-stroke);
+  margin-bottom: 2%;
+  padding-bottom: 1%;
 }
 
-.setting_item_title_text {
+.setting-item-title-text {
+  flex: 1;
   font-size: 30px;
   font-weight: var(--header-weight-size);
 }
 
-.setting_item_content {
-  display: grid;
-  border-radius: 20px;
-  border: 1.5px solid var(--color-button-hover);
-}
-
-.setting_avatar {
-  display: contents;
+.setting-email {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: space-between; /* Tạo khoảng cách giữa input và button */
 }

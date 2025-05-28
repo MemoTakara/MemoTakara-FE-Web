@@ -9,7 +9,7 @@ import BtnWhite from "@/components/btn/btn-white";
 
 function Register() {
   const { t } = useTranslation();
-  const { register } = useAuth();
+  const { register, getGoogleRedirect } = useAuth();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
@@ -28,15 +28,56 @@ function Register() {
         duration: 2,
       });
       setTimeout(() => {
-        navigate("/login");
+        navigate("/dashboard");
       }, 2000);
     } catch (error) {
+      let errorMessage;
+      switch (error.response.status) {
+        case 403:
+          errorMessage = t("views.pages.register.noti_error1");
+          break;
+        case 409:
+          errorMessage = t("views.pages.register.noti_error2");
+          break;
+        default:
+          errorMessage = t("views.pages.register.noti_error");
+          break;
+      }
+
       messageApi.error({
-        content:
-          error.response?.data?.message || t("views.pages.register.noti_error"),
+        content: errorMessage,
         key,
         duration: 2,
       });
+    }
+  };
+
+  const googleRedirect = async () => {
+    const key = "registerMessage";
+    try {
+      const response = await getGoogleRedirect();
+      window.location.href = response;
+      console.log("Register: Get Google redirects successfully!");
+    } catch (error) {
+      let errorMessage;
+      switch (error.response.status) {
+        case 403:
+          errorMessage = t("views.pages.register.noti_error1");
+          break;
+        case 409:
+          errorMessage = t("views.pages.register.noti_error2");
+          break;
+        default:
+          errorMessage = t("views.pages.register.noti_error");
+          break;
+      }
+
+      messageApi.error({
+        content: errorMessage,
+        key,
+        duration: 2,
+      });
+      console.error("Register: Error get Google redirect");
     }
   };
 
@@ -68,7 +109,7 @@ function Register() {
             ]}
             style={{ height: "60px" }}
           >
-            <Input />
+            <Input id="register_email" />
           </Form.Item>
 
           {/* username */}
@@ -80,6 +121,10 @@ function Register() {
               {
                 required: true,
                 message: t("views.pages.register.username_required"),
+              },
+              {
+                pattern: /^[a-zA-Z0-9_]+$/,
+                message: t("views.pages.register.username_invalid"),
               },
             ]}
             style={{ height: "60px" }}
@@ -200,6 +245,7 @@ function Register() {
           }}
           iconSrc={google_icon}
           iconAlt="Google icon"
+          onClick={googleRedirect}
         />
       </div>
 

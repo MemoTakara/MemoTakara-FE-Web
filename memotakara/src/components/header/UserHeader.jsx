@@ -4,7 +4,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Badge, Popconfirm } from "antd";
-import { BellOutlined, FireOutlined, BookOutlined } from "@ant-design/icons";
+import {
+  BellOutlined,
+  FireOutlined,
+  BookOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
@@ -119,12 +124,12 @@ const UserHeader = () => {
             onClick={() => setActive("")}
           >
             <BtnWhite
-              username={user.username}
-              iconSrc="logo.png"
-              iconAlt="User avatar"
+              username={`@${user.username}`}
               style={{
-                border: "2.4px solid var(--color-button)",
+                border: "2px solid var(--color-button)",
                 borderRadius: "30px",
+                fontSize: "16px",
+                // fontStyle: "italic",
               }}
             />
           </Link>

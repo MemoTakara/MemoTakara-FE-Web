@@ -9,13 +9,15 @@ import UserLayout from "@/components/layout/UserLayout";
 import LandingPage from "@/views/pages/landing_page";
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
+import GooglePage from "@/views/pages/login/google";
 import ForgotPassword from "@/views/pages/forgot-password";
+import ResetPassword from "@/views/pages/forgot-password/reset-pass";
 import Dashboard from "@/views/pages/dashboard";
 import Statistics from "@/views/pages/statistics";
 import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
-import CreateCollection from "@/views/pages/create_collection";
 import StudyDetail from "@/views/pages/study_detail";
+import StudyFlashcard from "@/views/pages/study/flashcard";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import UserManagement from "@/views/admin-pages/user";
@@ -45,16 +47,24 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
+        path: "google",
+        element: <GooglePage />,
+      },
+      {
         path: "forgot_password",
         element: <ForgotPassword />,
       },
       {
+        path: "reset-password",
+        element: <ResetPassword />,
+      },
+      {
         path: "public-collection",
-        element: <PublicList />,
+        element: <PublicList isPublic={true} />,
       },
       {
         path: "public-collection/:id",
-        element: <StudyDetail isPublic={true} />,
+        element: <StudyDetail isPublic={true} isEditFC={false} />,
       },
     ],
   },
@@ -82,16 +92,16 @@ const router = createBrowserRouter([
             element: <StudySets />,
           },
           {
-            path: "create_collection",
-            element: <CreateCollection />,
-          },
-          {
             path: "public-study-set",
-            element: <PublicList />,
+            element: <PublicList isPublic={false} />,
           },
           {
             path: "public-study-set/:id",
-            element: <StudyDetail isPublic={true} />,
+            element: <StudyDetail isPublic={false} isEditFC={false} />,
+          },
+          {
+            path: "collection-study/flashcard/:id",
+            element: <StudyFlashcard isPublic={false} isEditFC={false} />,
           },
         ],
       },

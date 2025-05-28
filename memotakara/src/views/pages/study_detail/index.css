@@ -22,3 +22,10 @@
   margin-top: 20px;
   margin-bottom: 25px;
 }
+
+.std-fc-toggle-btn {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 12px;
+}

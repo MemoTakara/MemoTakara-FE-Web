@@ -1,218 +1,353 @@
 import "./index.css";
-import { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import {
-  LogoutOutlined,
-  UserOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { Input, Button, message, Upload } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, Input, Button, message } from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
-
-//Upload image
-const props = {
-  name: "file",
-  action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-  headers: {
-    authorization: "authorization-text",
-  },
-  onChange(info) {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+import { changePassword } from "@/api/admin";
+import { updateAccount, unlinkGoogleAccount } from "@/api/user";
+import BtnBlue from "@/components/btn/btn-blue";
 
 function Settings() {
   const { t } = useTranslation();
+  const { user, logout, getGoogleRedirect } = useAuth();
   const navigate = useNavigate();
-
-  //Save button
   const [messageApi, contextHolder] = message.useMessage();
-  const handleSave = () => {
-    messageApi.open({
-      type: "success",
-      content: "Update successful!",
-      //style,
-    });
+
+  const [accountForm] = Form.useForm();
+  const [passwordForm] = Form.useForm();
+
+  const [formData, setFormData] = useState({
+    name: user?.name || "",
+    username: user?.username || "",
+    email: user?.email || "",
+    googleConnected: user?.google_id !== null,
+    oldPassword: "",
+    newPassword: "",
+    newPasswordConfirmation: "",
+  });
+
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  //Update account button
+  const handleAccountUpdate = async () => {
+    try {
+      const response = await updateAccount({
+        name: formData.name,
+        username: formData.username,
+        email: formData.email,
+      });
+      messageApi.success(
+        response.message || t("components.edit-collection.update-success")
+      );
+    } catch (error) {
+      if (error.errors?.username?.length) {
+        messageApi.error(error.errors.username[0]);
+      } else {
+        messageApi.error(t("components.edit-collection.update-error"));
+      }
+    }
+  };
+
+  // Link Google
+  const googleRedirect = async () => {
+    try {
+      const response = await getGoogleRedirect();
+      window.location.href = response;
+      console.log("Link: Get Google redirects successfully!");
+    } catch {
+      messageApi.error({
+        content: t("views.pages.settings.link-error"),
+        duration: 2,
+      });
+      console.error("Login: Error get Google redirect");
+    }
+  };
+
+  // Unlink google
+  const handleUnlinkGoogle = async () => {
+    try {
+      await unlinkGoogleAccount();
+      messageApi.success(t("views.pages.settings.unlink-success"));
+      setFormData((prev) => ({ ...prev, googleConnected: false }));
+    } catch (error) {
+      messageApi.error(t("views.pages.settings.unlink-error"));
+    }
+  };
+
+  // Update password button
+  const handlePassUpdate = async () => {
+    try {
+      const response = await changePassword(
+        formData.oldPassword,
+        formData.newPassword
+      );
+      messageApi.success(
+        response.message || t("components.edit-collection.update_success")
+      );
+      passwordForm.resetFields();
+      setFormData((prev) => ({
+        ...prev,
+        oldPassword: "",
+        newPassword: "",
+        newPasswordConfirmation: "",
+      }));
+    } catch (error) {
+      let errorMsg;
+      switch (error.message) {
+        case "The password is incorrect.":
+          errorMsg = t("views.pages.settings.current-pass-error");
+          break;
+        case "Same pass.":
+          errorMsg = t("views.pages.settings.pass-error");
+          break;
+        default:
+          errorMsg = t("views.pages.forgot-password.reset-error");
+          break;
+      }
+      messageApi.error({
+        content: errorMsg,
+        duration: 2,
+      });
+    }
   };
 
   //Log out
-  const { user, logout } = useAuth();
   const handleLogout = async () => {
-    console.log(user?.username); // Xem tên người dùng
     await logout(); // Đăng xuất
     navigate("/login");
   };
 
   return (
     <div className="setting_container">
-      <div className="setting_title">
-        <div className="setting_title_text">Settings</div>
+      <div className="setting-sidebar">
+        <div className="setting-title">{t("views.pages.settings.setting")}</div>
+        {["account", "password", "notifications", "appearance"].map((item) => (
+          <button
+            key={item}
+            className="setting-sidebar-item"
+            onClick={() =>
+              document.getElementById(`setting-${item}`).scrollIntoView()
+            }
+          >
+            {t(`views.pages.settings.${item}`)}
+          </button>
+        ))}
+      </div>
 
+      <div className="setting-content">
         <Button
           type="primary"
           htmlType="submit"
-          className="setting_btn"
-          id="setting_btn_signout"
+          id="setting-btn-signout"
           icon={<LogoutOutlined />}
           onClick={handleLogout}
         >
           {t("buttons.logout")}
         </Button>
-      </div>
 
-      <div className="setting_item">
-        <div className="setting_item_title">
-          <div className="setting_item_title_text">Account</div>
-          {contextHolder}
-          <Button type="primary" className="setting_btn" onClick={handleSave}>
-            Save
-          </Button>
-        </div>
+        {contextHolder}
 
-        <div className="setting_item_content">
-          <div className="setting_avatar">
-            {/* <UserOutlined
-              style={{
-                fontSize: "150px",
-                background: "#fff",
-                borderRadius: "50%",
-                border: "1px solid var(--color-button)",
-                padding: "20px",
-                color: "var(--color-disabled)",
-              }}
-            />
-            <Upload {...props}>
-              <Button icon={<UploadOutlined />}>Upload image</Button>
-            </Upload> */}
+        <div className="setting-item" id="setting-account">
+          <div className="setting-item-title">
+            <div className="setting-item-title-text">
+              {t("views.pages.settings.account")}
+            </div>
+            <BtnBlue textKey="save" onClick={handleAccountUpdate} />
           </div>
-        </div>
-      </div>
 
-      {/* <div className="namepage-mobile">
-        <div className="account-wrap">
-          <div className="account-container">
-            <div className="account-pic">
-              <img
-                className="avt-img"
-                src="https://www.svgrepo.com/show/382097/female-avatar-girl-face-woman-user-9.svg"
-                alt="Oops! Something went wrong"
-                style={{ width: "200px", height: "200px" }}
+          <Form
+            form={accountForm}
+            layout="horizontal"
+            onFinish={handleAccountUpdate}
+          >
+            <Form.Item
+              label={t("views.pages.settings.name_placeholder")}
+              name="name"
+              style={{ height: "50px" }}
+              initialValue={formData.name}
+            >
+              <Input
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
               />
+            </Form.Item>
+
+            <Form.Item
+              label={t("views.pages.register.username_placeholder")}
+              name="username"
+              style={{ height: "50px" }}
+              rules={[
+                {
+                  pattern: /^[a-zA-Z0-9_]+$/,
+                  message: t("views.pages.register.username_invalid"),
+                },
+              ]}
+              initialValue={formData.username}
+            >
+              <Input
+                value={formData.username}
+                onChange={(e) => handleInputChange("username", e.target.value)}
+              />
+            </Form.Item>
+
+            <Form.Item
+              layout=""
+              label={t("views.pages.settings.email-holder")}
+              name="email"
+              style={{ height: "50px" }}
+              rules={[
+                {
+                  type: "email",
+                  message: t("views.pages.register.email_invalid"),
+                },
+              ]}
+              initialValue={formData.email}
+            >
+              {formData.googleConnected ? (
+                <div className="setting-email">
+                  <Input
+                    value={formData.email}
+                    disabled
+                    style={{ flex: 1, marginRight: "2%" }}
+                  />
+                  <Button danger onClick={handleUnlinkGoogle}>
+                    {t("buttons.unlink-google")}
+                  </Button>
+                </div>
+              ) : (
+                <div className="setting-email">
+                  <Input
+                    value={formData.email}
+                    style={{ flex: 1, marginRight: "2%" }}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                  />
+                  <BtnBlue textKey="link-google" onClick={googleRedirect} />
+                </div>
+              )}
+            </Form.Item>
+          </Form>
+
+          {/* <div className="setting-email">
+            <div>Delete</div>
+            <Button danger onClick={handleUnlinkGoogle}>
+              Xóa
+            </Button>
+          </div> */}
+        </div>
+
+        <div className="setting-item" id="setting-password">
+          <div className="setting-item-title">
+            <div className="setting-item-title-text">
+              {t("views.pages.settings.password")}
             </div>
-            <div className="change-img">Thay ảnh đại diện</div>
+            <BtnBlue textKey="save" onClick={handlePassUpdate} />
           </div>
-          <div className="user-info">
-            <div className="user-name">
-              <div className="name-text">Họ và tên:</div>
-              <div className="user-input">
-                <Input
-                  defaultValue="Nguyễn Thị Hương Lan"
-                  style={{ color: "#074979", fontWeight: "700" }}
-                />
-              </div>
+
+          <Form
+            form={passwordForm}
+            layout="horizontal"
+            onFinish={handlePassUpdate}
+          >
+            <Form.Item
+              label={t("views.pages.register.password_placeholder")}
+              name="oldPassword"
+              rules={[
+                {
+                  required: true,
+                  message: t("views.pages.register.password_required"),
+                },
+              ]}
+            >
+              <Input.Password
+                value={formData.oldPassword}
+                onChange={(e) =>
+                  handleInputChange("oldPassword", e.target.value)
+                }
+              />
+            </Form.Item>
+
+            <Form.Item
+              label={t("views.pages.settings.new-pass-placeholder")}
+              name="newPassword"
+              rules={[
+                {
+                  required: true,
+                  message: t("views.pages.register.password_required"),
+                },
+                {
+                  min: 8,
+                  message: t("views.pages.register.password_min_length", {
+                    length: 8,
+                  }),
+                },
+              ]}
+            >
+              <Input.Password
+                value={formData.newPassword}
+                onChange={(e) =>
+                  handleInputChange("newPassword", e.target.value)
+                }
+              />
+            </Form.Item>
+
+            <Form.Item
+              label={t("views.pages.register.password_confirm_placeholder")}
+              name="newPasswordConfirmation"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: t("views.pages.register.password_confirm_required"),
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (
+                      !value ||
+                      passwordForm.getFieldValue("newPassword") === value
+                    ) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        t("views.pages.register.password_confirm_invalid")
+                      )
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input.Password
+                value={formData.newPasswordConfirmation}
+                onChange={(e) =>
+                  handleInputChange("newPasswordConfirmation", e.target.value)
+                }
+              />
+            </Form.Item>
+          </Form>
+        </div>
+
+        <div className="setting-item" id="setting-notifications">
+          <div className="setting-item-title">
+            <div className="setting-item-title-text">
+              {t("views.pages.settings.notifications")}
             </div>
-            <div className="user-date">
-              <div className="date-text">Năm sinh:</div>
-              <div className="user-input">
-                <Input
-                  defaultValue="10/10/1978"
-                  style={{ color: "#074979", fontWeight: "700" }}
-                />
-              </div>
-            </div>
-            <div className="user-address">
-              <div className="address-text">Địa chỉ:</div>
-              <div className="user-input">
-                {" "}
-                <Input
-                  defaultValue="Ngõ 1 đường 30/4 phường A, Hà Nội"
-                  style={{ color: "#074979", fontWeight: "700" }}
-                />
-              </div>
-            </div>
-            <div className="user-phone">
-              <div className="phone-text">Điện thoại:</div>
-              <div className="user-input">
-                <Input
-                  defaultValue="0911617850"
-                  style={{ color: "#074979", fontWeight: "700" }}
-                />
-              </div>
-            </div>
+            <BtnBlue textKey="save" />
           </div>
         </div>
-        <div className="more-info">
-          <div className="role-info">
-            <div className="role-text">Vai trò:</div>
-            <div
-              className="role-input"
-              style={{ color: "#074979", fontWeight: "700" }}
-            >
-              Giảng viên
+
+        <div className="setting-item" id="setting-appearance">
+          <div className="setting-item-title">
+            <div className="setting-item-title-text">
+              {t("views.pages.settings.appearance")}
             </div>
-          </div>
-          <div className="univer-info">
-            <div className="univer-text">Trường:</div>
-            <div
-              className="univer-input"
-              style={{ color: "#074979", fontWeight: "700" }}
-            >
-              Đại học Kinh tế Quốc dân
-            </div>
-          </div>
-          <div className="member-info">
-            <div className="member-text">Thành viên:</div>
-            <div
-              className="member-input"
-              style={{ color: "#074979", fontWeight: "700" }}
-            >
-              Thân thiết (có thời gian sử dụng trên 1 năm)
-            </div>
+            <BtnBlue textKey="save" />
           </div>
         </div>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="update-info"
-          onClick={handleSave}
-        >
-          Cập nhật thông tin
-        </Button>
       </div>
-      <div className="mobile-line"></div>
-      <div className="change-pass-mobile">
-        <div className="change-pass-mobile-header">Thay đổi mật khẩu</div>
-        <div className="change-pass-mobile-content">
-          <div className="change-pass-mobile-old_pass">
-            <div className="change-pass-mobile-old-text">Mật khẩu cũ:</div>
-            <div className="change-pass-mobile-old-inp">
-              <Input.Password />
-            </div>
-          </div>
-          <div className="change-pass-mobile-old_pass">
-            <div className="change-pass-mobile-old-text">Mật khẩu mới:</div>
-            <div className="change-pass-mobile-old-inp">
-              <Input.Password />
-            </div>
-          </div>
-          <div className="change-pass-mobile-old_pass">
-            <div className="change-pass-mobile-old-text">
-              Nhập lại mật khẩu:
-            </div>
-            <div className="change-pass-mobile-old-inp">
-              <Input.Password />
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

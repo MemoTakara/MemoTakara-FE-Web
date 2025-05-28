@@ -11,17 +11,25 @@ export const getPublicCollections = async () => {
   }
 };
 
+// Hàm lấy chi tiết của một public collection theo ID
+export const getPublicCollectionDetail = async (id) => {
+  try {
+    const response = await axiosClient.get(`/public-collections/${id}`);
+    return response.data; // Trả về chi tiết của collection
+  } catch (error) {
+    console.error("Lỗi khi lấy chi tiết public collection:", error);
+    return null; // Hoặc bạn có thể trả giá trị khác nếu cần
+  }
+};
+
 // Lấy danh sách các collection công khai của 1 người dùng xác định
 export const getPublicCollectionsByUser = async (userId) => {
   try {
-    const response = await fetch(`/collections/user/${userId}`);
-    if (!response.ok) {
-      throw new Error("Error fetching public collections");
-    }
-    return await response.json();
+    const response = await axiosClient.get(`/collections/user/${userId}`);
+    return response.data;
   } catch (error) {
     console.error("Error fetching public collections:", error);
-    throw error; // Đẩy lỗi lên để xử lý ở nơi gọi
+    throw error;
   }
 };
 
@@ -45,10 +53,23 @@ export const getOwnCollections = async () => {
 // Hàm tạo mới collection
 export const createCollection = async (data) => {
   try {
-    const response = await axiosClient.post("/api/collections", data);
+    const response = await axiosClient.post("/collections", data);
     return response.data;
   } catch (err) {
     throw new Error("Error creating collection");
+  }
+};
+
+// Hàm update thông tin của collection
+export const updateCollection = async (collectionId, collectionData) => {
+  try {
+    const response = await axiosClient.put(
+      `/collections/${collectionId}`,
+      collectionData
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error("Error updating collection");
   }
 };
 
@@ -61,10 +82,30 @@ export const deleteCollection = async (id) => {
 // Hàm tìm kiếm public collection theo tên, tag, tác giả
 export const searchItems = async (query) => {
   try {
-    const response = await axiosClient.get("/search-public?query=${query}");
+    const response = await axiosClient.get(`/search-public?query=${query}`);
     return response.data; // Trả về kết quả tìm kiếm
   } catch (error) {
     console.error("Lỗi khi tìm kiếm:", error);
     return [];
+  }
+};
+
+// Duplicate collection
+export const duplicateCollection = async (collectionId) => {
+  try {
+    const response = await axiosClient.post(
+      `/collections/${collectionId}/duplicate`
+    );
+    return {
+      success: true,
+      message: response.data.message,
+      newCollectionId: response.data.new_collection_id,
+    };
+  } catch (error) {
+    console.error("Error duplicating collection:", error);
+    return {
+      success: false,
+      message: error.response?.data?.error || "Failed to duplicate collection",
+    };
   }
 };

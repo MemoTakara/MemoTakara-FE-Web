@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const BtnBlue = ({ textKey, disabled, style, onClick }) => {
+const ToggleBlue = ({
+  textKeyDefault,
+  textKeyClicked,
+  disabled,
+  style,
+  iconDefault,
+  iconClicked,
+  onClick,
+}) => {
   const { t } = useTranslation();
   const [isClicked, setIsClicked] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -16,9 +24,8 @@ const BtnBlue = ({ textKey, disabled, style, onClick }) => {
   const btnBlueStyle = {
     backgroundColor: disabled
       ? "var(--color-btn-disabled)"
-      : "var(--color-light-button)", // Đổi màu nền
-    color: disabled ? "var(--color-text-disabled)" : "#fff", // Đổi màu chữ
-
+      : "var(--color-light-button)",
+    color: disabled ? "var(--color-text-disabled)" : "#fff",
     padding: "10px",
     borderRadius: "var(--button-border-radius)",
     border: disabled
@@ -26,15 +33,12 @@ const BtnBlue = ({ textKey, disabled, style, onClick }) => {
       : isHovered
       ? "1px solid var(--color-light-button)"
       : "1px solid",
-
     cursor: disabled ? "not-allowed" : "pointer",
-
     fontSize: "var(--small-size)",
-
-    transition: "0.3s ease-in-out", // tạo hiệu ứng mượt mà
-    transform: disabled ? "scale(0.95)" : "scale(1)", // Hiệu ứng phóng to khi hover
-    opacity: disabled ? 0.6 : 1, // Giảm độ rõ khi bị disable
-    ...style, // Kết hợp với style được truyền từ props
+    transition: "0.3s ease-in-out",
+    transform: disabled ? "scale(0.95)" : "scale(1)",
+    opacity: disabled ? 0.6 : 1,
+    ...style,
   };
 
   return (
@@ -45,9 +49,19 @@ const BtnBlue = ({ textKey, disabled, style, onClick }) => {
       disabled={disabled}
       style={btnBlueStyle}
     >
-      {t(`buttons.${textKey}`)}
+      {isClicked ? (
+        <>
+          {iconClicked && <span>{iconClicked}</span>}
+          {t(`buttons.${textKeyClicked}`)}
+        </>
+      ) : (
+        <>
+          {iconDefault && <span>{iconDefault}</span>}
+          {t(`buttons.${textKeyDefault}`)}
+        </>
+      )}
     </button>
   );
 };
 
-export default BtnBlue;
+export default ToggleBlue;

@@ -15,10 +15,42 @@
       "terms_of_condition": "使用条款",
       "help": "帮助/常见问题"
     },
+    "create-collection": {
+      "title": "创建新合集",
+      "collection-name": "合集名称",
+      "name-required": "请输入合集名称！",
+      "name-placeholder": "输入合集名称",
+      "des": "描述",
+      "des-placeholder": "输入描述",
+      "privacy": "隐私设置",
+      "privacy-required": "请选择隐私设置！",
+      "privacy-placeholder": "选择隐私设置",
+      "privacy-public": "公开",
+      "privacy-private": "私密",
+      "tag-placeholder": "输入标签，用逗号分隔",
+      "btn-creating": "创建中...",
+      "btn-create": "创建合集",
+      "create-msg-success": "合集创建成功！",
+      "create-msg-error": "创建合集失败，请重试。"
+    },
+    "edit-collection": {
+      "title": "编辑合集",
+      "update-success": "更新成功！",
+      "update-error": "更新失败",
+      "btn-update": "保存更改",
+      "btn-updating": "保存中..."
+    },
     "set-item": {
       "public-collection-title": "探索社区学习集",
       "filter-all": "全部",
-      "filter-otherUsers": "其他用户"
+      "filter-otherUsers": "其他用户",
+      "edit-icon": "编辑合集",
+      "copy-icon": "复制",
+      "delete-icon": "删除"
+    },
+    "cards": {
+      "card": "卡片",
+      "no-fc-due": "没有需要学习的卡片！"
     }
   },
   "views": {
@@ -39,7 +71,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "欢迎回来 ",
         "welcome2": "让我们从今天到期的闪卡开始吧！",
@@ -51,14 +82,13 @@
       },
       "forgot-password": {
         "header": "忘记密码",
-        "enter_code": "输入密码重置验证码",
-        "code_required": "请输入发送至您邮箱的密码重置验证码",
-        "des1": "输入您的邮箱以获取密码重置验证码。",
-        "des2": "输入系统发送至您邮箱的验证码",
-        "des3": "如果您不记得邮箱，请联系我们的客服团队。",
-        "resend_code": "重新发送验证码",
+        "des": "输入您的邮箱以获取密码重置验证码。",
         "noti_success": "密码重置链接发送成功！",
-        "noti_error": "未找到该邮箱，请检查后重试。"
+        "noti_error": "未找到该邮箱，请检查后重试。",
+        "wait_for": "等待后可重发",
+        "reset": "重置密码",
+        "reset-success": "密码重置成功！",
+        "reset-error": "发生错误。"
       },
       "landing_page": {
         "content1": "增强记忆力与认知能力",
@@ -85,8 +115,10 @@
         "password_placeholder": "输入密码",
         "password_confirm_invalid": "密码确认不匹配！",
         "noti_success": "登录成功！",
-        "noti_error1": "验证失败：邮箱或密码错误！",
-        "noti_error2": "登录失败，请重试。"
+        "noti_error": "登录失败，请重试。",
+        "noti_error1": "未找到该邮箱，您是否已注册账号？",
+        "noti_error2": "密码无效",
+        "noti_error3": "用户账号未激活"
       },
       "register": {
         "header": "创建账号！请输入您的信息。",
@@ -94,6 +126,7 @@
         "email_required": "请输入邮箱！",
         "email_placeholder": "输入您的邮箱",
         "username_required": "请输入用户名！",
+        "username_invalid": "用户名只能包含字母、数字和下划线",
         "username_placeholder": "输入用户名",
         "password_required": "请输入密码",
         "password_placeholder": "输入密码",
@@ -105,21 +138,39 @@
         "login": "已有账号？",
         "login_now": "立即登录！",
         "noti_success": "注册成功！",
-        "noti_error": "注册失败，请重试。"
+        "noti_error": "注册失败，请重试。",
+        "noti_error1": "用户账号已锁定",
+        "noti_error2": "用户已存在"
       },
-      "settings": {},
+      "settings": {
+        "setting": "设置",
+        "account": "账户",
+        "password": "密码",
+        "notifications": "通知",
+        "appearance": "外观",
+        "name_placeholder": "输入您的姓名",
+        "new-pass-placeholder": "输入新密码",
+        "current-pass-error": "当前密码不正确。",
+        "pass-error": "新密码不能与旧密码相同。",
+        "no-change": "没有可更新的更改。",
+        "email-holder": "您的邮箱",
+        "link-error": "无法关联Google账户",
+        "unlink-success": "已解除Google关联。",
+        "unlink-error": "解除关联失败。"
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "暂无合集数据",
         "collection-des": "描述: ",
         "no-description": "该合集暂无描述",
         "totalcard": "卡片",
-        "flashcards-title": "本合集中的卡片:",
+        "flashcards-title": "本合集中的卡片",
         "error-loading": "加载错误"
       },
       "study_sets": {
         "header": "您的合集列表",
         "no-collection": "暂无合集",
+        "no-create-collection": "您还没有任何合集，赶快创建一个吧！",
         "edit-icon": "编辑",
         "merge-icon": "配对",
         "flashcard-icon": "闪卡",
@@ -128,12 +179,15 @@
         "cards": "卡片",
         "confirm-delete": "您确定要删除该合集吗？",
         "delete-success": "删除成功！",
-        "delete-fail": "删除失败，请重试。"
+        "delete-fail": "删除失败，请重试。",
+        "filter-public": "公开合集",
+        "filter-private": "私密合集"
       }
     }
   },
   "buttons": {
     "submit": "提交",
+    "save": "保存",
     "cancel": "取消",
     "continue": "下一步",
     "login": "登录",
@@ -149,7 +203,16 @@
     "login_with_google": "使用Google账号登录",
     "back_to_login": "返回登录",
     "see_more": "查看更多",
-    "study_now": "立即学习"
+    "study_now": "立即学习",
+    "see-details": "查看详情",
+    "again": "不记得",
+    "hard": "困难",
+    "good": "良好",
+    "easy": "记得",
+    "shuffle": "随机",
+    "default": "默认",
+    "link-google": "关联Google账号",
+    "unlink-google": "解除Google关联"
   },
   "tooltip": {
     "edit": "编辑",

@@ -75,25 +75,31 @@
 }
 
 .set-item-collection-des {
+  flex: 1;
   width: 100%;
-  margin-top: 10px;
-  font-size: var(--body-size);
+  font-size: 14px;
   color: var(--color-text-disabled);
 }
 
 .set-item-footer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  text-align: end;
+  align-items: center;
   width: 10%;
   height: 100%;
   margin-top: 15px;
+  padding-left: 10px;
+}
+
+.set-item-icon {
+  justify-content: flex-end;
 }
 
 .set-item-totalcard {
+  font-size: 16px;
+  text-align: center;
   background-color: var(--color-card-background);
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 10px;
+  padding: 5px;
   box-sizing: border-box;
 }
 
@@ -112,7 +118,7 @@
   font-family: var(--body-font);
   font-size: var(--body-size);
   width: 300px;
-  height: 150px;
+  height: 160px;
   text-align: justify;
   justify-content: space-between;
   align-items: center;
@@ -152,14 +158,12 @@
 .dashboard_card_status_new,
 .dashboard_card_status_learn,
 .dashboard_card_status_due {
-  display: grid;
-  width: 40px;
+  width: 16%;
   height: 30px;
-  border-radius: 15px;
-  font-size: 14px;
+  border-radius: var(--small-btn-radius);
+  font-size: var(--small-size);
   text-align: center;
   align-content: center;
-  justify-content: center;
 }
 
 .dashboard_card_footer {

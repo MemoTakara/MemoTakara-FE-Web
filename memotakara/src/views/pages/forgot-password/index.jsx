@@ -1,13 +1,46 @@
 import "./index.css";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Form, Input } from "antd";
+import { Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
+import { forgotPassword } from "@/api/user";
 import BtnBlue from "@/components/btn/btn-blue";
 import BtnWhite from "@/components/btn/btn-white";
 
 function ForgotPassword() {
   const { t } = useTranslation();
-  const handleForgotPass = {};
+  const [loading, setLoading] = useState(false);
+  const [waitTime, setWaitTime] = useState(0);
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const handleForgotPass = async (values) => {
+    setLoading(true);
+    setWaitTime(0);
+    try {
+      // Gửi yêu cầu gửi email reset mật khẩu
+      await forgotPassword(values.email);
+      messageApi.success(t("views.pages.forgot-password.noti_success"));
+      setWaitTime(60);
+
+      const countdown = setInterval(() => {
+        setWaitTime((prev) => {
+          if (prev <= 1) {
+            clearInterval(countdown);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } catch (error) {
+      const errorMessage =
+        error.error ||
+        error.message ||
+        t("views.pages.forgot-password.noti_error");
+      messageApi.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="forgot-container">
@@ -26,13 +59,16 @@ function ForgotPassword() {
           {/* email */}
           <Form.Item
             layout="vertical"
-            label={t("views.pages.forgot-password.des1")}
+            label={t("views.pages.forgot-password.des")}
             name="email"
             rules={[
-              { type: "email", message: t("views.pages.login.email_invalid") },
+              {
+                type: "email",
+                messageApi: t("views.pages.login.email_invalid"),
+              },
               {
                 required: true,
-                message: t("views.pages.login.email_required"),
+                messageApi: t("views.pages.login.email_required"),
               },
             ]}
             style={{ height: "60px" }}
@@ -40,43 +76,31 @@ function ForgotPassword() {
             <Input placeholder={t("views.pages.login.email_placeholder")} />
           </Form.Item>
 
-          {/* code */}
-          <Form.Item
-            layout="vertical"
-            label={t("views.pages.forgot-password.enter_code")}
-            hasFeedback
-            // validateStatus="success"
-            rules={[
-              {
-                required: true,
-                message: t("views.pages.forgot-password.code_required"),
-              },
-            ]}
-            style={{ height: "60px" }}
-          >
-            <Input.OTP />
-          </Form.Item>
-
-          {/* resend */}
-          <Form.Item>
-            <div className="forgot-resend-code">
-              {t("views.pages.forgot-password.resend_code")}
+          {waitTime > 0 && (
+            <div
+              style={{
+                color: "red",
+                textAlign: "right",
+                marginBottom: "3%",
+              }}
+            >
+              {t("views.pages.forgot-password.wait_for")} {waitTime}
+              {t("s")}
             </div>
-          </Form.Item>
+          )}
 
           {/* continue */}
           <Form.Item>
-            <Link to="/reset-password">
-              <BtnBlue
-                textKey="continue"
-                style={{
-                  width: "400px",
-                  fontSize: "var(--body-size)",
-                  fontWeight: "var(--header-weight-size)",
-                  borderRadius: "var(--button-border-radius)",
-                }}
-              />
-            </Link>
+            <BtnBlue
+              textKey="continue"
+              style={{
+                width: "400px",
+                fontSize: "var(--body-size)",
+                fontWeight: "var(--header-weight-size)",
+                borderRadius: "var(--button-border-radius)",
+              }}
+              disabled={loading || waitTime > 0}
+            />
           </Form.Item>
         </Form>
 

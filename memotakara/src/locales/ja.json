@@ -15,10 +15,42 @@
       "terms_of_condition": "利用規約",
       "help": "ヘルプ/FAQ"
     },
+    "create-collection": {
+      "title": "新しいコレクションを作成",
+      "collection-name": "コレクション名",
+      "name-required": "コレクション名を入力してください！",
+      "name-placeholder": "コレクション名を入力",
+      "des": "説明",
+      "des-placeholder": "説明を入力",
+      "privacy": "公開設定",
+      "privacy-required": "公開設定を選択してください！",
+      "privacy-placeholder": "公開設定を選択",
+      "privacy-public": "公開",
+      "privacy-private": "非公開",
+      "tag-placeholder": "タグを入力（カンマ区切り）",
+      "btn-creating": "作成中...",
+      "btn-create": "コレクションを作成",
+      "create-msg-success": "コレクションを作成しました！",
+      "create-msg-error": "コレクションの作成に失敗しました。もう一度お試しください。"
+    },
+    "edit-collection": {
+      "title": "コレクションを編集",
+      "update-success": "更新に成功しました！",
+      "update-error": "更新に失敗しました。",
+      "btn-update": "変更を保存",
+      "btn-updating": "保存中..."
+    },
     "set-item": {
       "public-collection-title": "コミュニティコレクションを探索",
       "filter-all": "すべて",
-      "filter-otherUsers": "他のユーザー"
+      "filter-otherUsers": "他のユーザー",
+      "edit-icon": "編集",
+      "copy-icon": "コピー",
+      "delete-icon": "削除"
+    },
+    "cards": {
+      "card": "カード",
+      "no-fc-due": "復習期限のカードはありません！"
     }
   },
   "views": {
@@ -39,7 +71,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "おかえりなさい ",
         "welcome2": "今日の期限付きフラッシュカードから始めましょう！",
@@ -51,14 +82,13 @@
       },
       "forgot-password": {
         "header": "パスワードをお忘れの方",
-        "enter_code": "パスワード再設定コードを入力",
-        "code_required": "パスワード再設定用のコードを入力してください",
-        "des1": "メールアドレスを入力して、コードを受け取ってください。",
-        "des2": "システムから送信されたコードを入力してください",
-        "des3": "メールアドレスがわからない場合は、サポートチームまでお問い合わせください。",
-        "resend_code": "コードを再送する",
+        "des": "メールアドレスを入力して、コードを受け取ってください。",
         "noti_success": "パスワード再設定リンクを送信しました！",
-        "noti_error": "メールアドレスが見つかりませんでした。正しいアドレスを入力してください。"
+        "noti_error": "メールアドレスが見つかりませんでした。正しいアドレスを入力してください。",
+        "wait_for": "後ほど再送信",
+        "reset": "パスワードをリセット",
+        "reset-success": "パスワードが再設定されました！",
+        "reset-error": "エラーが発生しました。"
       },
       "landing_page": {
         "content1": "記憶力と認知能力の向上",
@@ -85,8 +115,10 @@
         "password_placeholder": "パスワードを入力",
         "password_confirm_invalid": "パスワードが一致しません！",
         "noti_success": "ログイン成功！",
-        "noti_error1": "認証エラー：メールアドレスまたはパスワードが正しくありません！",
-        "noti_error2": "ログインに失敗しました。もう一度お試しください。"
+        "noti_error": "ログインに失敗しました。もう一度お試しください。",
+        "noti_error1": "メールアドレスが見つかりません。アカウント登録はお済みですか？",
+        "noti_error2": "パスワードが正しくありません",
+        "noti_error3": "アカウントが有効化されていません"
       },
       "register": {
         "header": "アカウント作成！情報を入力してください。",
@@ -94,6 +126,7 @@
         "email_required": "メールアドレスを入力してください！",
         "email_placeholder": "メールアドレスを入力",
         "username_required": "ユーザー名を入力してください！",
+        "username_invalid": "ユーザー名は英数字とアンダースコアのみ使用できます",
         "username_placeholder": "ユーザー名を入力",
         "password_required": "パスワードを入力してください",
         "password_placeholder": "パスワードを入力",
@@ -105,21 +138,39 @@
         "login": "既にアカウントをお持ちですか？",
         "login_now": "今すぐログイン！",
         "noti_success": "登録が完了しました！",
-        "noti_error": "登録に失敗しました。もう一度お試しください。"
+        "noti_error": "登録に失敗しました。もう一度お試しください。",
+        "noti_error1": "アカウントがロックされています",
+        "noti_error2": "既に存在するユーザーです"
       },
-      "settings": {},
+      "settings": {
+        "setting": "設定",
+        "account": "アカウント",
+        "password": "パスワード",
+        "notifications": "通知",
+        "appearance": "外観",
+        "name_placeholder": "名前を入力",
+        "new-pass-placeholder": "新しいパスワードを入力",
+        "current-pass-error": "現在のパスワードが正しくありません。",
+        "pass-error": "新しいパスワードは現在のものと異なる必要があります。",
+        "no-change": "更新する変更がありません。",
+        "email-holder": "あなたのメールアドレス",
+        "link-error": "Googleアカウントと連携できません",
+        "unlink-success": "Google連携を解除しました。",
+        "unlink-error": "連携解除に失敗しました。"
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "コレクションデータがありません",
         "collection-des": "説明: ",
         "no-description": "説明文がありません",
         "totalcard": "カード",
-        "flashcards-title": "このコレクションのカード:",
+        "flashcards-title": "このコレクションのカード",
         "error-loading": "読み込みエラー"
       },
       "study_sets": {
         "header": "あなたのコレクションリスト",
         "no-collection": "コレクションが存在しません",
+        "no-create-collection": "コレクションがありません。新しく作成しましょう！",
         "edit-icon": "編集",
         "merge-icon": "マッチング",
         "flashcard-icon": "単語カード",
@@ -128,12 +179,15 @@
         "cards": "カード",
         "confirm-delete": "このコレクションを削除してもよろしいですか？",
         "delete-success": "削除に成功しました！",
-        "delete-fail": "削除に失敗しました。もう一度お試しください。"
+        "delete-fail": "削除に失敗しました。もう一度お試しください。",
+        "filter-public": "公開コレクション",
+        "filter-private": "非公開コレクション"
       }
     }
   },
   "buttons": {
     "submit": "送信",
+    "save": "保存",
     "cancel": "キャンセル",
     "continue": "次へ",
     "login": "ログイン",
@@ -149,7 +203,16 @@
     "login_with_google": "Googleで続ける",
     "back_to_login": "ログイン画面に戻る",
     "see_more": "もっと見る",
-    "study_now": "今すぐ学習"
+    "study_now": "今すぐ学習",
+    "see-details": "詳細を見る",
+    "again": "もう一度",
+    "hard": "難しい",
+    "good": "良い",
+    "easy": "簡単",
+    "shuffle": "シャッフル",
+    "default": "デフォルト",
+    "link-google": "Googleと連携",
+    "unlink-google": "Google連携を解除"
   },
   "tooltip": {
     "edit": "編集",

@@ -15,10 +15,42 @@
       "terms_of_condition": "Terms of Condition",
       "help": "Help/FAQ"
     },
+    "create-collection": {
+      "title": "Create a New Collection",
+      "collection-name": "Collection Name",
+      "name-required": "Please input the collection name!",
+      "name-placeholder": "Enter collection name",
+      "des": "Description",
+      "des-placeholder": "Enter description",
+      "privacy": "Privacy",
+      "privacy-required": "Please select privacy settings!",
+      "privacy-placeholder": "Select privacy",
+      "privacy-public": "Public",
+      "privacy-private": "Private",
+      "tag-placeholder": "Enter tags, separated by commas",
+      "btn-creating": "Creating...",
+      "btn-create": "Create Collection",
+      "create-msg-success": "Collection created successfully!",
+      "create-msg-error": "Error creating collection. Please try again."
+    },
+    "edit-collection": {
+      "title": "Edit collection",
+      "update-success": "Updated successfully!",
+      "update-error": "Error updating.",
+      "btn-update": "Save changes",
+      "btn-updating": "Saving..."
+    },
     "set-item": {
       "public-collection-title": "Explore Community Collections",
       "filter-all": "All",
-      "filter-otherUsers": "Others"
+      "filter-otherUsers": "Others",
+      "edit-icon": "Edit collection",
+      "copy-icon": "Copy",
+      "delete-icon": "Delete"
+    },
+    "cards": {
+      "card": "Card",
+      "no-fc-due": "No flashcards are due to learn!"
     }
   },
   "views": {
@@ -39,7 +71,6 @@
       }
     },
     "pages": {
-      "create_collection": {},
       "dashboard": {
         "welcome1": "Welcome back ",
         "welcome2": "Let's get started with your flashcards due today!",
@@ -51,14 +82,13 @@
       },
       "forgot-password": {
         "header": "Forgot Password",
-        "enter_code": "Enter code to reset password",
-        "code_required": "Please enter code sent to reset password",
-        "des1": "Enter your email to receive a password reset code.",
-        "des2": "Enter the code sent to your email by the system",
-        "des3": "If you don't remember your email, please contact our support team.",
-        "resend_code": "Resend code",
+        "des": "Enter your email to receive a password reset link.",
         "noti_success": "Password reset link sent successfully!",
-        "noti_error": "Email not found. Please check your email and try again."
+        "noti_error": "Email not found. Please check your email and try again.",
+        "wait_for": "Resend request after",
+        "reset": "Reset password",
+        "reset-success": "Password has been reset!",
+        "reset-error": "An error occurred."
       },
       "landing_page": {
         "content1": "Enhance memory, cognition",
@@ -85,8 +115,10 @@
         "password_placeholder": "Enter your password",
         "password_confirm_invalid": "Password confirmation does not match!",
         "noti_success": "Login Successful!",
-        "noti_error1": "Unauthorized: Incorrect email or password!",
-        "noti_error2": "Login Failed. Please try again."
+        "noti_error": "Login Failed. Please try again.",
+        "noti_error1": "Email not found, have you registered an account yet?",
+        "noti_error2": "Invalid password",
+        "noti_error3": "User account not active"
       },
       "register": {
         "header": "Create an account! Please enter your details.",
@@ -94,6 +126,7 @@
         "email_required": "Please input your email!",
         "email_placeholder": "Enter your email",
         "username_required": "Please input your username!",
+        "username_invalid": "Username must contain only letters, numbers, and underscores.",
         "username_placeholder": "Enter your username",
         "password_required": "Please enter your password",
         "password_placeholder": "Enter your password",
@@ -105,21 +138,39 @@
         "login": "Already have an account?",
         "login_now": "Login Now!",
         "noti_success": "Registration Successful!",
-        "noti_error": "Registration Failed. Please try again."
+        "noti_error": "Registration Failed. Please try again.",
+        "noti_error1": "User account is locked",
+        "noti_error2": "User already exists"
       },
-      "settings": {},
+      "settings": {
+        "setting": "Settings",
+        "account": "Account",
+        "password": "Password",
+        "notifications": "Notifications",
+        "appearance": "Appearance",
+        "name_placeholder": "Enter your name",
+        "new-pass-placeholder": "Enter your new password",
+        "current-pass-error": "The current password is incorrect.",
+        "pass-error": "The new password cannot be the same as the old password.",
+        "no-change": "There are no changes to update.",
+        "email-holder": "Your email",
+        "link-error": "Cannot link to Google account",
+        "unlink-success": "Google link removed.",
+        "unlink-error": "Unlink failed."
+      },
       "statistics": {},
       "study_detail": {
         "no-collection-data": "No collection data.",
         "collection-des": "Description: ",
         "no-description": "Collection has no description.",
         "totalcard": "cards",
-        "flashcards-title": "Cards in this collection:",
+        "flashcards-title": "Cards in this collection",
         "error-loading": "Error loading"
       },
       "study_sets": {
         "header": "Your collection list",
         "no-collection": "There are no collections.",
+        "no-create-collection": "You don't own any collection, create a new one!",
         "edit-icon": "edit",
         "merge-icon": "matching",
         "flashcard-icon": "flashcard",
@@ -128,12 +179,15 @@
         "cards": "cards",
         "confirm-delete": "Are you sure you want to delete this collection?",
         "delete-success": "Deletion successful!",
-        "delete-fail": "Deletion failed. Please try again!"
+        "delete-fail": "Deletion failed. Please try again!",
+        "filter-public": "Public Collection",
+        "filter-private": "Private Collection"
       }
     }
   },
   "buttons": {
     "submit": "Submit",
+    "save": "Save",
     "cancel": "Cancel",
     "continue": "Continue",
     "login": "Login",
@@ -149,11 +203,16 @@
     "login_with_google": "Continue with Google",
     "back_to_login": "Back to Login",
     "see_more": "See More",
-    "study_now": "Study Now"
-  },
-  "search": {
-    "placeholder": "Search standard collection",
-    "enter": "Search"
+    "study_now": "Study Now",
+    "see-details": "See Details",
+    "again": "Again",
+    "hard": "Hard",
+    "good": "Good",
+    "easy": "Easy",
+    "shuffle": "Shuffle",
+    "default": "Default",
+    "link-google": "Link to Google",
+    "unlink-google": "Unlink Google"
   },
   "tooltip": {
     "edit": "Edit",
@@ -170,6 +229,10 @@
     "new_card": "new card",
     "learning_card": "learning card",
     "due_card": "due card"
+  },
+  "search": {
+    "placeholder": "Search standard collection",
+    "enter": "Search"
   },
   "image": {
     "banner_alt": "Banner image"

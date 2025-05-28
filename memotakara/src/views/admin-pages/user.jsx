@@ -126,19 +126,7 @@ const UserManagement = () => {
         title="Thêm người dùng mới"
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
-        footer={[
-          <Button key="cancel" onClick={() => setIsModalVisible(false)}>
-            Huỷ
-          </Button>,
-          <Button
-            key="create"
-            type="primary"
-            htmlType="submit"
-            onClick={handleCreateUser}
-          >
-            Tạo
-          </Button>,
-        ]}
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={handleCreateUser}>
           <Form.Item
@@ -178,6 +166,15 @@ const UserManagement = () => {
               <Option value="user">User</Option>
               <Option value="admin">Admin</Option>
             </Select>
+          </Form.Item>
+
+          <Form.Item>
+            <Space style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button onClick={() => setIsModalVisible(false)}>Huỷ</Button>
+              <Button type="primary" htmlType="submit">
+                Tạo
+              </Button>
+            </Space>
           </Form.Item>
         </Form>
       </Modal>
