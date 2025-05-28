@@ -96,7 +96,7 @@ function StudyDetail({ isPublic, isEditFC }) {
       <MemoFlash
         flashcards={collection.flashcards}
         collectionId={collection.id}
-        collectionTag={collection.tag}
+        collectionTag={collection.tags[0].name}
       />
 
       <div className="std-detail-flashcards-title">
@@ -107,7 +107,7 @@ function StudyDetail({ isPublic, isEditFC }) {
 
       <MemoCard
         flashcards={paginatedFlashcards}
-        collectionTag={collection.tag}
+        collectionTag={collection.tags[0].name}
         isEditFC={isEditFC}
       />
 

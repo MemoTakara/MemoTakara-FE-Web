@@ -2,7 +2,6 @@ import "./index.css";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Tooltip } from "antd";
 import { getCollectionProgress } from "@/api/flashcard";
 import BtnBlue from "@/components/btn/btn-blue";
 
@@ -33,31 +32,26 @@ const DashboardCard = ({ collection, setAuthor }) => {
       {setAuthor && (
         <div>
           <div className="dashboard_card_status">
-            <Tooltip // new
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_new"
               title={t("tooltip.new_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_new">{progress.new}</div>
-            </Tooltip>
+              {progress.new}
+            </div>
 
-            <Tooltip // learning
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_learn"
               title={t("tooltip.learning_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_learn">
-                {progress.learning}
-              </div>
-            </Tooltip>
+              {progress.learning}
+            </div>
 
-            <Tooltip // due
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_due"
               title={t("tooltip.due_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_due">{progress.due}</div>
-            </Tooltip>
+              {progress.due}
+            </div>
           </div>
         </div>
       )}

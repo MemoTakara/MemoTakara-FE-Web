@@ -1,6 +1,6 @@
 import "./flashcard.css";
 import { useEffect, useState } from "react";
-import { Card, Button, Tooltip } from "antd";
+import { Card, Progress } from "antd";
 import { useTranslation } from "react-i18next";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { reviewFlashcard, getCollectionProgress } from "@/api/flashcard";
@@ -20,6 +20,8 @@ const MemoFlash = ({
   const [currentIndex, setCurrentIndex] = useState(0); // Quản lý thẻ hiện tại
   const [flipped, setFlipped] = useState(false); // Trạng thái lật thẻ
   const [summary, setSummary] = useState({ new: 0, learning: 0, due: 0 });
+
+  const progressPercent = ((currentIndex + 1) / flashcards.length) * 100;
 
   useEffect(() => {
     if (progress) {
@@ -61,7 +63,6 @@ const MemoFlash = ({
     } catch (error) {
       console.error("Lỗi khi gửi review:", error);
     }
-    console.log("summary", summary);
   };
 
   const card = flashcards[currentIndex];
@@ -93,7 +94,10 @@ const MemoFlash = ({
               border: "3px solid var(--color-stroke)",
             }}
           >
-            <div className="memo-flash-icon">
+            <div
+              className="memo-flash-icon"
+              onClick={(e) => e.stopPropagation()}
+            >
               <MemoSpeaker
                 text={card.front}
                 lang={mapTagToLang(collectionTag)}
@@ -165,38 +169,40 @@ const MemoFlash = ({
           </div>
 
           <div className="memo-flash-status">
-            <Tooltip //new
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_new"
               title={t("tooltip.new_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_new">{summary.new}</div>
-            </Tooltip>
+              {summary.new}
+            </div>
 
-            <Tooltip //learning
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_learn"
               title={t("tooltip.learning_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_learn">
-                {summary.learning}
-              </div>
-            </Tooltip>
+              {summary.learning}
+            </div>
 
-            <Tooltip //due
-              placement="bottomRight"
+            <div
+              className="dashboard_card_status_due"
               title={t("tooltip.due_card")}
-              arrow={true}
             >
-              <div className="dashboard_card_status_due">{summary.due}</div>
-            </Tooltip>
+              {summary.due}
+            </div>
           </div>
         </>
       ) : (
         <div className="memo-flash-status">
-          <div>
-            {t("components.cards.card")} {currentIndex + 1} /{" "}
-            {flashcards.length}
+          <Progress
+            percent={progressPercent.toFixed(2)}
+            strokeColor={{
+              "0%": "var(--color-light-button-hover)",
+              "100%": "var(--color-light-button)",
+            }}
+            trailColor="var(--color-card-background)"
+          />
+          <div className="dashboard_card_status_new" style={{ width: "30%" }}>
+            {currentIndex + 1} / {flashcards.length}
           </div>
         </div>
       )}

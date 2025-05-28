@@ -1,7 +1,7 @@
 import "./index.css";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Tooltip, Select, message } from "antd";
+import { Button, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { getOwnCollections, deleteCollection } from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
@@ -124,24 +124,19 @@ function StudySets() {
           options={setOptions}
         />
 
-        <Tooltip
-          placement="bottomRight"
+        <Button
+          shape="circle"
+          style={{
+            height: "50px",
+            width: "50px",
+            marginBottom: "10px",
+            background: "var(--color-button)",
+          }}
+          id="dashboard_btn"
+          icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
+          onClick={() => setIsModalVisible(true)} // Mở modal
           title={t("components.create-collection.title")}
-          arrow={true}
-        >
-          <Button
-            shape="circle"
-            style={{
-              height: "50px",
-              width: "50px",
-              marginBottom: "10px",
-              background: "var(--color-button)",
-            }}
-            id="dashboard_btn"
-            icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
-            onClick={() => setIsModalVisible(true)} // Mở modal
-          />
-        </Tooltip>
+        />
       </div>
 
       {/* Sử dụng modal tạo collection */}

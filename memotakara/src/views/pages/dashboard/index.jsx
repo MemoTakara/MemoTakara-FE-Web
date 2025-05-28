@@ -2,7 +2,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, Col, Row, Tooltip } from "antd";
+import { Button, Col, Row } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { getPublicCollections } from "@/api/collection";
@@ -44,24 +44,19 @@ function Dashboard() {
 
   return (
     <div className="dashboard_container">
-      <Tooltip
-        placement="bottomRight"
+      <Button
+        shape="circle"
+        style={{
+          height: "50px",
+          width: "50px",
+          marginBottom: "10px",
+          background: "var(--color-button)",
+        }}
+        id="dashboard_btn"
+        icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
+        onClick={() => setIsModalVisible(true)} // Mở modal
         title={t("components.create-collection.title")}
-        arrow={true}
-      >
-        <Button
-          shape="circle"
-          style={{
-            height: "50px",
-            width: "50px",
-            marginBottom: "10px",
-            background: "var(--color-button)",
-          }}
-          id="dashboard_btn"
-          icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
-          onClick={() => setIsModalVisible(true)} // Mở modal
-        />
-      </Tooltip>
+      />
 
       {/* Sử dụng modal tạo collection */}
       <MemoCreateCollection
