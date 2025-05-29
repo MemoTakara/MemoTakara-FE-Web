@@ -2,7 +2,7 @@ import "./card.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from "@/views/error-pages/LoadingPage";
-import MemoSpeaker from "@/components/speaker";
+import MemoSpeaker from "@/components/widget/speaker";
 
 const MemoCard = ({ flashcards, collectionTag, isEditFC }) => {
   if (!flashcards) return <LoadingPage />;

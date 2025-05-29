@@ -15,7 +15,7 @@ import {
   updateCollection,
   deleteCollection,
 } from "@/api/admin";
-import FormattedDate from "@/components/formatted-date";
+import FormattedDate from "@/components/widget/formatted-date";
 
 const { Option } = Select;
 

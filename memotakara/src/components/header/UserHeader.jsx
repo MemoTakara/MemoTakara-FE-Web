@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnWhite from "@/components/btn/btn-white";
 import BtnLanguage from "@/components/btn/btn-language";
-import MemoSearch from "@/components/search-bar";
+import MemoSearch from "@/components/widget/search-bar";
 
 const UserHeader = () => {
   const [active, setActive] = useState("");

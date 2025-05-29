@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { reviewFlashcard, getCollectionProgress } from "@/api/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
-import MemoSpeaker from "@/components/speaker";
+import MemoSpeaker from "@/components/widget/speaker";
 import BtnWhite from "@/components/btn/btn-white";
 
 const MemoFlash = ({

@@ -113,6 +113,7 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         collection={collection}
         isAuthor={isAuthor}
         onUpdate={handleUpdateCollection}
+        isStudy={true}
       />
 
       <div className="std-fc-toggle-btn">

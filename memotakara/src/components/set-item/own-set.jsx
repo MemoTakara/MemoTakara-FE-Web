@@ -17,7 +17,7 @@ import {
 import { duplicateCollection } from "@/api/collection";
 import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
 
-const OwnSet = ({ collection, isAuthor, onUpdate }) => {
+const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -95,20 +95,22 @@ const OwnSet = ({ collection, isAuthor, onUpdate }) => {
             {collection.collection_name}
           </div>
 
-          {/* <div className="set-item-collection-des">
+          <div className="set-item-collection-des">
             {t("components.header.search_user1")}{" "}
             {collection.user?.role === "admin"
               ? "MemoTakara"
               : collection.user?.username ||
                 t("components.header.search_user2")}
-          </div> */}
-
-          <div className="set-item-collection-des">
-            {t("views.pages.study_detail.collection-des")}{" "}
-            {collection.description
-              ? collection.description
-              : t("views.pages.study_detail.no-description")}
           </div>
+
+          {!isStudy && (
+            <div className="set-item-collection-des">
+              {t("views.pages.study_detail.collection-des")}{" "}
+              {collection.description
+                ? collection.description
+                : t("views.pages.study_detail.no-description")}
+            </div>
+          )}
         </div>
 
         <div className="set-item-footer">

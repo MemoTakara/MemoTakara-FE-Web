@@ -15,7 +15,7 @@ import {
   toggleUserStatus,
   deleteUser,
 } from "@/api/admin";
-import FormattedDate from "@/components/formatted-date";
+import FormattedDate from "@/components/widget/formatted-date";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);

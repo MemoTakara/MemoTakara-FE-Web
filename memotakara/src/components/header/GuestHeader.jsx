@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import HeaderSet from "@/components/btn/btn-header-set";
 import BtnBlue from "@/components/btn/btn-blue";
 import BtnLanguage from "@/components/btn/btn-language";
-import MemoSearch from "@/components/search-bar";
+import MemoSearch from "@/components/widget/search-bar";
 
 const GuestHeader = () => {
   const [active, setActive] = useState("");

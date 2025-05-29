@@ -2,7 +2,7 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { getPublicCollections } from "@/api/collection";
@@ -18,10 +18,12 @@ function Dashboard() {
   const [collections, setCollections] = useState([]); // public collections
   const [recentViewed, setRecentViewed] = useState([]); // recently viewed collections
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCollections = async () => {
       if (user) {
+        setLoading(true);
         try {
           const [publicData, recentData] = await Promise.all([
             getPublicCollections(),
@@ -31,7 +33,11 @@ function Dashboard() {
           setRecentViewed(recentData);
         } catch (error) {
           console.error("Failed to fetch collections:", error);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
 
@@ -122,7 +128,7 @@ function Dashboard() {
             {t("views.pages.dashboard.title1")}
           </div>
           <Link //see more
-            to="/study_sets"
+            to="/recent-collection"
             className="dashboard_link"
             onClick={() => setActive("study_sets")}
           >
@@ -131,21 +137,27 @@ function Dashboard() {
         </div>
 
         <div style={{ padding: 20 }}>
-          <Row gutter={[16, 16]}>
-            {recentViewed.length > 0 ? (
-              recentViewed.map((collection) => (
-                <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                  <DashboardCard collection={collection} setAuthor={true} />
+          {loading ? (
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <Spin>{t("views.error-pages.loadingPage.title")}</Spin>
+            </div>
+          ) : (
+            <Row gutter={[16, 16]}>
+              {recentViewed.length > 0 ? (
+                recentViewed.slice(0, 3).map((collection) => (
+                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                    <DashboardCard collection={collection} setAuthor={true} />
+                  </Col>
+                ))
+              ) : (
+                <Col span={24}>
+                  <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    {t("views.pages.study_sets.no-collection")}
+                  </div>
                 </Col>
-              ))
-            ) : (
-              <Col span={24}>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  {t("views.pages.study_sets.no-collection")}
-                </div>
-              </Col>
-            )}
-          </Row>
+              )}
+            </Row>
+          )}
         </div>
       </div>
 
@@ -173,21 +185,27 @@ function Dashboard() {
         </div>
 
         <div style={{ padding: 20 }}>
-          <Row gutter={[16, 16]}>
-            {collections.length > 0 ? (
-              collections.slice(0, 3).map((collection) => (
-                <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                  <DashboardCard collection={collection} setAuthor={false} />
+          {loading ? (
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
+              <Spin>{t("views.error-pages.loadingPage.title")}</Spin>
+            </div>
+          ) : (
+            <Row gutter={[16, 16]}>
+              {collections.length > 0 ? (
+                collections.slice(0, 3).map((collection) => (
+                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                    <DashboardCard collection={collection} setAuthor={false} />
+                  </Col>
+                ))
+              ) : (
+                <Col span={24}>
+                  <div style={{ textAlign: "center", marginTop: "20px" }}>
+                    {t("views.pages.study_sets.no-collection")}
+                  </div>
                 </Col>
-              ))
-            ) : (
-              <Col span={24}>
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
-                  {t("views.pages.study_sets.no-collection")}
-                </div>
-              </Col>
-            )}
-          </Row>
+              )}
+            </Row>
+          )}
         </div>
       </div>
 

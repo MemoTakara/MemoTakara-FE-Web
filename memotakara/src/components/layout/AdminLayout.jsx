@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu, theme } from "antd";
 import { useAuth } from "@/contexts/AuthContext";
-import ChangePasswordOverlay from "@/components/change-pass";
+import ChangePasswordOverlay from "@/views/admin-pages/change-pass";
 
 const { Header, Sider, Content } = Layout;
 
@@ -23,13 +23,13 @@ const AdminLayout = () => {
   };
 
   // Xác định key dựa trên đường dẫn hiện tại
-  const currentKey = (() => {
-    if (location.pathname.startsWith("/users")) return "1";
-    if (location.pathname.startsWith("/notifications")) return "2";
-    if (location.pathname.startsWith("/collections")) return "3";
-    if (location.pathname.startsWith("/flashcards")) return "4";
-    return "1"; // Mặc định active vào User Manager
-  })();
+  const pathToKey = {
+    "/users": "1",
+    "/notifications": "2",
+    "/collections": "3",
+    "/flashcards": "4",
+  };
+  const currentKey = pathToKey[location.pathname] || "1";
 
   // Menu item
   const items = [
