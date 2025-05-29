@@ -1,12 +1,14 @@
 import "./card.css";
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/widget/speaker";
 
 const MemoCard = ({ flashcards, collectionTag, isEditFC }) => {
+  const { t } = useTranslation();
   if (!flashcards) return <LoadingPage />;
-  if (flashcards.length === 0) return <div>Không có flashcards nào.</div>; // Xử lý khi không có flashcards
+  if (flashcards.length === 0) return <div>{t("components.cards.no-fc")}</div>;
 
   const mapTagToLang = (tag) => {
     if (!tag || typeof tag !== "string") return "en"; // Kiểm tra undefined/null hoặc không phải string

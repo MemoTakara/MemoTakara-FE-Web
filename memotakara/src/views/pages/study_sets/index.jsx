@@ -3,7 +3,11 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Select, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { getOwnCollections, deleteCollection } from "@/api/collection";
+import {
+  getOwnCollections,
+  duplicateCollection,
+  deleteCollection,
+} from "@/api/collection";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import SetItem from "@/components/set-item/set-item";
 import MemoCreateCollection from "@/components/create-collection/MemoCreateCollection";
@@ -74,11 +78,8 @@ function StudySets() {
 
     try {
       await deleteCollection(id);
-
-      // Cập nhật cả 2 state
       setCollections((prev) => prev.filter((col) => col.id !== id));
       setFilteredCollections((prev) => prev.filter((col) => col.id !== id));
-
       messageApi.success(t("views.pages.study_sets.delete-success"));
     } catch (error) {
       console.error("Xóa thất bại:", error);
@@ -91,18 +92,34 @@ function StudySets() {
     setFilteredCollections((prev) => [...prev, newCollection]);
   };
 
-  // Hàm để cập nhật collection từ modal
   const handleUpdateCollection = (updatedCollection) => {
-    setCollections((prevCollections) => {
-      return prevCollections.map((col) =>
+    setCollections((prevCollections) =>
+      prevCollections.map((col) =>
         col.id === updatedCollection.id ? updatedCollection : col
-      );
-    });
-    setFilteredCollections((prevFiltered) => {
-      return prevFiltered.map((col) =>
+      )
+    );
+    setFilteredCollections((prevFiltered) =>
+      prevFiltered.map((col) =>
         col.id === updatedCollection.id ? updatedCollection : col
-      );
-    });
+      )
+    );
+  };
+
+  const handleCopyCollection = async (collectionId) => {
+    try {
+      const res = await duplicateCollection(collectionId);
+      if (res.success) {
+        const updatedCollections = await getOwnCollections();
+        setCollections(updatedCollections);
+        setFilteredCollections(updatedCollections);
+        messageApi.success(t("views.pages.study_sets.copy-success"));
+      } else {
+        messageApi.error(res.message);
+      }
+    } catch (error) {
+      console.error("Lỗi khi sao chép collection:", error);
+      messageApi.error(t("views.pages.study_sets.copy-fail"));
+    }
   };
 
   if (loading) return <LoadingPage />;
@@ -115,11 +132,7 @@ function StudySets() {
       <div className="std-set-select">
         <Select
           defaultValue="all"
-          style={{
-            width: 160,
-            height: 40,
-            marginRight: "10px",
-          }}
+          style={{ width: 160, height: 40, marginRight: "10px" }}
           onChange={handleSets}
           options={setOptions}
         />
@@ -157,6 +170,7 @@ function StudySets() {
             collection={col}
             onDelete={handleDeleteCollection}
             onUpdate={handleUpdateCollection}
+            onCopy={handleCopyCollection}
           />
         ))
       )}

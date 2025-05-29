@@ -130,7 +130,7 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         isStudy={true}
         flashcards={flashcardsDue}
         collectionId={collection.id}
-        collectionTag={collection.tags[0].name}
+        collectionTag={collection.tags?.[0]?.name || ""}
         progress={progress}
         onUpdateProgress={setProgress}
       />

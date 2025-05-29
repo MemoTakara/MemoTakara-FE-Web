@@ -1,12 +1,10 @@
 import "./index.css";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Dropdown, message } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { message } from "antd";
 import { duplicateCollection } from "@/api/collection";
 import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
+import CollectionDropdown from "@/components/widget/collection-menu";
 
 const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
   const { t } = useTranslation();
@@ -27,55 +25,10 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
     }
   };
 
-  const handleMenuClick = ({ key }) => {
-    if (key === "edit") {
-      setIsModalVisible(true);
-    } else if (key === "copy") {
-      handleDuplicate();
-    }
-  };
-
   const handleUpdate = (updatedCollection) => {
     // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
     onUpdate(updatedCollection);
   };
-
-  const menuItems = useMemo(
-    () => [
-      ...(isAuthor
-        ? [
-            {
-              key: "edit",
-              label: (
-                <div>
-                  <FontAwesomeIcon
-                    icon={faPencil}
-                    style={{ fontSize: "var(--body-size)", marginRight: 8 }}
-                  />
-                  {t("components.set-item.edit-icon")}
-                </div>
-              ),
-            },
-          ]
-        : []),
-      {
-        key: "copy",
-        label: (
-          <div>
-            <FontAwesomeIcon
-              icon={faCopy}
-              style={{
-                fontSize: "var(--body-size)",
-                marginRight: 8,
-              }}
-            />
-            {t("components.set-item.copy-icon")}
-          </div>
-        ),
-      },
-    ],
-    [isAuthor, t]
-  );
 
   return (
     <div className="set-item-container">
@@ -104,22 +57,11 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
 
         <div className="set-item-footer">
           {!isPublic && (
-            <Dropdown
-              menu={{
-                items: menuItems,
-                onClick: handleMenuClick,
-              }}
-              placement="bottomRight"
-              trigger={["click"]}
-            >
-              <EllipsisOutlined
-                style={{
-                  fontSize: "var(--body-size-max)",
-                  marginBottom: "5px",
-                  cursor: "pointer",
-                }}
-              />
-            </Dropdown>
+            <CollectionDropdown
+              isAuthor={isAuthor}
+              onEdit={() => setIsModalVisible(true)}
+              onCopy={handleDuplicate}
+            />
           )}
 
           <div className="set-item-totalcard">

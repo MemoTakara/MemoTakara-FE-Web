@@ -44,13 +44,18 @@
       "public-collection-title": "探索社区学习集",
       "filter-all": "全部",
       "filter-otherUsers": "其他用户",
-      "edit-icon": "编辑合集",
+      "edit-icon": "编辑",
       "copy-icon": "复制",
       "delete-icon": "删除"
     },
     "cards": {
       "card": "卡片",
-      "no-fc-due": "没有需要学习的卡片！"
+      "no-fc-due": "没有需要学习的卡片！",
+      "no-fc": "该合集内暂无卡片内容。"
+    },
+    "speaker": {
+      "stop": "停止发音",
+      "pronounce": "发音"
     }
   },
   "views": {
@@ -181,7 +186,12 @@
         "delete-success": "删除成功！",
         "delete-fail": "删除失败，请重试。",
         "filter-public": "公开合集",
-        "filter-private": "私密合集"
+        "filter-private": "私密合集",
+        "copy-success": "复制成功！",
+        "copy-fail": "复制失败，请重试。"
+      },
+      "recent-list": {
+        "title": "最近访问的合集列表"
       }
     }
   },

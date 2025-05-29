@@ -1,14 +1,11 @@
 // set while study
 import "./index.css";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Dropdown, message } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCopy,
-  faPencil,
   faCodePullRequest,
   faRepeat,
   faKeyboard,
@@ -16,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { duplicateCollection } from "@/api/collection";
 import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
+import CollectionDropdown from "@/components/widget/collection-menu";
 
 const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
   const { t } = useTranslation();
@@ -36,55 +34,10 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
     }
   };
 
-  const handleMenuClick = ({ key }) => {
-    if (key === "edit") {
-      setIsModalVisible(true);
-    } else if (key === "copy") {
-      handleDuplicate();
-    }
-  };
-
   const handleUpdate = (updatedCollection) => {
     // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
     onUpdate(updatedCollection);
   };
-
-  const menuItems = useMemo(
-    () => [
-      ...(isAuthor
-        ? [
-            {
-              key: "edit",
-              label: (
-                <div>
-                  <FontAwesomeIcon
-                    icon={faPencil}
-                    style={{ fontSize: "var(--body-size)", marginRight: 8 }}
-                  />
-                  {t("components.set-item.edit-icon")}
-                </div>
-              ),
-            },
-          ]
-        : []),
-      {
-        key: "copy",
-        label: (
-          <div>
-            <FontAwesomeIcon
-              icon={faCopy}
-              style={{
-                fontSize: "var(--body-size)",
-                marginRight: 8,
-              }}
-            />
-            {t("components.set-item.copy-icon")}
-          </div>
-        ),
-      },
-    ],
-    [isAuthor, t]
-  );
 
   return (
     <div className="set-item-container">
@@ -114,22 +67,11 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
         </div>
 
         <div className="set-item-footer">
-          <Dropdown
-            menu={{
-              items: menuItems,
-              onClick: handleMenuClick,
-            }}
-            placement="bottomRight"
-            trigger={["click"]}
-          >
-            <EllipsisOutlined
-              style={{
-                fontSize: "var(--body-size-max)",
-                marginBottom: "5px",
-                cursor: "pointer",
-              }}
-            />
-          </Dropdown>
+          <CollectionDropdown
+            isAuthor={isAuthor}
+            onEdit={() => setIsModalVisible(true)}
+            onCopy={handleDuplicate}
+          />
 
           {/* <div className="set-item-totalcard">
             {collection.flashcards?.length || 0}

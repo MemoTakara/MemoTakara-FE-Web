@@ -50,7 +50,12 @@
     },
     "cards": {
       "card": "カード",
-      "no-fc-due": "復習期限のカードはありません！"
+      "no-fc-due": "復習期限のカードはありません！",
+      "no-fc": "このコレクションにはカードが含まれていません。"
+    },
+    "speaker": {
+      "stop": "発音を停止",
+      "pronounce": "発音する"
     }
   },
   "views": {
@@ -181,7 +186,12 @@
         "delete-success": "削除に成功しました！",
         "delete-fail": "削除に失敗しました。もう一度お試しください。",
         "filter-public": "公開コレクション",
-        "filter-private": "非公開コレクション"
+        "filter-private": "非公開コレクション",
+        "copy-success": "コピーに成功しました！",
+        "copy-fail": "コピーに失敗しました。もう一度お試しください。"
+      },
+      "recent-list": {
+        "title": "最近閲覧したコレクション一覧"
       }
     }
   },

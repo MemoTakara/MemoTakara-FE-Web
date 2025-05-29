@@ -44,13 +44,18 @@
       "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
       "filter-all": "Tất cả",
       "filter-otherUsers": "Người dùng khác",
-      "edit-icon": "Sửa bộ sưu tập",
+      "edit-icon": "Chỉnh sửa",
       "copy-icon": "Sao chép",
       "delete-icon": "Xóa"
     },
     "cards": {
       "card": "Thẻ",
-      "no-fc-due": "Không có thẻ nào cần ôn tập!"
+      "no-fc-due": "Không có thẻ nào cần ôn tập!",
+      "no-fc": "Bộ sưu tập này không có thẻ nào."
+    },
+    "speaker": {
+      "stop": "Dừng phát âm",
+      "pronounce": "Phát âm"
     }
   },
   "views": {
@@ -181,7 +186,12 @@
         "delete-success": "Xoá thành công!",
         "delete-fail": "Xoá thất bại. Vui lòng thử lại!",
         "filter-public": "Bộ sưu tập công khai",
-        "filter-private": "Bộ sưu tập riêng tư"
+        "filter-private": "Bộ sưu tập riêng tư",
+        "copy-success": "Đã sao chép thành công!",
+        "copy-fail": "Sao chép thất bại. Vui lòng thử lại!"
+      },
+      "recent-list": {
+        "title": "Danh sách bộ sưu tập đã xem gần đây"
       }
     }
   },

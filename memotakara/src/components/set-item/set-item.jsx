@@ -3,61 +3,17 @@ import "./index.css";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Dropdown } from "antd";
-import { EllipsisOutlined, DeleteOutlined } from "@ant-design/icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
+import CollectionDropdown from "@/components/widget/collection-menu";
 
-const SetItem = ({ collection, onDelete, onUpdate }) => {
+const SetItem = ({ collection, onDelete, onUpdate, onCopy }) => {
   const { t } = useTranslation();
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const handleMenuClick = ({ key }) => {
-    if (key === "edit") {
-      setIsModalVisible(true);
-    } else if (key === "delete") {
-      onDelete(collection.id);
-    }
-  };
 
   const handleUpdate = (updatedCollection) => {
     // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
     onUpdate(updatedCollection);
   };
-
-  const menuItems = [
-    {
-      key: "edit",
-      label: (
-        <div>
-          <FontAwesomeIcon
-            icon={faPencil}
-            style={{
-              fontSize: "var(--body-size)",
-              marginRight: 8,
-            }}
-          />
-          {t("components.set-item.edit-icon")}
-        </div>
-      ),
-    },
-    {
-      key: "delete",
-      label: (
-        <div>
-          <DeleteOutlined
-            style={{
-              fontSize: "var(--body-size)",
-              color: "var(--color-error-button)",
-              marginRight: 8,
-            }}
-          />
-          {t("components.set-item.delete-icon")}
-        </div>
-      ),
-    },
-  ];
 
   return (
     <div className="set-item-container">
@@ -78,22 +34,12 @@ const SetItem = ({ collection, onDelete, onUpdate }) => {
         </div>
 
         <div className="set-item-footer set-item-icon">
-          <Dropdown
-            menu={{
-              items: menuItems,
-              onClick: handleMenuClick,
-            }}
-            placement="bottomRight"
-            trigger={["click"]}
-          >
-            <EllipsisOutlined
-              style={{
-                fontSize: "var(--body-size-max)",
-                marginBottom: "5px",
-                cursor: "pointer",
-              }}
-            />
-          </Dropdown>
+          <CollectionDropdown
+            isAuthor={true}
+            onEdit={() => setIsModalVisible(true)}
+            onCopy={() => onCopy(collection.id)}
+            onDelete={() => onDelete(collection.id)}
+          />
         </div>
       </div>
 

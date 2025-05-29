@@ -31,7 +31,9 @@ const MemoFlash = ({
 
   if (!flashcards) return <LoadingPage />;
   if (!flashcards || flashcards.length === 0)
-    return <div>{t("components.cards.no-fc-due")}</div>;
+    return (
+      <div style={{ marginTop: "3%" }}>{t("components.cards.no-fc-due")}</div>
+    );
 
   const mapTagToLang = (tag) => {
     const tagMap = {

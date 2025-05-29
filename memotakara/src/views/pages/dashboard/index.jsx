@@ -22,27 +22,23 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchCollections = async () => {
-      if (user) {
-        setLoading(true);
-        try {
-          const [publicData, recentData] = await Promise.all([
-            getPublicCollections(),
-            getRecentCollections(user.id),
-          ]);
-          setCollections(publicData);
-          setRecentViewed(recentData);
-        } catch (error) {
-          console.error("Failed to fetch collections:", error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
+      setLoading(true);
+      try {
+        const [publicData, recentData] = await Promise.all([
+          getPublicCollections(),
+          getRecentCollections(),
+        ]);
+        setCollections(publicData);
+        setRecentViewed(recentData);
+      } catch (error) {
+        console.error("Failed to fetch collections:", error);
+      } finally {
         setLoading(false);
       }
     };
 
     fetchCollections();
-  }, [user]);
+  }, []);
 
   const handleCreateCollection = (newCollection) => {
     setCollections((prev) => [...prev, newCollection]);
@@ -144,9 +140,19 @@ function Dashboard() {
           ) : (
             <Row gutter={[16, 16]}>
               {recentViewed.length > 0 ? (
-                recentViewed.slice(0, 3).map((collection) => (
-                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
-                    <DashboardCard collection={collection} setAuthor={true} />
+                recentViewed.slice(0, 3).map((item) => (
+                  <Col
+                    key={item.collection.id}
+                    xs={24}
+                    sm={12}
+                    md={8}
+                    lg={8}
+                    xl={8}
+                  >
+                    <DashboardCard
+                      collection={item.collection}
+                      setAuthor={true}
+                    />
                   </Col>
                 ))
               ) : (
