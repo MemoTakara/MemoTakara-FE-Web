@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "@/views/routes/ProtectedRoute";
 
 import GuestLayout from "@/components/layout/GuestLayout";
-import PublicList from "@/components/set-item/public-set-list";
+import PublicList from "@/views/pages/study_sets/public-collection";
 
 import UserLayout from "@/components/layout/UserLayout";
 import LandingPage from "@/views/pages/landing_page";
@@ -13,11 +13,13 @@ import GooglePage from "@/views/pages/login/google";
 import ForgotPassword from "@/views/pages/forgot-password";
 import ResetPassword from "@/views/pages/forgot-password/reset-pass";
 import Dashboard from "@/views/pages/dashboard";
-import Statistics from "@/views/pages/statistics";
+import ProgressPage from "@/views/pages/progress";
 import Settings from "@/views/pages/settings";
 import StudySets from "@/views/pages/study_sets";
+import RecentList from "@/views/pages/study_sets/recent-collection";
 import StudyDetail from "@/views/pages/study_detail";
 import StudyFlashcard from "@/views/pages/study/flashcard";
+import StudyTyping from "@/views/pages/study/typing";
 
 import AdminLayout from "@/components/layout/AdminLayout";
 import UserManagement from "@/views/admin-pages/user";
@@ -28,6 +30,7 @@ import FlashcardManagement from "@/views/admin-pages/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
 import NotFound from "@/views/error-pages/NotFound";
+import SM2FlashcardComponent from "@/views/test";
 
 const router = createBrowserRouter([
   {
@@ -80,8 +83,8 @@ const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "statistics",
-            element: <Statistics />,
+            path: "progress",
+            element: <ProgressPage />,
           },
           {
             path: "settings",
@@ -90,6 +93,10 @@ const router = createBrowserRouter([
           {
             path: "study_sets",
             element: <StudySets />,
+          },
+          {
+            path: "recent-collection",
+            element: <RecentList />,
           },
           {
             path: "public-study-set",
@@ -102,6 +109,10 @@ const router = createBrowserRouter([
           {
             path: "collection-study/flashcard/:id",
             element: <StudyFlashcard isPublic={false} isEditFC={false} />,
+          },
+          {
+            path: "collection-study/typing/:id",
+            element: <StudyTyping isPublic={false} isEditFC={false} />,
           },
         ],
       },
@@ -145,6 +156,10 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: <LoadingPage />,
+  },
+  {
+    path: "/test",
+    element: <SM2FlashcardComponent />,
   },
 ]);
 

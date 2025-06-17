@@ -96,16 +96,16 @@ const UserHeader = () => {
           </Link>
 
           <Link
-            to="/statistics"
+            to="/progress"
             className={`header_link ${
-              active === "statistics" ? "header_active" : ""
+              active === "progress" ? "header_active" : ""
             }`}
-            onClick={() => setActive("statistics")}
+            onClick={() => setActive("progress")}
           >
             <HeaderSet
-              textKey="statistics"
-              isActive={active === "statistics"}
-              onClick={() => setActive("statistics")}
+              textKey="progress"
+              isActive={active === "progress"}
+              onClick={() => setActive("progress")}
             />
           </Link>
         </div>

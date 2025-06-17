@@ -1,19 +1,20 @@
-// học bằng flashcard
+// học bằng typing
 import "@/views/pages/study_detail/index.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { faShuffle, faRotate } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { postRecentCollection } from "@/api/recentCollection";
 import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
-import { startSession, endSession } from "@/api/study";
+import { getCollectionProgress } from "@/api/flashcard";
+import { getDueCards, startSession, endSession } from "@/api/study";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoFlash from "@/components/cards/flashcard";
 import OwnSet from "@/components/set-item/own-set";
 import ToggleWhite from "@/components/btn/toggle-white";
 
-function StudyFlashcard({ isPublic, isEditFC }) {
+function StudyTyping({ isPublic, isEditFC }) {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
@@ -27,7 +28,6 @@ function StudyFlashcard({ isPublic, isEditFC }) {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const sessionIdRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,30 +50,26 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         }
 
         if (user) {
-          // Gọi startSession và dùng luôn dữ liệu trả về
+          // 🔹 Bắt đầu session
           const session = await startSession({
             collection_id: id,
             study_type: "flashcard",
-            limit: 40,
-            new_cards_limit: 20,
-            review_cards_limit: 20,
+            limit: 20,
+            new_cards_limit: 10,
+            review_cards_limit: 10,
           });
           if (cancelled) return;
-          sessionIdRef.current = session.session_id;
           setSessionId(session.session_id);
 
-          // Lấy flashcards cần học
-          const cards = session.cards || [];
-          setFlashcardsDue(cards);
-          setOriginalFlashcards(cards);
+          // 🔹 Lấy flashcards cần học
+          const cards = await getDueCards({ collection_id: id });
+          if (cancelled) return;
+          setFlashcardsDue(cards.due_cards || []);
+          setOriginalFlashcards(cards.due_cards || []);
 
-          // Cập nhật progress từ server trả về
-          const counts = session.card_counts || {};
-          setProgress({
-            new: counts.new || 0,
-            learning: counts.learning || 0,
-            due: counts.due || 0,
-          });
+          const progressData = await getCollectionProgress(id);
+          if (cancelled) return;
+          setProgress(progressData);
         } else {
           const cards = data.flashcards || [];
           setFlashcardsDue(cards);
@@ -94,16 +90,12 @@ function StudyFlashcard({ isPublic, isEditFC }) {
 
     return () => {
       cancelled = true;
-      const endSessionAsync = async () => {
-        if (sessionIdRef.current) {
-          try {
-            await endSession({ session_id: sessionIdRef.current });
-          } catch (error) {
-            console.warn("Không thể kết thúc session:", error);
-          }
-        }
-      };
-      endSessionAsync();
+      if (sessionId) {
+        // 🔚 Kết thúc session khi rời trang
+        endSession(sessionId).catch((err) => {
+          console.warn("Không thể kết thúc session:", err);
+        });
+      }
     };
   }, [id, t, user]);
 
@@ -157,13 +149,12 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         isStudy={true}
         flashcards={flashcardsDue}
         collectionId={collection.id}
-        languageFront={collection.language_front || ""}
+        collectionTag={collection.tags[0].name}
         progress={progress}
         onUpdateProgress={setProgress}
-        sessionId={sessionId}
       />
     </div>
   );
 }
 
-export default StudyFlashcard;
+export default StudyTyping;

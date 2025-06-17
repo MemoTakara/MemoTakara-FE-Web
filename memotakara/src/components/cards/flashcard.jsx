@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, Progress } from "antd";
 import { useTranslation } from "react-i18next";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { reviewFlashcard, getCollectionProgress } from "@/api/flashcard";
+import { submitFlashcardAnswer } from "@/api/study";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/widget/speaker";
 import BtnWhite from "@/components/btn/btn-white";
@@ -12,14 +12,16 @@ const MemoFlash = ({
   isStudy,
   flashcards,
   collectionId,
-  collectionTag,
+  languageFront,
   progress,
   onUpdateProgress,
+  sessionId,
 }) => {
   const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0); // Quản lý thẻ hiện tại
   const [flipped, setFlipped] = useState(false); // Trạng thái lật thẻ
   const [summary, setSummary] = useState({ new: 0, learning: 0, due: 0 });
+  const [startTime, setStartTime] = useState(Date.now());
 
   const progressPercent = ((currentIndex + 1) / flashcards.length) * 100;
 
@@ -35,31 +37,45 @@ const MemoFlash = ({
       <div style={{ marginTop: "3%" }}>{t("components.cards.no-fc-due")}</div>
     );
 
-  const mapTagToLang = (tag) => {
-    const tagMap = {
-      english: "en",
-      "tiếng anh": "en",
-      japanese: "ja",
-      "tiếng nhật": "ja",
-      chinese: "zh",
-      "tiếng trung": "zh",
-    };
-    return tagMap[tag?.toLowerCase()] || "en";
-  };
-
   // Học bằng flashcard
-  const handleReview = async (quality) => {
-    const cardId = flashcards[currentIndex].id;
-    try {
-      await reviewFlashcard({ flashcard_id: cardId, quality });
+  const handleReview = async (qualityLabel) => {
+    if (!sessionId) {
+      alert("Session học không hợp lệ. Vui lòng thử lại sau.");
+      return;
+    }
 
-      // Cập nhật lại tiến độ
-      if (onUpdateProgress) {
-        const updatedProgress = await getCollectionProgress(collectionId);
-        onUpdateProgress(updatedProgress);
+    const qualityMap = {
+      again: 0,
+      hard: 2,
+      good: 4,
+      easy: 5,
+    };
+
+    const quality = qualityMap[qualityLabel] ?? 0;
+    const cardId = flashcards[currentIndex].id;
+    const responseTime = Date.now() - startTime;
+
+    try {
+      const result = await submitFlashcardAnswer({
+        session_id: sessionId,
+        collection_id: collectionId,
+        flashcard_id: cardId,
+        quality,
+        study_mode: "front_to_back",
+        response_time_ms: responseTime,
+      });
+
+      // Nếu backend trả về progress mới thì cập nhật
+      if (result?.card_counts && onUpdateProgress) {
+        const updated = {
+          new: result.card_counts.new ?? summary.new,
+          learning: result.card_counts.learning ?? summary.learning,
+          due: result.card_counts.due ?? summary.due,
+        };
+        setSummary(updated);
+        onUpdateProgress(updated);
       }
 
-      // Chuyển sang thẻ tiếp theo
       setFlipped(false);
       setCurrentIndex((i) => (i + 1) % flashcards.length);
     } catch (error) {
@@ -100,10 +116,7 @@ const MemoFlash = ({
               className="memo-flash-icon"
               onClick={(e) => e.stopPropagation()}
             >
-              <MemoSpeaker
-                text={card.front}
-                lang={mapTagToLang(collectionTag)}
-              />
+              <MemoSpeaker text={card.front} lang={languageFront} />
             </div>
             <div
               className="memo-flash-front-content"

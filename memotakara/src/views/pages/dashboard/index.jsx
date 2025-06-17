@@ -6,6 +6,7 @@ import { Button, Col, Row, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useAuth } from "@/contexts/AuthContext";
 import { getPublicCollections } from "@/api/collection";
+import { getDashboard } from "@/api/progress";
 import { getRecentCollections } from "@/api/recentCollection";
 import BtnBlue from "@/components/btn/btn-blue.jsx";
 import DashboardCard from "@/components/set-item/dashboard-set";
@@ -15,29 +16,56 @@ function Dashboard() {
   const { t } = useTranslation();
   const [active, setActive] = useState("");
   const { user } = useAuth();
+  const [studyDashboard, setStudyDashboard] = useState(null);
   const [collections, setCollections] = useState([]); // public collections
   const [recentViewed, setRecentViewed] = useState([]); // recently viewed collections
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loadingPublic, setLoadingPublic] = useState(true);
+  const [loadingRecent, setLoadingRecent] = useState(true);
+
+  const fetchPublicCollections = async () => {
+    setLoadingPublic(true);
+    try {
+      const publicData = await getPublicCollections();
+      setCollections(publicData);
+    } catch (error) {
+      console.error("Failed to fetch public collections:", error);
+    } finally {
+      setLoadingPublic(false);
+    }
+  };
+
+  const fetchRecentCollections = async () => {
+    setLoadingRecent(true);
+    try {
+      const recentData = await getRecentCollections();
+      setRecentViewed(recentData);
+    } catch (error) {
+      console.error("Failed to fetch recent collections:", error);
+    } finally {
+      setLoadingRecent(false);
+    }
+  };
+
+  const fetchStudyDashboard = async () => {
+    try {
+      const res = await getDashboard();
+      setStudyDashboard(res);
+    } catch (error) {
+      console.error("Failed to fetch dashboard data", err);
+    }
+  };
 
   useEffect(() => {
-    const fetchCollections = async () => {
-      setLoading(true);
-      try {
-        const [publicData, recentData] = await Promise.all([
-          getPublicCollections(),
-          getRecentCollections(),
-        ]);
-        setCollections(publicData);
-        setRecentViewed(recentData);
-      } catch (error) {
-        console.error("Failed to fetch collections:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    fetchPublicCollections();
+  }, []);
 
-    fetchCollections();
+  useEffect(() => {
+    fetchRecentCollections();
+  }, []);
+
+  useEffect(() => {
+    fetchStudyDashboard();
   }, []);
 
   const handleCreateCollection = (newCollection) => {
@@ -92,7 +120,7 @@ function Dashboard() {
 
         <div className="dashboard_cards">
           <div className="dashboard_due">
-            {/* {totalData.due} */}0
+            {studyDashboard?.overall_stats.due_cards}
             <span
               style={{
                 fontSize: "16px",
@@ -104,7 +132,7 @@ function Dashboard() {
           </div>
 
           <div className="dashboard_streak">
-            0
+            {studyDashboard?.overall_stats.study_streak}
             <span
               style={{
                 fontSize: "16px",
@@ -133,7 +161,7 @@ function Dashboard() {
         </div>
 
         <div style={{ padding: 20 }}>
-          {loading ? (
+          {loadingRecent ? (
             <div style={{ textAlign: "center", marginTop: "20px" }}>
               <Spin>{t("views.error-pages.loadingPage.title")}</Spin>
             </div>
@@ -191,7 +219,7 @@ function Dashboard() {
         </div>
 
         <div style={{ padding: 20 }}>
-          {loading ? (
+          {loadingPublic ? (
             <div style={{ textAlign: "center", marginTop: "20px" }}>
               <Spin>{t("views.error-pages.loadingPage.title")}</Spin>
             </div>

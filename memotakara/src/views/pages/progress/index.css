@@ -1,0 +1,15 @@
+.progress-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.progress-section {
+  margin-bottom: 32px;
+}
+
+.progress-section-title {
+  margin-bottom: 32px;
+  font-size: var(--body-size-max);
+  font-weight: var(--header-weight-size);
+}
