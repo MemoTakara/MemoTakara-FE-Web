@@ -136,7 +136,7 @@ function Login() {
         {/* checkbox - forgot pass*/}
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox style={{ fontSize: "16px" }}>
+            <Checkbox style={{ fontSize: "var(--normal-font-size)" }}>
               {t("views.pages.login.remember_me")}
             </Checkbox>
           </Form.Item>

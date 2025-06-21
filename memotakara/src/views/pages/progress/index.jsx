@@ -325,7 +325,7 @@ const ProgressPage = () => {
                     width: "100%",
                     justifyContent: "space-between",
                     padding: "4px 0",
-                    fontSize: "16px",
+                    fontSize: "var(--normal-font-size)",
                   }}
                 >
                   <div style={{ width: "50%", textAlign: "left" }}>{title}</div>

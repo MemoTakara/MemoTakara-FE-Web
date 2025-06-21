@@ -128,7 +128,7 @@ const UserHeader = () => {
               style={{
                 border: "2px solid var(--color-button)",
                 borderRadius: "30px",
-                fontSize: "16px",
+                fontSize: "var(--normal-font-size)",
                 // fontStyle: "italic",
               }}
             />

@@ -43,7 +43,7 @@ export const submitMatchingAnswer = async (payload) => {
 // by quiz
 export const submitQuizAnswer = async (payload) => {
   try {
-    const res = await axiosClient.post("/study/quiz", payload);
+    const res = await axiosClient.post("/study/submit-quiz-answer", payload);
     return res.data.data;
   } catch (error) {
     throw error.response?.data || error;

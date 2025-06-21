@@ -1,4 +1,3 @@
-// học bằng flashcard
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -8,30 +7,52 @@ import "@/views/pages/study_detail/index.css";
 import { useAuth } from "@/contexts/AuthContext";
 import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
 import { postRecentCollection } from "@/api/recentCollection";
-import { startSession, endSession } from "@/api/study";
+import { startSession, submitMatchingAnswer, endSession } from "@/api/study";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
-import MemoFlash from "@/components/cards/flashcard";
+import MatchingCard from "@/components/cards/match-card";
 import OwnSet from "@/components/set-item/own-set";
 import {
   NotiSessionComplete,
   NotiSessionLeave,
 } from "@/components/widget/noti-session";
 
-function StudyFlashcard({ isPublic, isEditFC }) {
+function StudyMatching({ isEditFC }) {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
 
   const [collection, setCollection] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
-  const [progress, setProgress] = useState({ new: 0, learning: 0, due: 0 });
   const [sessionId, setSessionId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [matchResults, setMatchResults] = useState(null);
   const [showCompleteModal, setShowCompleteModal] = useState(false);
+  const [showLeaveModal, setShowLeaveModal] = useState(false);
 
   const sessionIdRef = useRef(null);
+  const startTimeRef = useRef(Date.now());
+
+  const setupSession = async (collectionId) => {
+    try {
+      const session = await startSession({
+        collection_id: collectionId,
+        study_type: "game_match",
+        limit: 5,
+        new_cards_limit: 0,
+        review_cards_limit: 5,
+      });
+      sessionIdRef.current = session.session_id;
+      setSessionId(session.session_id);
+      setFlashcards(session.cards || []);
+      setIsCompleted(false);
+      setMatchResults(null);
+    } catch (err) {
+      throw err;
+    }
+  };
 
   useEffect(() => {
     let isCancelled = false;
@@ -40,21 +61,6 @@ function StudyFlashcard({ isPublic, isEditFC }) {
       return user
         ? await getCollectionById(id)
         : await getPublicCollectionDetail(id);
-    };
-
-    const setupSession = async (collectionId) => {
-      const session = await startSession({
-        collection_id: collectionId,
-        study_type: "flashcard",
-        limit: 40,
-        new_cards_limit: 20,
-        review_cards_limit: 20,
-      });
-
-      sessionIdRef.current = session.session_id;
-      setSessionId(session.session_id);
-      setFlashcards(session.cards || []);
-      setProgress(session.card_counts || { new: 0, learning: 0, due: 0 });
     };
 
     const loadData = async () => {
@@ -74,7 +80,6 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         } else {
           const cards = data.flashcards || [];
           setFlashcards(cards);
-          setProgress({ new: 0, learning: 0, due: cards.length });
         }
       } catch (err) {
         if (!isCancelled) setError(t("views.pages.study_detail.error-loading"));
@@ -97,32 +102,33 @@ function StudyFlashcard({ isPublic, isEditFC }) {
   }, [id, t, user]);
 
   useEffect(() => {
-    if (user && flashcards.length === 0) {
+    if (isCompleted) {
       setShowCompleteModal(true);
     }
-  }, [user, flashcards]);
+  }, [isCompleted]);
 
-  // Trở lại giao diện loading hoặc thông báo lỗi nếu có
-  if (loading) return <LoadingPage />;
-  if (error) return <div>{error}</div>;
-  if (!collection) {
-    return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
-  }
-
-  const isAuthor = user?.id === collection.user_id;
-
-  // Hàm để cập nhật collection từ modal
-  const handleUpdateCollection = (updatedCollection) => {
-    setCollection((prev) => ({
-      ...prev,
-      ...updatedCollection,
-    }));
+  const handleSubmitMatching = async (matches) => {
+    const responseTime = Date.now() - startTimeRef.current;
+    try {
+      const result = await submitMatchingAnswer({
+        session_id: sessionId,
+        matches,
+        study_mode: "front_to_back",
+        response_time_ms: responseTime,
+      });
+      setIsCompleted(true);
+      setMatchResults(result);
+    } catch (err) {
+      console.error("Lỗi khi gửi đáp án matching:", err);
+      setError(t("views.pages.quiz.error-submitting"));
+    }
   };
 
   const handleRetry = async () => {
     setShowCompleteModal(false);
     setLoading(true);
     try {
+      setLoading(true);
       if (sessionIdRef.current) {
         await endSession({ session_id: sessionIdRef.current });
         sessionIdRef.current = null;
@@ -130,42 +136,55 @@ function StudyFlashcard({ isPublic, isEditFC }) {
       await setupSession(collection.id);
     } catch (err) {
       setError(t("views.pages.study_detail.error-loading"));
+      console.error("Lỗi khi tạo session mới:", err);
     } finally {
       setLoading(false);
     }
   };
+
+  if (loading) return <LoadingPage />;
+  if (error) return <div>{error}</div>;
+  if (!collection)
+    return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
 
   return (
     <>
       <div className="std-detail-container">
         <OwnSet
           collection={collection}
-          isAuthor={isAuthor}
+          isAuthor={user?.id === collection.user_id}
           onUpdate={setCollection}
           isStudy
         />
 
-        <MemoFlash
-          isStudy
+        <MatchingCard
           flashcards={flashcards}
-          collectionId={collection.id}
-          languageFront={collection.language_front || ""}
-          progress={progress}
-          onUpdateProgress={setProgress}
-          sessionId={sessionId}
+          onSubmitResult={handleSubmitMatching}
+          onRetry={handleRetry}
+          matchResults={matchResults}
         />
       </div>
-      <NotiSessionLeave isActive={sessionId && flashcards.length > 0} />
 
       <NotiSessionComplete
         open={showCompleteModal}
         onClose={() => setShowCompleteModal(false)}
         onRetry={handleRetry}
         collectionId={collection?.id}
-        studyType="flashcard"
+        studyType="matching"
+      />
+
+      <NotiSessionLeave
+        open={showLeaveModal}
+        onConfirm={() => {
+          setShowLeaveModal(false);
+          window.removeEventListener("beforeunload", () => {});
+          window.location.href = "/dashboard";
+        }}
+        onCancel={() => setShowLeaveModal(false)}
+        studyType="matching"
       />
     </>
   );
 }
 
-export default StudyFlashcard;
+export default StudyMatching;

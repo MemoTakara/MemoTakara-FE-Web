@@ -93,7 +93,7 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
 
       <div className="set-item-bottom">
         <Link
-          to={`/public-study-set/${collection.id}`}
+          to={`/collection-study/match/${collection.id}`}
           className="set-item-link"
         >
           <FontAwesomeIcon
@@ -123,7 +123,7 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
         </Link>
 
         <Link
-          to={`/public-study-set/${collection.id}`}
+          to={`/collection-study/typing/${collection.id}`}
           className="set-item-link"
         >
           <FontAwesomeIcon
@@ -138,7 +138,7 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
         </Link>
 
         <Link
-          to={`/public-study-set/${collection.id}`}
+          to={`/collection-study/quiz/${collection.id}`}
           className="set-item-link"
         >
           <FontAwesomeIcon

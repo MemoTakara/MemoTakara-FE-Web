@@ -123,7 +123,7 @@ function Dashboard() {
             {studyDashboard?.overall_stats.due_cards}
             <span
               style={{
-                fontSize: "16px",
+                fontSize: "var(--normal-font-size)",
                 fontWeight: "normal",
               }}
             >
@@ -135,7 +135,7 @@ function Dashboard() {
             {studyDashboard?.overall_stats.study_streak}
             <span
               style={{
-                fontSize: "16px",
+                fontSize: "var(--normal-font-size)",
                 fontWeight: "normal",
               }}
             >

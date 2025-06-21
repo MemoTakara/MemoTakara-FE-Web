@@ -118,23 +118,7 @@ const MemoFlash = ({
             >
               <MemoSpeaker text={card.front} lang={languageFront} />
             </div>
-            <div
-              className="memo-flash-front-content"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                fontSize: "var(--body-size-bigger)",
-                padding: "40px",
-                cursor: "pointer",
-              }}
-            >
-              {card.front}
-            </div>
+            <div className="memo-flash-fc-content">{card.front}</div>
           </div>
           <div
             className="memo-flash-back"
@@ -143,20 +127,7 @@ const MemoFlash = ({
               border: "3px solid var(--color-stroke)",
             }}
           >
-            <div
-              className="memo-flash-back-content"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                width: "100%",
-                height: "100%",
-                fontSize: "var(--body-size-bigger)",
-                padding: "40px",
-                cursor: "pointer",
-              }}
-            >
+            <div className="memo-flash-fc-content">
               {card.pronunciation}
               <br />
               <br />

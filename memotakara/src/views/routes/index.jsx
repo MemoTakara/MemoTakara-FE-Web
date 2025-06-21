@@ -19,6 +19,8 @@ import StudySets from "@/views/pages/study_sets";
 import RecentList from "@/views/pages/study_sets/recent-collection";
 import StudyDetail from "@/views/pages/study_detail";
 import StudyFlashcard from "@/views/pages/study/flashcard";
+import StudyMatch from "@/views/pages/study/match";
+import StudyQuiz from "@/views/pages/study/quiz";
 import StudyTyping from "@/views/pages/study/typing";
 
 import AdminLayout from "@/components/layout/AdminLayout";
@@ -30,7 +32,6 @@ import FlashcardManagement from "@/views/admin-pages/flashcard";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import NotAuthorized from "@/views/error-pages/NotAuthorized";
 import NotFound from "@/views/error-pages/NotFound";
-import SM2FlashcardComponent from "@/views/test";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +112,14 @@ const router = createBrowserRouter([
             element: <StudyFlashcard isPublic={false} isEditFC={false} />,
           },
           {
+            path: "collection-study/match/:id",
+            element: <StudyMatch isPublic={false} isEditFC={false} />,
+          },
+          {
+            path: "collection-study/quiz/:id",
+            element: <StudyQuiz isPublic={false} isEditFC={false} />,
+          },
+          {
             path: "collection-study/typing/:id",
             element: <StudyTyping isPublic={false} isEditFC={false} />,
           },
@@ -156,10 +165,6 @@ const router = createBrowserRouter([
   {
     path: "/loading",
     element: <LoadingPage />,
-  },
-  {
-    path: "/test",
-    element: <SM2FlashcardComponent />,
   },
 ]);
 

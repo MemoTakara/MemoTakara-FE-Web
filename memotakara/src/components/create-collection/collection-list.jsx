@@ -192,7 +192,7 @@ const CollectionList = ({ title, isPublic, fetchCollections, isRecent }) => {
                     </Link>
                     <div
                       className="set-item-collection-des"
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: "var(--normal-font-size)" }}
                     >
                       {t("components.header.search_user1")}{" "}
                       {collection.user?.role === "admin"
@@ -202,7 +202,7 @@ const CollectionList = ({ title, isPublic, fetchCollections, isRecent }) => {
                     </div>
                     <div
                       className="set-item-collection-des"
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: "var(--normal-font-size)" }}
                     >
                       {t("views.pages.study_detail.collection-des")}{" "}
                       {collection.description ||

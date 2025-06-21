@@ -64,6 +64,20 @@
   box-sizing: border-box;
 }
 
+.memo-flash-type {
+  display: flex;
+  position: relative; /* Để có thể định vị icon bên trên */
+  background-color: var(--color-card-background);
+  width: 520px !important; /* Chiều rộng của thẻ */
+  height: 340px !important; /* Chiều cao của thẻ */
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+  box-sizing: border-box;
+}
+
 /* Định dạng cho mặt trước của thẻ */
 .memo-flash-front {
   background-color: var(--color-card-background);
@@ -71,6 +85,19 @@
   flex-direction: column; /* Căn chỉnh theo chiều dọc */
   position: relative; /* Để có thể định vị icon bên trên */
   height: 100%; /* Đảm bảo mặt trước giữ chiều cao đầy đủ */
+}
+
+.memo-flash-fc-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  font-size: var(--body-size-bigger);
+  padding: 40px;
+  cursor: pointer;
 }
 
 /* Định dạng cho icon của MemoSpeaker */
@@ -95,6 +122,17 @@
   transform: rotateY(180deg); /* Xoay thẻ để hiện mặt sau */
 }
 
+.memo-flash-type-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  font-size: var(--body-size-bigger);
+  padding: 40px;
+  margin-bottom: 2%;
+}
+
 /* Phần trạng thái */
 .memo-flash-status {
   display: flex;
@@ -102,4 +140,42 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 16px;
+}
+
+.memo-flash-status-new {
+  background: #b4f6b3;
+  border: 3px solid #519c4f;
+}
+
+.memo-flash-status-learn {
+  background: #aca6f1;
+  border: 3px solid #7b6ffe;
+}
+
+.memo-flash-status-due {
+  background: #e8b2b2;
+  border: 3px solid #db5151;
+}
+
+.memo-flash-status-new,
+.memo-flash-status-learn,
+.memo-flash-status-due {
+  width: 16%;
+  height: 30px;
+  border-radius: var(--small-btn-radius);
+  font-size: var(--small-size);
+  text-align: center;
+  align-content: center;
+}
+
+.memo-flash-submit {
+  display: flex;
+  flex-direction: column; /* Sắp xếp theo cột */
+  align-items: flex-start; /* Căn chỉnh text sang trái */
+  width: 80%;
+}
+
+.memo-flash-type-btn {
+  align-self: flex-end; /* Căn chỉnh nút sang bên phải */
+  margin-top: 2%; /* Khoảng cách phía trên nút */
 }

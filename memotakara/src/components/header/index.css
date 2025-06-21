@@ -70,7 +70,7 @@ body {
 }
 
 .header_start {
-  font-size: 16px;
+  font-size: var(--normal-font-size);
   width: 100px;
   height: 40px;
   color: #fff;
