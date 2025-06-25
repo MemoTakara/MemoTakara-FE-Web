@@ -47,11 +47,10 @@
   background: #fff;
   color: var(--color-error-button);
   border-radius: var(--big-btn-radius);
-  border: 1px solid var(--color-error-button);
-  font-size: 20px;
+  border: 2px solid var(--color-error-button);
+  font-size: var(--normal-font-size);
   font-weight: var(--header-weight-size);
-  padding: 2.4%;
-  width: 18%;
+  padding: 2%;
   align-self: flex-end;
   margin-bottom: 5%;
 }

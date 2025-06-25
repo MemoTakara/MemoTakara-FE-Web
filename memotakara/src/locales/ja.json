@@ -15,6 +15,24 @@
       "terms_of_condition": "利用規約",
       "help": "ヘルプ/FAQ"
     },
+    "collection-list": {
+      "difficulty": "難易度",
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級",
+      "front": "表側の言語",
+      "viet": "ベトナム語",
+      "eng": "英語",
+      "japan": "日本語",
+      "china": "中国語",
+      "back": "裏側の言語",
+      "sort-by": "並び替え",
+      "newest": "最新",
+      "rate": "評価",
+      "card-count": "カード数",
+      "duplicates": "重複",
+      "name": "名前"
+    },
     "create-collection": {
       "title": "新しいコレクションを作成",
       "collection-name": "コレクション名",
@@ -28,10 +46,37 @@
       "privacy-public": "公開",
       "privacy-private": "非公開",
       "tag-placeholder": "タグを入力（カンマ区切り）",
-      "btn-creating": "作成中...",
-      "btn-create": "コレクションを作成",
-      "create-msg-success": "コレクションを作成しました！",
-      "create-msg-error": "コレクションの作成に失敗しました。もう一度お試しください。"
+      "tag-input-holder": "例: 英語, 基本, 食べ物",
+      "create-msg-success": "コレクションの作成に成功しました！",
+      "create-msg-error": "コレクションの作成に失敗しました。もう一度お試しください。",
+      "front-msg": "コレクションの表側の言語を選択してください",
+      "back-msg": "コレクションの裏側の言語を選択してください",
+      "diff-msg": "難易度を選択してください",
+      "meta": "メタデータ (JSON形式)",
+      "meta-tooltip": "有効なJSONを入力してください",
+      "meta-error": "メタデータは有効なJSON文字列でなければなりません。",
+      "rate-msg-success": "評価に成功しました！",
+      "rate-msg-error": "評価に失敗しました。もう一度お試しください。",
+      "rating": "あなたの評価",
+      "rating-required": "評価を選択してください",
+      "review": "コメント（任意）",
+      "review-max": "最大500文字"
+    },
+    "collection-modal": {
+      "create-fc": "新しいフラッシュカードを作成",
+      "create-fc-bulk": "フラッシュカードを一括作成",
+      "username": "ユーザー名",
+      "comment": "コメント",
+      "create-at": "作成日時",
+      "update-at": "更新日時",
+      "detail": "コレクションの詳細: ",
+      "total-card": "カード数",
+      "average-rate": "平均評価",
+      "total-dupli": "重複数",
+      "lang": "言語 (表 → 裏)",
+      "creator": "作成者",
+      "tags": "タグ",
+      "ratings": "評価"
     },
     "edit-collection": {
       "title": "コレクションを編集",
@@ -40,18 +85,77 @@
       "btn-update": "変更を保存",
       "btn-updating": "保存中..."
     },
+    "flashcard-modal": {
+      "study-type": "学習タイプ",
+      "quality": "記憶の質評価",
+      "interval": "新しい間隔（日）",
+      "ease-factor": "易しさ係数",
+      "repetition": "連続正解数",
+      "review-time": "復習時間",
+      "fc-review-title": "フラッシュカード学習履歴",
+      "fc-edit-title": "フラッシュカード編集",
+      "front": "表",
+      "fc-msg": "空欄にできません！",
+      "back": "裏",
+      "pronunciation": "発音",
+      "kanji": "漢字",
+      "image": "画像URL",
+      "extra-data": "追加データ（JSON）",
+      "fc-update-success": "フラッシュカードの更新に成功しました！",
+      "fc-update-error": "フラッシュカードの更新エラー",
+      "fc-delete-success": "フラッシュカードを削除しました！",
+      "fc-delete-error": "フラッシュカードの削除エラー"
+    },
+    "create-fc": {
+      "extra-data": "無効な追加データ（JSON形式ではありません）",
+      "fc-create-success": "フラッシュカードの作成に成功しました",
+      "fc-create-error": "フラッシュカードの作成エラー",
+      "fc-create-bulk": "フラッシュカードを一括作成",
+      "fc-create-bulk-success": "フラッシュカードの一括作成に成功しました",
+      "bulk-fc-required": "表または裏が不足しています"
+    },
+    "detail-fc": {
+      "fc-info": "フラッシュカード情報",
+      "status-info": "ステータス情報",
+      "study-mode": "学習モード",
+      "fc-status": "フラッシュカードの状態",
+      "interval": "間隔",
+      "min": "分",
+      "lapses": "不正解数",
+      "last-review": "前回の復習日時",
+      "next-review": "次の復習日時",
+      "study-yet": "未学習"
+    },
     "set-item": {
       "public-collection-title": "コミュニティコレクションを探索",
+      "rate-title": "コレクションの評価",
       "filter-all": "すべて",
       "filter-otherUsers": "他のユーザー",
       "edit-icon": "編集",
       "copy-icon": "コピー",
-      "delete-icon": "削除"
+      "delete-icon": "削除",
+      "rate-icon": "評価",
+      "leech-icon": "難易度の高いカードを検出",
+      "history-icon": "学習履歴",
+      "detail-icon": "詳細"
     },
     "cards": {
       "card": "カード",
       "no-fc-due": "復習期限のカードはありません！",
       "no-fc": "このコレクションにはカードが含まれていません。"
+    },
+    "noti-drop": {
+      "noti-load-error": "通知の読み込みエラー",
+      "mark-error": "既読にできません",
+      "delete-error": "通知を削除できません",
+      "all-mark-error": "すべてを既読にできません",
+      "all-mark-delete-error": "既読通知をすべて削除できません",
+      "no-noti": "通知はありません",
+      "mark": "既読にする",
+      "mark-all": "すべて既読にする",
+      "delete-mark": "既読通知を削除",
+      "recent": "最近の通知",
+      "unread": "未読"
     },
     "speaker": {
       "stop": "発音を停止",
@@ -223,7 +327,8 @@
         "correct": "正解！",
         "incorrect": "不正解",
         "ans": "あなたの答え:",
-        "correct-ans": "正しい答え:"
+        "correct-ans": "正しい答え:",
+        "similarity": "類似度"
       },
       "study_sets": {
         "header": "あなたのコレクションリスト",
@@ -240,7 +345,8 @@
         "delete-fail": "削除に失敗しました。もう一度お試しください。",
         "filter-public": "公開コレクション",
         "filter-private": "非公開コレクション",
-        "copy-success": "コピーに成功しました！",
+        "copy-success": "コピーに成功しました！詳細ページにリダイレクトしています...",
+        "copy-success-dashboard": "コピーに成功しました！ダッシュボードにリダイレクトしています...",
         "copy-fail": "コピーに失敗しました。もう一度お試しください。"
       },
       "recent-list": {
@@ -278,7 +384,10 @@
     "shuffle": "シャッフル",
     "default": "デフォルト",
     "link-google": "Googleと連携",
-    "unlink-google": "Google連携を解除"
+    "unlink-google": "Google連携を解除",
+    "creating": "作成中...",
+    "create": "作成",
+    "add-fc": "フラッシュカードを追加"
   },
   "tooltip": {
     "edit": "編集",

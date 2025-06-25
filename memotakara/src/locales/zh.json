@@ -15,6 +15,24 @@
       "terms_of_condition": "使用条款",
       "help": "帮助/常见问题"
     },
+    "collection-list": {
+      "difficulty": "难度等级",
+      "beginner": "初级",
+      "intermediate": "中级",
+      "advanced": "高级",
+      "front": "正面语言",
+      "viet": "越南语",
+      "eng": "英语",
+      "japan": "日语",
+      "china": "中文",
+      "back": "背面语言",
+      "sort-by": "排序方式",
+      "newest": "最新",
+      "rate": "评分",
+      "card-count": "卡片数量",
+      "duplicates": "重复项",
+      "name": "名称"
+    },
     "create-collection": {
       "title": "创建新合集",
       "collection-name": "合集名称",
@@ -28,10 +46,37 @@
       "privacy-public": "公开",
       "privacy-private": "私密",
       "tag-placeholder": "输入标签，用逗号分隔",
-      "btn-creating": "创建中...",
-      "btn-create": "创建合集",
+      "tag-input-holder": "例如：英语, 基础, 食物",
       "create-msg-success": "合集创建成功！",
-      "create-msg-error": "创建合集失败，请重试。"
+      "create-msg-error": "创建合集失败，请重试。",
+      "front-msg": "请选择合集的正面语言",
+      "back-msg": "请选择合集的背面语言",
+      "diff-msg": "请选择难度",
+      "meta": "元数据（JSON格式）",
+      "meta-tooltip": "请输入有效的JSON",
+      "meta-error": "元数据必须是有效的JSON字符串。",
+      "rate-msg-success": "评分成功！",
+      "rate-msg-error": "评分失败，请重试。",
+      "rating": "您的评分",
+      "rating-required": "请选择评分",
+      "review": "评论（选填）",
+      "review-max": "最多500个字符"
+    },
+    "collection-modal": {
+      "create-fc": "创建新闪卡",
+      "create-fc-bulk": "批量创建闪卡",
+      "username": "用户名",
+      "comment": "评论",
+      "create-at": "创建时间",
+      "update-at": "更新时间",
+      "detail": "集合详情: ",
+      "total-card": "卡片数量",
+      "average-rate": "平均评分",
+      "total-dupli": "重复数量",
+      "lang": "语言 (正面 → 背面)",
+      "creator": "创建者",
+      "tags": "标签",
+      "ratings": "评分"
     },
     "edit-collection": {
       "title": "编辑合集",
@@ -40,18 +85,77 @@
       "btn-update": "保存更改",
       "btn-updating": "保存中..."
     },
+    "flashcard-modal": {
+      "study-type": "学习类型",
+      "quality": "记忆质量评分",
+      "interval": "新间隔（天）",
+      "ease-factor": "容易度系数",
+      "repetition": "连续正确回答次数",
+      "review-time": "复习时间",
+      "fc-review-title": "闪卡学习历史",
+      "fc-edit-title": "编辑闪卡",
+      "front": "正面",
+      "fc-msg": "不能为空！",
+      "back": "背面",
+      "pronunciation": "发音",
+      "kanji": "汉字",
+      "image": "图片链接",
+      "extra-data": "额外数据（JSON）",
+      "fc-update-success": "闪卡更新成功！",
+      "fc-update-error": "闪卡更新错误",
+      "fc-delete-success": "闪卡已删除！",
+      "fc-delete-error": "闪卡删除错误"
+    },
+    "create-fc": {
+      "extra-data": "无效的额外数据（非JSON格式）",
+      "fc-create-success": "闪卡创建成功",
+      "fc-create-error": "闪卡创建错误",
+      "fc-create-bulk": "批量创建闪卡",
+      "fc-create-bulk-success": "批量创建闪卡成功",
+      "bulk-fc-required": "缺少正面或背面内容"
+    },
+    "detail-fc": {
+      "fc-info": "闪卡信息",
+      "status-info": "状态信息",
+      "study-mode": "学习模式",
+      "fc-status": "闪卡状态",
+      "interval": "间隔",
+      "min": "分钟",
+      "lapses": "错误回答次数",
+      "last-review": "上次复习时间",
+      "next-review": "下次复习时间",
+      "study-yet": "未学习"
+    },
     "set-item": {
       "public-collection-title": "探索社区学习集",
+      "rate-title": "评分集合",
       "filter-all": "全部",
       "filter-otherUsers": "其他用户",
       "edit-icon": "编辑",
       "copy-icon": "复制",
-      "delete-icon": "删除"
+      "delete-icon": "删除",
+      "rate-icon": "评分",
+      "leech-icon": "检测到困难卡片",
+      "history-icon": "学习历史",
+      "detail-icon": "详情"
     },
     "cards": {
       "card": "卡片",
       "no-fc-due": "没有需要学习的卡片！",
       "no-fc": "该合集内暂无卡片内容。"
+    },
+    "noti-drop": {
+      "noti-load-error": "加载通知错误",
+      "mark-error": "无法标记为已读",
+      "delete-error": "无法删除通知",
+      "all-mark-error": "无法全部标记为已读",
+      "all-mark-delete-error": "无法删除所有已读通知",
+      "no-noti": "没有通知",
+      "mark": "标记为已读",
+      "mark-all": "全部标记为已读",
+      "delete-mark": "删除已读通知",
+      "recent": "最近通知",
+      "unread": "未读"
     },
     "speaker": {
       "stop": "停止发音",
@@ -223,7 +327,8 @@
         "correct": "正确！",
         "incorrect": "错误",
         "ans": "你的答案：",
-        "correct-ans": "正确答案："
+        "correct-ans": "正确答案：",
+        "similarity": "相似度"
       },
       "study_sets": {
         "header": "您的合集列表",
@@ -240,7 +345,8 @@
         "delete-fail": "删除失败，请重试。",
         "filter-public": "公开合集",
         "filter-private": "私密合集",
-        "copy-success": "复制成功！",
+        "copy-success": "复制成功！正在跳转到详情页...",
+        "copy-success-dashboard": "复制成功！正在跳转到仪表盘...",
         "copy-fail": "复制失败，请重试。"
       },
       "recent-list": {
@@ -278,7 +384,10 @@
     "shuffle": "随机",
     "default": "默认",
     "link-google": "关联Google账号",
-    "unlink-google": "解除Google关联"
+    "unlink-google": "解除Google关联",
+    "creating": "创建中...",
+    "create": "创建",
+    "add-fc": "添加闪卡"
   },
   "tooltip": {
     "edit": "编辑",

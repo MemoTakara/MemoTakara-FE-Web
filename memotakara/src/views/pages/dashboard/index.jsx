@@ -4,36 +4,53 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Row, Spin } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+
 import { useAuth } from "@/contexts/AuthContext";
-import { getPublicCollections } from "@/api/collection";
+import { getCollections, getRecentCollections } from "@/api/collection";
 import { getDashboard } from "@/api/progress";
-import { getRecentCollections } from "@/api/recentCollection";
+
 import BtnBlue from "@/components/btn/btn-blue.jsx";
 import DashboardCard from "@/components/set-item/dashboard-set";
-import MemoCreateCollection from "@/components/create-collection/MemoCreateCollection";
+import MemoCreateCollection from "@/components/collection-modal/MemoCreateCollection";
 
 function Dashboard() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [active, setActive] = useState("");
   const { user } = useAuth();
+
   const [studyDashboard, setStudyDashboard] = useState(null);
   const [collections, setCollections] = useState([]); // public collections
   const [recentViewed, setRecentViewed] = useState([]); // recently viewed collections
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [languageBack, setLanguageBack] = useState(() => {
+    const lang = localStorage.getItem("language") || i18n.language || "en";
+    return ["vi", "en", "ja", "zh"].includes(lang) ? lang : "en";
+  });
+
   const [loadingPublic, setLoadingPublic] = useState(true);
   const [loadingRecent, setLoadingRecent] = useState(true);
 
-  const fetchPublicCollections = async () => {
+  const fetchMemoCollections = async (params) => {
     setLoadingPublic(true);
     try {
-      const publicData = await getPublicCollections();
-      setCollections(publicData);
+      const publicData = await getCollections({
+        user_id: 1,
+        privacy: "public",
+        language_back: languageBack,
+        sort_by: "rating",
+      });
+      setCollections(publicData.data);
     } catch (error) {
       console.error("Failed to fetch public collections:", error);
     } finally {
       setLoadingPublic(false);
     }
   };
+
+  useEffect(() => {
+    setLanguageBack(i18n.language);
+  }, [i18n.language]);
 
   const fetchRecentCollections = async () => {
     setLoadingRecent(true);
@@ -57,7 +74,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    fetchPublicCollections();
+    fetchMemoCollections();
   }, []);
 
   useEffect(() => {
@@ -84,7 +101,7 @@ function Dashboard() {
         }}
         id="dashboard_btn"
         icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
-        onClick={() => setIsModalVisible(true)} // Mở modal
+        onClick={() => setIsModalVisible(true)}
         title={t("components.create-collection.title")}
       />
 
@@ -169,18 +186,8 @@ function Dashboard() {
             <Row gutter={[16, 16]}>
               {recentViewed.length > 0 ? (
                 recentViewed.slice(0, 3).map((item) => (
-                  <Col
-                    key={item.collection.id}
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    lg={8}
-                    xl={8}
-                  >
-                    <DashboardCard
-                      collection={item.collection}
-                      setAuthor={true}
-                    />
+                  <Col key={`recent-${item.id}`}>
+                    <DashboardCard collection={item} setAuthor={true} />
                   </Col>
                 ))
               ) : (
@@ -227,7 +234,7 @@ function Dashboard() {
             <Row gutter={[16, 16]}>
               {collections.length > 0 ? (
                 collections.slice(0, 3).map((collection) => (
-                  <Col key={collection.id} xs={24} sm={12} md={8} lg={8} xl={8}>
+                  <Col key={`public-${collection.id}`}>
                     <DashboardCard collection={collection} setAuthor={false} />
                   </Col>
                 ))

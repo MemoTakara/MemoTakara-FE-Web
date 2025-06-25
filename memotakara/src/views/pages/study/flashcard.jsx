@@ -6,8 +6,7 @@ import { useParams } from "react-router-dom";
 import "@/views/pages/study_detail/index.css";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
-import { postRecentCollection } from "@/api/recentCollection";
+import { getCollectionById } from "@/api/collection";
 import { startSession, endSession } from "@/api/study";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
@@ -18,7 +17,7 @@ import {
   NotiSessionLeave,
 } from "@/components/widget/noti-session";
 
-function StudyFlashcard({ isPublic, isEditFC }) {
+function StudyFlashcard({ isPublic }) {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
@@ -37,9 +36,14 @@ function StudyFlashcard({ isPublic, isEditFC }) {
     let isCancelled = false;
 
     const fetchCollection = async () => {
-      return user
-        ? await getCollectionById(id)
-        : await getPublicCollectionDetail(id);
+      try {
+        const data = await getCollectionById(id);
+
+        setCollection(data.collection);
+        return data.collection;
+      } catch (err) {
+        throw new Error(t("views.pages.study_detail.error-loading-collection"));
+      }
     };
 
     const setupSession = async (collectionId) => {
@@ -64,10 +68,6 @@ function StudyFlashcard({ isPublic, isEditFC }) {
         if (isCancelled) return;
 
         setCollection(data);
-
-        if (user && (data.privacy === 1 || user.id === data.user_id)) {
-          await postRecentCollection(data.id);
-        }
 
         if (user) {
           await setupSession(data.id);
@@ -102,14 +102,14 @@ function StudyFlashcard({ isPublic, isEditFC }) {
     }
   }, [user, flashcards]);
 
-  // Trở lại giao diện loading hoặc thông báo lỗi nếu có
   if (loading) return <LoadingPage />;
   if (error) return <div>{error}</div>;
   if (!collection) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
   }
 
-  const isAuthor = user?.id === collection.user_id;
+  // const isAuthor = user?.id === collection.user_id;
+  const isAuthor = collection.can_edit;
 
   // Hàm để cập nhật collection từ modal
   const handleUpdateCollection = (updatedCollection) => {
@@ -142,13 +142,13 @@ function StudyFlashcard({ isPublic, isEditFC }) {
           collection={collection}
           isAuthor={isAuthor}
           onUpdate={setCollection}
-          isStudy
+          isDetail
         />
 
         <MemoFlash
           isStudy
           flashcards={flashcards}
-          collectionId={collection.id}
+          collection={collection}
           languageFront={collection.language_front || ""}
           progress={progress}
           onUpdateProgress={setProgress}

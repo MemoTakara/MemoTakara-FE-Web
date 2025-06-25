@@ -1,5 +1,18 @@
 import axiosClient from "@/axiosClient";
 
+// Lấy lịch sử ôn tập của một flashcard
+export const getFlashcardReviewHistory = async (fcId, params = {}) => {
+  try {
+    const response = await axiosClient.get(`/progress/${fcId}/review-history`, {
+      params,
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching flashcard review history:", error);
+    throw error;
+  }
+};
+
 // Lấy streak học từ server
 export const getStudyStreak = async () => {
   try {

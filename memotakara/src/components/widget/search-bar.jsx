@@ -2,14 +2,15 @@ import { useState } from "react";
 import { Input, AutoComplete } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { searchItems } from "@/api/collection";
+
+import { getCollections } from "@/api/collection";
 
 const MemoSearch = ({ isGuest }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const navigate = useNavigate();
 
   // Search bar - Gọi API khi nhập từ khóa
   const handleSearch = async (value) => {
@@ -21,11 +22,15 @@ const MemoSearch = ({ isGuest }) => {
 
     setLoading(true);
     try {
-      const results = await searchItems(value);
-      setLoading(false);
+      const results = await getCollections({
+        search: value,
+        privacy: "public",
+        sort_by: "rating",
+      });
+      const collections = results?.data || [];
 
       // Format lại kết quả cho AutoComplete
-      const formattedOptions = results.map((item) => ({
+      const formattedOptions = collections.map((item) => ({
         value: String(item.id), // Giả sử ID của collection được trả về từ API
         label: (
           <div>

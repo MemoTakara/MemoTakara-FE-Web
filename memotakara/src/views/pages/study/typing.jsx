@@ -8,8 +8,7 @@ import "@/components/cards/flashcard.css";
 import "@/views/pages/study_detail/index.css";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { postRecentCollection } from "@/api/recentCollection";
-import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
+import { getCollectionById } from "@/api/collection";
 import { startSession, submitTypingAnswer, endSession } from "@/api/study";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
@@ -23,7 +22,7 @@ import MemoSpeaker from "@/components/widget/speaker";
 
 const { Paragraph } = Typography;
 
-function StudyTyping({ isEditFC }) {
+function StudyTyping() {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
@@ -35,11 +34,13 @@ function StudyTyping({ isEditFC }) {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [showAnswer, setShowAnswer] = useState(false);
   const [isAnswerCorrect, setIsAnswerCorrect] = useState(false);
   const [answerResult, setAnswerResult] = useState(null);
+
   const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [completedData, setCompletedData] = useState(null);
 
@@ -47,17 +48,14 @@ function StudyTyping({ isEditFC }) {
   const startTimeRef = useRef(Date.now());
 
   const fetchCollectionData = async () => {
-    const data = user
-      ? await getCollectionById(id)
-      : await getPublicCollectionDetail(id);
+    try {
+      const data = await getCollectionById(id);
 
-    setCollection(data);
-
-    if (user && (data.privacy === 1 || user.id === data.user_id)) {
-      await postRecentCollection(data.id);
+      setCollection(data.collection);
+      return data.collection;
+    } catch (err) {
+      throw new Error(t("views.pages.study_detail.error-loading-collection"));
     }
-
-    return data;
   };
 
   const initStudySession = async (collectionId) => {
@@ -224,12 +222,7 @@ function StudyTyping({ isEditFC }) {
   return (
     <>
       <div className="std-detail-container">
-        <OwnSet
-          collection={collection}
-          isAuthor={user?.id === collection.user_id}
-          onUpdate={setCollection}
-          isStudy={true}
-        />
+        <OwnSet collection={collection} isDetail={true} />
 
         {currentCard ? (
           <Card className="memo-flash-card">
@@ -277,14 +270,19 @@ function StudyTyping({ isEditFC }) {
                       description={
                         <div>
                           <Paragraph>
-                            <strong>Your answer:</strong> {userAnswer}
+                            <strong>{t("views.pages.typing.ans")}</strong>{" "}
+                            {userAnswer}
                           </Paragraph>
                           <Paragraph>
-                            <strong>Correct answer:</strong>{" "}
+                            <strong>
+                              {t("views.pages.typing.correct-ans")}
+                            </strong>{" "}
                             {answerResult?.correct_answer ?? currentCard.back}
                           </Paragraph>
                           <Paragraph>
-                            <strong>Similarity:</strong>{" "}
+                            <strong>
+                              {t("views.pages.typing.similarity")}
+                            </strong>{" "}
                             {answerResult?.similarity ?? "N/A"}%
                           </Paragraph>
                         </div>
@@ -309,34 +307,37 @@ function StudyTyping({ isEditFC }) {
         )}
 
         {showAnswer && currentCard && (
-          <>
-            <div className="memo-flash-status">
-              <BtnWhite textKey="again" onClick={() => handleReview("again")} />
-              <BtnWhite textKey="hard" onClick={() => handleReview("hard")} />
-              <BtnWhite textKey="good" onClick={() => handleReview("good")} />
-              <BtnWhite textKey="easy" onClick={() => handleReview("easy")} />
+          <div className="memo-flash-status">
+            <BtnWhite textKey="again" onClick={() => handleReview("again")} />
+            <BtnWhite textKey="hard" onClick={() => handleReview("hard")} />
+            <BtnWhite textKey="good" onClick={() => handleReview("good")} />
+            <BtnWhite textKey="easy" onClick={() => handleReview("easy")} />
+          </div>
+        )}
+
+        {currentCard ? (
+          <div className="memo-flash-status" style={{ width: "32%" }}>
+            <div
+              className="memo-flash-status-new"
+              title={t("tooltip.new_card")}
+            >
+              {progress.new}
             </div>
-            <div className="memo-flash-status" style={{ width: "32%" }}>
-              <div
-                className="memo-flash-status-new"
-                title={t("tooltip.new_card")}
-              >
-                {progress.new}
-              </div>
-              <div
-                className="memo-flash-status-learn"
-                title={t("tooltip.learning_card")}
-              >
-                {progress.learning}
-              </div>
-              <div
-                className="memo-flash-status-due"
-                title={t("tooltip.due_card")}
-              >
-                {progress.due}
-              </div>
+            <div
+              className="memo-flash-status-learn"
+              title={t("tooltip.learning_card")}
+            >
+              {progress.learning}
             </div>
-          </>
+            <div
+              className="memo-flash-status-due"
+              title={t("tooltip.due_card")}
+            >
+              {progress.due}
+            </div>
+          </div>
+        ) : (
+          ""
         )}
       </div>
 

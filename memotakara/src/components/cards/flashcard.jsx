@@ -1,8 +1,9 @@
 import "./flashcard.css";
 import { useEffect, useState } from "react";
-import { Card, Progress } from "antd";
 import { useTranslation } from "react-i18next";
+import { Card, Progress } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+
 import { submitFlashcardAnswer } from "@/api/study";
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import MemoSpeaker from "@/components/widget/speaker";
@@ -10,8 +11,9 @@ import BtnWhite from "@/components/btn/btn-white";
 
 const MemoFlash = ({
   isStudy,
+  collection,
   flashcards,
-  collectionId,
+  total,
   languageFront,
   progress,
   onUpdateProgress,
@@ -22,8 +24,7 @@ const MemoFlash = ({
   const [flipped, setFlipped] = useState(false); // Trạng thái lật thẻ
   const [summary, setSummary] = useState({ new: 0, learning: 0, due: 0 });
   const [startTime, setStartTime] = useState(Date.now());
-
-  const progressPercent = ((currentIndex + 1) / flashcards.length) * 100;
+  const progressPercent = ((currentIndex + 1) / total) * 100;
 
   useEffect(() => {
     if (progress) {
@@ -32,7 +33,7 @@ const MemoFlash = ({
   }, [progress]);
 
   if (!flashcards) return <LoadingPage />;
-  if (!flashcards || flashcards.length === 0)
+  if (!flashcards || total === 0)
     return (
       <div style={{ marginTop: "3%" }}>{t("components.cards.no-fc-due")}</div>
     );
@@ -58,7 +59,7 @@ const MemoFlash = ({
     try {
       const result = await submitFlashcardAnswer({
         session_id: sessionId,
-        collection_id: collectionId,
+        collection_id: collection.id,
         flashcard_id: cardId,
         quality,
         study_mode: "front_to_back",
@@ -77,7 +78,7 @@ const MemoFlash = ({
       }
 
       setFlipped(false);
-      setCurrentIndex((i) => (i + 1) % flashcards.length);
+      setCurrentIndex((i) => (i + 1) % total);
     } catch (error) {
       console.error("Lỗi khi gửi review:", error);
     }
@@ -88,20 +89,22 @@ const MemoFlash = ({
   // Hàm chuyển sang thẻ trước
   const prevCard = () => {
     setFlipped(false);
-    setCurrentIndex((i) => (i === 0 ? flashcards.length - 1 : i - 1));
+    setCurrentIndex((i) => (i === 0 ? total - 1 : i - 1));
   };
 
   // Hàm chuyển sang thẻ tiếp theo
   const nextCard = () => {
     setFlipped(false);
-    setCurrentIndex((i) => (i + 1) % flashcards.length);
+    setCurrentIndex((i) => (i + 1) % total);
   };
 
   return (
     <div className="memo-flash-container">
-      <button className="fc-btn-prev" onClick={prevCard}>
-        <LeftOutlined />
-      </button>
+      {!isStudy && currentIndex > 0 && (
+        <button className="fc-btn-prev" onClick={prevCard}>
+          <LeftOutlined />
+        </button>
+      )}
 
       <Card className="memo-flash-card" onClick={() => setFlipped(!flipped)}>
         <div className={`memo-flash-inner ${flipped ? "flipped" : ""}`}>
@@ -141,9 +144,11 @@ const MemoFlash = ({
         </div>
       </Card>
 
-      <button className="fc-btn-next" onClick={nextCard}>
-        <RightOutlined />
-      </button>
+      {!isStudy && currentIndex < total - 1 && (
+        <button className="fc-btn-next" onClick={nextCard}>
+          <RightOutlined />
+        </button>
+      )}
 
       {isStudy ? (
         <>
@@ -188,7 +193,7 @@ const MemoFlash = ({
             trailColor="var(--color-card-background)"
           />
           <div className="dashboard_card_status_new" style={{ width: "30%" }}>
-            {currentIndex + 1} / {flashcards.length}
+            {currentIndex + 1} / {total}
           </div>
         </div>
       )}

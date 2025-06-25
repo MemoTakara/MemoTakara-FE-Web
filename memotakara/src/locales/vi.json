@@ -15,6 +15,24 @@
       "terms_of_condition": "Điều khoản sử dụng",
       "help": "Trợ giúp/FAQ"
     },
+    "collection-list": {
+      "difficulty": "Mức độ khó",
+      "beginner": "Sơ cấp",
+      "intermediate": "Trung cấp",
+      "advanced": "Nâng cao",
+      "front": "Ngôn ngữ mặt trước",
+      "viet": "Tiếng Việt",
+      "eng": "Tiếng Anh",
+      "japan": "Tiếng Nhật",
+      "china": "Tiếng Trung",
+      "back": "Ngôn ngữ mặt sau",
+      "sort-by": "Sắp xếp theo",
+      "newest": "Mới nhất",
+      "rate": "Đánh giá",
+      "card-count": "Số thẻ",
+      "duplicates": "Bản sao",
+      "name": "Tên"
+    },
     "create-collection": {
       "title": "Tạo bộ sưu tập mới",
       "collection-name": "Tên bộ sưu tập",
@@ -28,10 +46,37 @@
       "privacy-public": "Công khai",
       "privacy-private": "Riêng tư",
       "tag-placeholder": "Nhập các thẻ (phân cách bằng dấu phẩy)",
-      "btn-creating": "Đang tạo...",
-      "btn-create": "Tạo bộ sưu tập",
+      "tag-input-holder": "Ví dụ: tiếng anh, cơ bản, đồ ăn",
       "create-msg-success": "Tạo bộ sưu tập thành công!",
-      "create-msg-error": "Lỗi khi tạo bộ sưu tập. Vui lòng thử lại."
+      "create-msg-error": "Lỗi khi tạo bộ sưu tập. Vui lòng thử lại.",
+      "front-msg": "Vui lòng chọn ngôn ngữ mặt trước của bộ sưu tập",
+      "back-msg": "Vui lòng chọn ngôn ngữ mặt sau của bộ sưu tập",
+      "diff-msg": "Vui lòng chọn độ khó",
+      "meta": "Metadata (định dạng JSON)",
+      "meta-tooltip": "Nhập JSON hợp lệ",
+      "meta-error": "Metadata phải là chuỗi JSON hợp lệ.",
+      "rate-msg-success": "Đánh giá thành công!",
+      "rate-msg-error": "Đánh giá thất bại. Vui lòng thử lại.",
+      "rating": "Đánh giá của bạn",
+      "rating-required": "Vui lòng chọn mức đánh giá",
+      "review": "Bình luận (không bắt buộc)",
+      "review-max": "Tối đa 500 ký tự"
+    },
+    "collection-modal": {
+      "create-fc": "Tạo flashcard mới",
+      "create-fc-bulk": "Tạo flashcard hàng loạt",
+      "username": "Tên người dùng",
+      "comment": "Bình luận",
+      "create-at": "Tạo lúc",
+      "update-at": "Cập nhật lúc",
+      "detail": "Chi tiết bộ sưu tập: ",
+      "total-card": "Số lượng thẻ",
+      "average-rate": "Đánh giá trung bình",
+      "total-dupli": "Số bản sao",
+      "lang": "Ngôn ngữ (mặt trước → mặt sau)",
+      "creator": "Người tạo",
+      "tags": "Thẻ",
+      "ratings": "Đánh giá"
     },
     "edit-collection": {
       "title": "Chỉnh sửa bộ sưu tập",
@@ -40,18 +85,77 @@
       "btn-update": "Lưu thay đổi",
       "btn-updating": "Đang lưu..."
     },
+    "flashcard-modal": {
+      "study-type": "Kiểu học",
+      "quality": "Đánh giá chất lượng trí nhớ",
+      "interval": "Khoảng thời gian mới (ngày)",
+      "ease-factor": "Hệ số dễ",
+      "repetition": "Số lần trả lời đúng liên tiếp",
+      "review-time": "Thời gian ôn tập",
+      "fc-review-title": "Lịch sử học flashcard",
+      "fc-edit-title": "Chỉnh sửa flashcard",
+      "front": "Mặt trước",
+      "fc-msg": "Không được để trống!",
+      "back": "Mặt sau",
+      "pronunciation": "Phát âm",
+      "kanji": "Kanji",
+      "image": "URL hình ảnh",
+      "extra-data": "Dữ liệu bổ sung (JSON)",
+      "fc-update-success": "Cập nhật flashcard thành công!",
+      "fc-update-error": "Lỗi khi cập nhật flashcard",
+      "fc-delete-success": "Đã xóa flashcard!",
+      "fc-delete-error": "Lỗi khi xóa flashcard"
+    },
+    "create-fc": {
+      "extra-data": "Dữ liệu bổ sung không hợp lệ (không phải JSON)",
+      "fc-create-success": "Tạo flashcard thành công",
+      "fc-create-error": "Lỗi khi tạo flashcard",
+      "fc-create-bulk": "Tạo flashcard hàng loạt",
+      "fc-create-bulk-success": "Tạo flashcard hàng loạt thành công",
+      "bulk-fc-required": "Thiếu mặt trước hoặc mặt sau"
+    },
+    "detail-fc": {
+      "fc-info": "Thông tin flashcard",
+      "status-info": "Thông tin trạng thái",
+      "study-mode": "Chế độ học",
+      "fc-status": "Trạng thái flashcard",
+      "interval": "Khoảng thời gian",
+      "min": "phút",
+      "lapses": "Số lần trả lời sai",
+      "last-review": "Lần ôn tập cuối",
+      "next-review": "Lần ôn tập tiếp theo",
+      "study-yet": "Chưa học"
+    },
     "set-item": {
       "public-collection-title": "Khám phá bộ sưu tập cộng đồng",
+      "rate-title": "Đánh giá bộ sưu tập",
       "filter-all": "Tất cả",
       "filter-otherUsers": "Người dùng khác",
       "edit-icon": "Chỉnh sửa",
       "copy-icon": "Sao chép",
-      "delete-icon": "Xóa"
+      "delete-icon": "Xóa",
+      "rate-icon": "Đánh giá",
+      "leech-icon": "Phát hiện thẻ khó",
+      "history-icon": "Lịch sử học",
+      "detail-icon": "Chi tiết"
     },
     "cards": {
       "card": "Thẻ",
       "no-fc-due": "Không có thẻ nào cần ôn tập!",
       "no-fc": "Bộ sưu tập này không có thẻ nào."
+    },
+    "noti-drop": {
+      "noti-load-error": "Lỗi tải thông báo",
+      "mark-error": "Không thể đánh dấu đã đọc",
+      "delete-error": "Không thể xóa thông báo",
+      "all-mark-error": "Không thể đánh dấu tất cả đã đọc",
+      "all-mark-delete-error": "Không thể xóa tất cả thông báo đã đọc",
+      "no-noti": "Không có thông báo",
+      "mark": "Đánh dấu đã đọc",
+      "mark-all": "Đánh dấu tất cả đã đọc",
+      "delete-mark": "Xóa thông báo đã đọc",
+      "recent": "Thông báo gần đây",
+      "unread": "Chưa đọc"
     },
     "speaker": {
       "stop": "Dừng phát âm",
@@ -163,7 +267,6 @@
         "unlink-success": "Đã hủy liên kết Google.",
         "unlink-error": "Hủy liên kết thất bại."
       },
-
       "progress": {
         "today-performance": "Hiệu suất hôm nay",
         "study-time": "Thời gian học",
@@ -224,7 +327,8 @@
         "correct": "Chính xác!",
         "incorrect": "Không chính xác",
         "ans": "Câu trả lời của bạn:",
-        "correct-ans": "Đáp án đúng:"
+        "correct-ans": "Đáp án đúng:",
+        "similarity": "Độ tương đồng"
       },
       "study_sets": {
         "header": "Danh sách bộ sưu tập của bạn",
@@ -241,7 +345,8 @@
         "delete-fail": "Xoá thất bại. Vui lòng thử lại!",
         "filter-public": "Bộ sưu tập công khai",
         "filter-private": "Bộ sưu tập riêng tư",
-        "copy-success": "Đã sao chép thành công!",
+        "copy-success": "Đã sao chép thành công! Đang chuyển hướng đến trang chi tiết...",
+        "copy-success-dashboard": "Đã sao chép thành công! Đang chuyển hướng đến bảng điều khiển...",
         "copy-fail": "Sao chép thất bại. Vui lòng thử lại!"
       },
       "recent-list": {
@@ -279,7 +384,10 @@
     "shuffle": "Ngẫu nhiên",
     "default": "Mặc định",
     "link-google": "Liên kết Google",
-    "unlink-google": "Hủy liên kết Google"
+    "unlink-google": "Hủy liên kết Google",
+    "creating": "Đang tạo...",
+    "create": "Tạo",
+    "add-fc": "Thêm Flashcard"
   },
   "tooltip": {
     "edit": "Chỉnh sửa",

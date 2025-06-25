@@ -1,23 +1,32 @@
 import "./index.css";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Select, message } from "antd";
+import { Button, Select, message, Pagination } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+
 import {
-  getOwnCollections,
+  getMyCollections,
   duplicateCollection,
   deleteCollection,
 } from "@/api/collection";
+
 import LoadingPage from "@/views/error-pages/LoadingPage";
 import SetItem from "@/components/set-item/set-item";
-import MemoCreateCollection from "@/components/create-collection/MemoCreateCollection";
+import MemoCreateCollection from "@/components/collection-modal/MemoCreateCollection";
 
 function StudySets() {
   const { t } = useTranslation();
-  const [collections, setCollections] = useState([]);
-  const [filteredCollections, setFilteredCollections] = useState([]);
-  const [loading, setLoading] = useState(true);
+
+  const [collections, setCollections] = useState({ data: [], total: 0 });
+  const [filteredCollections, setFilteredCollections] = useState({
+    data: [],
+    total: 0,
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [page, setPage] = useState(1);
+
+  const [loading, setLoading] = useState(true);
   const [messageApi, contextHolder] = message.useMessage();
 
   const [setOptions, setSetOptions] = useState([
@@ -38,13 +47,12 @@ function StudySets() {
     },
   ]);
 
-  // Gọi API khi component mount
   useEffect(() => {
     const fetchCollections = async () => {
       try {
-        const data = await getOwnCollections();
-        setCollections(data || []);
-        setFilteredCollections(data || []); // Ban đầu hiển thị tất cả
+        const data = await getMyCollections({ page, per_page: 5 });
+        setCollections(data);
+        setFilteredCollections(data);
       } catch (err) {
         console.error("Lỗi khi lấy danh sách collection:", err);
       } finally {
@@ -52,9 +60,8 @@ function StudySets() {
       }
     };
     fetchCollections();
-  }, []);
+  }, [page]);
 
-  // Lọc theo privacy
   const handleSets = (value) => {
     setSetOptions((prev) =>
       prev.map((opt) => ({
@@ -64,9 +71,11 @@ function StudySets() {
     );
 
     if (value === "public") {
-      setFilteredCollections(collections.filter((col) => col.privacy === 1));
+      const filtered = collections.data.filter((col) => col.privacy === 1);
+      setFilteredCollections({ data: filtered, total: filtered.length });
     } else if (value === "private") {
-      setFilteredCollections(collections.filter((col) => col.privacy === 0));
+      const filtered = collections.data.filter((col) => col.privacy === 0);
+      setFilteredCollections({ data: filtered, total: filtered.length });
     } else {
       setFilteredCollections(collections);
     }
@@ -78,8 +87,9 @@ function StudySets() {
 
     try {
       await deleteCollection(id);
-      setCollections((prev) => prev.filter((col) => col.id !== id));
-      setFilteredCollections((prev) => prev.filter((col) => col.id !== id));
+      const updatedData = collections.data.filter((col) => col.id !== id);
+      setCollections({ data: updatedData, total: updatedData.length });
+      setFilteredCollections({ data: updatedData, total: updatedData.length });
       messageApi.success(t("views.pages.study_sets.delete-success"));
     } catch (error) {
       console.error("Xóa thất bại:", error);
@@ -88,31 +98,31 @@ function StudySets() {
   };
 
   const handleCreateCollection = (newCollection) => {
-    setCollections((prev) => [...prev, newCollection]);
-    setFilteredCollections((prev) => [...prev, newCollection]);
+    const updatedData = [...collections.data, newCollection];
+    setCollections({ data: updatedData, total: updatedData.length });
+    setFilteredCollections({ data: updatedData, total: updatedData.length });
   };
 
   const handleUpdateCollection = (updatedCollection) => {
-    setCollections((prevCollections) =>
-      prevCollections.map((col) =>
-        col.id === updatedCollection.id ? updatedCollection : col
-      )
+    const updatedData = collections.data.map((col) =>
+      col.id === updatedCollection.id ? updatedCollection : col
     );
-    setFilteredCollections((prevFiltered) =>
-      prevFiltered.map((col) =>
-        col.id === updatedCollection.id ? updatedCollection : col
-      )
-    );
+    setCollections({ data: updatedData, total: updatedData.length });
+    setFilteredCollections({ data: updatedData, total: updatedData.length });
   };
 
   const handleCopyCollection = async (collectionId) => {
     try {
       const res = await duplicateCollection(collectionId);
       if (res.success) {
-        const updatedCollections = await getOwnCollections();
+        const updatedCollections = await getMyCollections({
+          page,
+          per_page: 5,
+        });
         setCollections(updatedCollections);
         setFilteredCollections(updatedCollections);
         messageApi.success(t("views.pages.study_sets.copy-success"));
+        setTimeout(() => navigate(`/public-study-set/${res.id}`), 3000);
       } else {
         messageApi.error(res.message);
       }
@@ -147,33 +157,43 @@ function StudySets() {
           }}
           id="dashboard_btn"
           icon={<PlusOutlined style={{ color: "#fff", fontSize: "24px" }} />}
-          onClick={() => setIsModalVisible(true)} // Mở modal
+          onClick={() => setIsModalVisible(true)}
           title={t("components.create-collection.title")}
         />
       </div>
 
-      {/* Sử dụng modal tạo collection */}
+      {filteredCollections.data.length === 0 ? (
+        <div className="std-set-no-collection">
+          {t("views.pages.study_sets.no-create-collection")}
+        </div>
+      ) : (
+        <>
+          {filteredCollections.data.map((col) => (
+            <SetItem
+              key={col.id}
+              collection={col}
+              onDelete={handleDeleteCollection}
+              onUpdate={handleUpdateCollection}
+              onCopy={handleCopyCollection}
+            />
+          ))}
+          <div style={{ textAlign: "center", marginTop: "5%" }}>
+            <Pagination
+              current={page}
+              pageSize={5}
+              total={filteredCollections.total || 0}
+              onChange={(page) => setPage(page)}
+              showSizeChanger={false}
+            />
+          </div>
+        </>
+      )}
+
       <MemoCreateCollection
         isVisible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         onCreate={handleCreateCollection}
       />
-
-      {filteredCollections.length === 0 ? (
-        <div className="std-set-no-collection">
-          {t("views.pages.study_sets.no-create-collection")}
-        </div>
-      ) : (
-        filteredCollections.map((col) => (
-          <SetItem
-            key={col.id}
-            collection={col}
-            onDelete={handleDeleteCollection}
-            onUpdate={handleUpdateCollection}
-            onCopy={handleCopyCollection}
-          />
-        ))
-      )}
     </div>
   );
 }

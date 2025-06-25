@@ -15,6 +15,24 @@
       "terms_of_condition": "Terms of Condition",
       "help": "Help/FAQ"
     },
+    "collection-list": {
+      "difficulty": "Difficulty Level",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "front": "Language Front",
+      "viet": "Vietnamese",
+      "eng": "English",
+      "japan": "Japanese",
+      "china": "Chinese",
+      "back": "Language Back",
+      "sort-by": "Sort By",
+      "newest": "Newest",
+      "rate": "Rating",
+      "card-count": "Cards count",
+      "duplicates": "Duplicates",
+      "name": "Name"
+    },
     "create-collection": {
       "title": "Create a New Collection",
       "collection-name": "Collection Name",
@@ -27,11 +45,38 @@
       "privacy-placeholder": "Select privacy",
       "privacy-public": "Public",
       "privacy-private": "Private",
-      "tag-placeholder": "Enter tags, separated by commas",
-      "btn-creating": "Creating...",
-      "btn-create": "Create Collection",
+      "tag-placeholder": "Tags (separated by commas)",
+      "tag-input-holder": "Example: english, basic, food",
       "create-msg-success": "Collection created successfully!",
-      "create-msg-error": "Error creating collection. Please try again."
+      "create-msg-error": "Error creating collection. Please try again.",
+      "front-msg": "Please select the language of the front of the collection",
+      "back-msg": "Please select the language on the back of the collection",
+      "diff-msg": "Please select difficulty",
+      "meta": "Metadata (JSON format)",
+      "meta-tooltip": "Enter valid JSON",
+      "meta-error": "Metadata must be a valid JSON string.",
+      "rate-msg-success": "Rated successfully!",
+      "rate-msg-error": "Failed to rate. Try again.",
+      "rating": "Your rating",
+      "rating-required": "Please select a rating",
+      "review": "Comment (optional)",
+      "review-max": "Maximum 500 characters"
+    },
+    "collection-modal": {
+      "create-fc": "Create new flashcard",
+      "create-fc-bulk": "Create flashcards in bulk",
+      "username": "Username",
+      "comment": "Comment",
+      "create-at": "Create at",
+      "update-at": "Update at",
+      "detail": "Collection Details: ",
+      "total-card": "Number of Cards",
+      "average-rate": "Average Rating",
+      "total-dupli": "Number of Duplicates",
+      "lang": "Language (front → back)",
+      "creator": "Creator",
+      "tags": "Tags",
+      "ratings": "Ratings"
     },
     "edit-collection": {
       "title": "Edit collection",
@@ -40,18 +85,77 @@
       "btn-update": "Save changes",
       "btn-updating": "Saving..."
     },
+    "flashcard-modal": {
+      "study-type": "Study Type",
+      "quality": "Memory Quality Rating",
+      "interval": "New Interval (days)",
+      "ease-factor": "Ease Factor",
+      "repetition": "Consecutive Correct Answers",
+      "review-time": "Review Time",
+      "fc-review-title": "Flashcard Study History",
+      "fc-edit-title": "Edit Flashcard",
+      "front": "Front",
+      "fc-msg": "Cannot be empty!",
+      "back": "Back",
+      "pronunciation": "Pronunciation",
+      "kanji": "Kanji",
+      "image": "Image URL",
+      "extra-data": "Extra Data (JSON)",
+      "fc-update-success": "Flashcard updated successfully!",
+      "fc-update-error": "Error updating flashcard",
+      "fc-delete-success": "Flashcard deleted!",
+      "fc-delete-error": "Error deleting flashcard"
+    },
+    "create-fc": {
+      "extra-data": "Invalid extra_data (not JSON)",
+      "fc-create-success": "Flashcard created successfully",
+      "fc-create-error": "Error creating flashcard",
+      "fc-create-bulk": "Create Flashcards in Bulk",
+      "fc-create-bulk-success": "Flashcard in Bulk created successfully",
+      "bulk-fc-required": "Missing front or back"
+    },
+    "detail-fc": {
+      "fc-info": "Flashcard Information",
+      "status-info": "Status Information",
+      "study-mode": "Study mode",
+      "fc-status": "Flashcard Status",
+      "interval": "Interval",
+      "min": "minute",
+      "lapses": "Number of wrong answers",
+      "last-review": "Last review at",
+      "next-review": "Next review at",
+      "study-yet": "Not studied yet"
+    },
     "set-item": {
       "public-collection-title": "Explore Community Collections",
+      "rate-title": "Rate Collection",
       "filter-all": "All",
       "filter-otherUsers": "Others",
       "edit-icon": "Edit",
       "copy-icon": "Copy",
-      "delete-icon": "Delete"
+      "delete-icon": "Delete",
+      "rate-icon": "Rate",
+      "leech-icon": "Leech detected",
+      "history-icon": "Study History",
+      "detail-icon": "Detail"
     },
     "cards": {
       "card": "Card",
       "no-fc-due": "No flashcards are due to learn!",
       "no-fc": "This collection does not contain any flashcards."
+    },
+    "noti-drop": {
+      "noti-load-error": "Error loading notifications",
+      "mark-error": "Unable to mark as read",
+      "delete-error": "Unable to delete notification",
+      "all-mark-error": "Unable to mark all as read",
+      "all-mark-delete-error": "Unable to delete all read notifications",
+      "no-noti": "No notifications",
+      "mark": "Mark as read",
+      "mark-all": "Mark all as read",
+      "delete-mark": "Delete read notifications",
+      "recent": "Recent Notifications",
+      "unread": "Unread"
     },
     "speaker": {
       "stop": "Stop Pronunciation",
@@ -223,7 +327,8 @@
         "correct": "Correct!",
         "incorrect": "Incorrect",
         "ans": "Your answer:",
-        "correct-ans": "Correct answer:"
+        "correct-ans": "Correct answer:",
+        "similarity": "Similarity"
       },
       "study_sets": {
         "header": "Your collection list",
@@ -240,7 +345,8 @@
         "delete-fail": "Deletion failed. Please try again!",
         "filter-public": "Public Collection",
         "filter-private": "Private Collection",
-        "copy-success": "Copied successfully!",
+        "copy-success": "Copied successfully! Redirecting to detail page...",
+        "copy-success-dashboard": "Copied successfully! Redirecting to dashboard...",
         "copy-fail": "Copy failed. Please try again!"
       },
       "recent-list": {
@@ -278,7 +384,10 @@
     "shuffle": "Shuffle",
     "default": "Default",
     "link-google": "Link to Google",
-    "unlink-google": "Unlink Google"
+    "unlink-google": "Unlink Google",
+    "creating": "Creating...",
+    "create": "Create",
+    "add-fc": "Add Flashcard"
   },
   "tooltip": {
     "edit": "Edit",

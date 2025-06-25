@@ -1,133 +1,13 @@
 import "./index.css";
 import google_icon from "@/assets/img/google_icon.png";
-import logo from "@/assets/img/logo.png";
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { Form, message, Input } from "antd";
 import { GithubFilled, LinkedinFilled } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook } from "@fortawesome/free-brands-svg-icons";
-import BtnBlue from "@/components/btn/btn-blue";
 
 function Footer() {
-  const { t } = useTranslation();
-  const [active, setActive] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  //Disable button
-  const onFieldsChange = (_, allFields) => {
-    // Kiểm tra nếu email hợp lệ thì kích hoạt nút submit
-    const isValid = allFields.every(
-      (field) => field.errors.length === 0 && field.value
-    );
-    setIsDisabled(!isValid);
-  };
-
-  //Send email notification
-  const [messageApi, contextHolder] = message.useMessage();
-  const key = "updatable";
-  const sendEmail = () => {
-    messageApi.open({
-      key,
-      type: "success",
-      content: t("components.footer.msg_success"),
-      duration: 2,
-    });
-  };
-
   return (
     <div className="footer_container">
-      <div className="footer_cols">
-        <Link
-          to="/dashboard"
-          className="footer_link"
-          onClick={() => setActive("dashboard")}
-        >
-          <div className="footer_logo">
-            <img loading="lazy" src={logo} alt="logo" className="img" />
-            <div className="footer_name">MemoTakara</div>
-          </div>
-        </Link>
-
-        <div className="footer_email">
-          <div
-            style={{
-              width: "380px",
-              fontSize: "20px",
-              fontWeight: "var(--header-weight-size)",
-              marginBottom: "20px",
-              wordWrap: "break-word",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {t("components.footer.send_email_msg")}
-          </div>
-
-          <Form
-            className="footer_email_send"
-            autoComplete="on"
-            onFinish={sendEmail}
-            onFieldsChange={onFieldsChange}
-          >
-            <Form.Item
-              name="email"
-              rules={[
-                { type: "email", message: t("components.footer.msg_invalid") },
-                {
-                  required: true,
-                  message: t("components.footer.msg_required"),
-                },
-              ]}
-            >
-              <Input
-                style={{
-                  width: "200px",
-                  fontWeight: "545",
-                  padding: "5.5px",
-                  border: "2px solid var(--color-light-button)",
-                  marginRight: "15px",
-                }}
-                placeholder={t("components.footer.email_placeholder")}
-              />
-            </Form.Item>
-
-            <Form.Item style={{ fontWeight: "var(--header-weight-size)" }}>
-              {contextHolder}
-              <BtnBlue
-                textKey="subscribe"
-                type="submit"
-                htmlType="submit"
-                disabled={isDisabled}
-              />
-            </Form.Item>
-          </Form>
-        </div>
-
-        <div className="footer_support">
-          <div
-            style={{
-              fontSize: "20px",
-              textDecoration: "underline",
-              fontWeight: "var(--header-weight-size)",
-            }}
-          >
-            {t("components.footer.support")}
-          </div>
-          <Link className="footer_link">{t("components.footer.about_us")}</Link>
-          <Link className="footer_link">
-            {t("components.footer.terms_of_condition")}
-          </Link>
-          <Link className="footer_link">{t("components.footer.help")}</Link>
-        </div>
-      </div>
-
       <div className="footer_bottom_row">
-        {/* line */}
-        <div
-          style={{ width: "550px", height: "1px", background: "#000" }}
-        ></div>
-
         <div className="footer_copyright">
           © Copyright{" "}
           <span style={{ fontStyle: "italic" }}>Dinh Thi Hong Phuc</span> 2025
@@ -155,7 +35,7 @@ function Footer() {
           >
             <FontAwesomeIcon
               style={{
-                fontSize: "20px",
+                fontSize: "21px",
                 color: "#1877F2",
                 paddingLeft: "15px",
                 paddingRight: "12px",
@@ -193,11 +73,6 @@ function Footer() {
             />
           </a>
         </div>
-
-        {/* line */}
-        <div
-          style={{ width: "550px", height: "1px", background: "#000" }}
-        ></div>
       </div>
     </div>
   );

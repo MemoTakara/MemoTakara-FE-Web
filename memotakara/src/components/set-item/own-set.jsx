@@ -11,17 +11,22 @@ import {
   faKeyboard,
   faBook,
 } from "@fortawesome/free-solid-svg-icons";
-import { duplicateCollection } from "@/api/collection";
-import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
-import CollectionDropdown from "@/components/widget/collection-menu";
 
-const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
+import { duplicateCollection } from "@/api/collection";
+
+import CollectionDropdown from "@/components/collection-modal/collection-menu";
+import MemoEditCollection from "@/components/collection-modal/MemoEditCollection";
+import MemoRateCollection from "@/components/collection-modal/MemoRateCollection";
+
+const OwnSet = ({ collection, isAuthor, onUpdate, isDetail }) => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showRateModal, setShowRateModal] = useState(false);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
 
   if (!collection) {
-    return <div>{t("views.pages.study_detail.no-collection-data")}</div>; // Kiểm tra nếu không tìm thấy collection
+    return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
   }
 
   const handleDuplicate = async () => {
@@ -29,13 +34,13 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
 
     if (result.success) {
       messageApi.success(result.message);
+      setTimeout(() => navigate(`/public-study-set/${result.id}`), 3000);
     } else {
       messageApi.error(result.message);
     }
   };
 
   const handleUpdate = (updatedCollection) => {
-    // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
     onUpdate(updatedCollection);
   };
 
@@ -56,7 +61,7 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
                 t("components.header.search_user2")}
           </div>
 
-          {!isStudy && (
+          {!isDetail && (
             <div className="set-item-collection-des">
               {t("views.pages.study_detail.collection-des")}{" "}
               {collection.description
@@ -71,6 +76,11 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
             isAuthor={isAuthor}
             onEdit={() => setIsModalVisible(true)}
             onCopy={handleDuplicate}
+            onRate={() => {
+              setSelectedCollectionId(collection.id);
+              setShowRateModal(true);
+            }}
+            collection={collection}
           />
 
           {/* <div className="set-item-totalcard">
@@ -159,6 +169,12 @@ const OwnSet = ({ collection, isAuthor, onUpdate, isStudy }) => {
         onCancel={() => setIsModalVisible(false)}
         onUpdate={handleUpdate}
         collection={collection}
+      />
+
+      <MemoRateCollection
+        visible={showRateModal}
+        onCancel={() => setShowRateModal(false)}
+        collectionId={selectedCollectionId}
       />
     </div>
   );

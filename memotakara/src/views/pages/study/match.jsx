@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom";
 import "@/views/pages/study_detail/index.css";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { getCollectionById, getPublicCollectionDetail } from "@/api/collection";
-import { postRecentCollection } from "@/api/recentCollection";
+import { getCollectionById } from "@/api/collection";
 import { startSession, submitMatchingAnswer, endSession } from "@/api/study";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
@@ -17,7 +16,7 @@ import {
   NotiSessionLeave,
 } from "@/components/widget/noti-session";
 
-function StudyMatching({ isEditFC }) {
+function StudyMatching() {
   const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
@@ -58,9 +57,14 @@ function StudyMatching({ isEditFC }) {
     let isCancelled = false;
 
     const fetchCollection = async () => {
-      return user
-        ? await getCollectionById(id)
-        : await getPublicCollectionDetail(id);
+      try {
+        const data = await getCollectionById(id);
+
+        setCollection(data.collection);
+        return data.collection;
+      } catch (err) {
+        throw new Error(t("views.pages.study_detail.error-loading-collection"));
+      }
     };
 
     const loadData = async () => {
@@ -70,10 +74,6 @@ function StudyMatching({ isEditFC }) {
         if (isCancelled) return;
 
         setCollection(data);
-
-        if (user && (data.privacy === 1 || user.id === data.user_id)) {
-          await postRecentCollection(data.id);
-        }
 
         if (user) {
           await setupSession(data.id);
@@ -154,7 +154,7 @@ function StudyMatching({ isEditFC }) {
           collection={collection}
           isAuthor={user?.id === collection.user_id}
           onUpdate={setCollection}
-          isStudy
+          isDetail
         />
 
         <MatchingCard

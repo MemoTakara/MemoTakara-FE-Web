@@ -3,12 +3,16 @@ import "./index.css";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
-import CollectionDropdown from "@/components/widget/collection-menu";
+
+import CollectionDropdown from "@/components/collection-modal/collection-menu";
+import MemoEditCollection from "@/components/collection-modal/MemoEditCollection";
+import MemoRateCollection from "@/components/collection-modal/MemoRateCollection";
 
 const SetItem = ({ collection, onDelete, onUpdate, onCopy }) => {
   const { t } = useTranslation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showRateModal, setShowRateModal] = useState(false);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
 
   const handleUpdate = (updatedCollection) => {
     // Gọi hàm onUpdate để cập nhật collection đã sửa ở phần cha (nếu cần)
@@ -39,6 +43,11 @@ const SetItem = ({ collection, onDelete, onUpdate, onCopy }) => {
             onEdit={() => setIsModalVisible(true)}
             onCopy={() => onCopy(collection.id)}
             onDelete={() => onDelete(collection.id)}
+            onRate={() => {
+              setSelectedCollectionId(collection.id);
+              setShowRateModal(true);
+            }}
+            collection={collection}
           />
         </div>
       </div>
@@ -49,6 +58,12 @@ const SetItem = ({ collection, onDelete, onUpdate, onCopy }) => {
         onCancel={() => setIsModalVisible(false)}
         onUpdate={handleUpdate}
         collection={collection}
+      />
+
+      <MemoRateCollection
+        visible={showRateModal}
+        onCancel={() => setShowRateModal(false)}
+        collectionId={selectedCollectionId}
       />
     </div>
   );

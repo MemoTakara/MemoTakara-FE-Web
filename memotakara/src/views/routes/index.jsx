@@ -7,16 +7,20 @@ import PublicList from "@/views/pages/study_sets/public-collection";
 
 import UserLayout from "@/components/layout/UserLayout";
 import LandingPage from "@/views/pages/landing_page";
+
 import Register from "@/views/pages/register";
 import Login from "@/views/pages/login";
 import GooglePage from "@/views/pages/login/google";
 import ForgotPassword from "@/views/pages/forgot-password";
 import ResetPassword from "@/views/pages/forgot-password/reset-pass";
+
 import Dashboard from "@/views/pages/dashboard";
 import ProgressPage from "@/views/pages/progress";
 import Settings from "@/views/pages/settings";
+
 import StudySets from "@/views/pages/study_sets";
 import RecentList from "@/views/pages/study_sets/recent-collection";
+
 import StudyDetail from "@/views/pages/study_detail";
 import StudyFlashcard from "@/views/pages/study/flashcard";
 import StudyMatch from "@/views/pages/study/match";
@@ -68,7 +72,7 @@ const router = createBrowserRouter([
       },
       {
         path: "public-collection/:id",
-        element: <StudyDetail isPublic={true} isEditFC={false} />,
+        element: <StudyDetail isPublic={true} />,
       },
     ],
   },
@@ -105,23 +109,23 @@ const router = createBrowserRouter([
           },
           {
             path: "public-study-set/:id",
-            element: <StudyDetail isPublic={false} isEditFC={false} />,
+            element: <StudyDetail isPublic={false} />,
           },
           {
             path: "collection-study/flashcard/:id",
-            element: <StudyFlashcard isPublic={false} isEditFC={false} />,
+            element: <StudyFlashcard isPublic={false} />,
           },
           {
             path: "collection-study/match/:id",
-            element: <StudyMatch isPublic={false} isEditFC={false} />,
+            element: <StudyMatch isPublic={false} />,
           },
           {
             path: "collection-study/quiz/:id",
-            element: <StudyQuiz isPublic={false} isEditFC={false} />,
+            element: <StudyQuiz isPublic={false} />,
           },
           {
             path: "collection-study/typing/:id",
-            element: <StudyTyping isPublic={false} isEditFC={false} />,
+            element: <StudyTyping isPublic={false} />,
           },
         ],
       },

@@ -40,13 +40,13 @@
 }
 
 .dashboard_due {
-  background: #98b1e1;
-  border: 3px solid var(--color-button);
+  background: #e8b2b2;
+  border: 3px solid #db5151;
 }
 
 .dashboard_streak {
-  background: #e8b2b2;
-  border: 3px solid #db5151;
+  background: #98b1e1;
+  border: 3px solid var(--color-button);
 }
 
 .dashboard_due,

@@ -1,29 +1,31 @@
 import "./card.css";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 import LoadingPage from "@/views/error-pages/LoadingPage";
+import FlashcardDropdown from "@/components/flashcard-modal/flashcard-menu";
 import MemoSpeaker from "@/components/widget/speaker";
 
-const MemoCard = ({ flashcards, collectionTag, isEditFC }) => {
+const MemoCard = ({
+  flashcards,
+  total,
+  languageFront,
+  isAuthor,
+  onUpdated,
+  onDeleted,
+}) => {
   const { t } = useTranslation();
-  if (!flashcards) return <LoadingPage />;
-  if (flashcards.length === 0) return <div>{t("components.cards.no-fc")}</div>;
 
-  const mapTagToLang = (tag) => {
-    if (!tag || typeof tag !== "string") return "en"; // Kiểm tra undefined/null hoặc không phải string
-    const normalizedTag = tag.toLowerCase(); // Chuyển tag về chữ thường để dễ so sánh
-    if (["english", "tiếng anh"].includes(normalizedTag)) return "en";
-    if (["japanese", "tiếng nhật"].includes(normalizedTag)) return "ja";
-    if (["chinese", "tiếng trung"].includes(normalizedTag)) return "zh";
-    return "en"; // Mặc định là tiếng Anh nếu không xác định được
-  };
+  if (!flashcards) return <LoadingPage />;
+  if (total === 0) return <div>{t("components.cards.no-fc")}</div>;
 
   return (
     <div>
       {flashcards.map((card) => (
         <div key={card.id} className="memo-card-container">
-          <div className="memo-card-left">{card.front}</div>
+          <div className="memo-card-left">
+            <div>{card.front}</div>
+            <MemoSpeaker text={card.front} lang={languageFront} />
+          </div>
 
           <div className="memo-card-right">
             <div className="memo-card-back">
@@ -33,29 +35,16 @@ const MemoCard = ({ flashcards, collectionTag, isEditFC }) => {
               {card.back}
               <br />
               <br />
-              {card.kanji ? card.kanji : null}{" "}
-              {/* Hiển thị kanji nếu có, ngược lại không hiển thị gì */}
+              {card.kanji || null}
             </div>
 
             <div className="memo-card-icon">
-              {/* Truyền mã ngôn ngữ được chuyển đổi từ tag */}
-              <MemoSpeaker
-                text={card.front}
-                lang={mapTagToLang(collectionTag)}
+              <FlashcardDropdown
+                isAuthor={isAuthor}
+                initialData={card}
+                onUpdated={onUpdated}
+                onDeleted={() => onDeleted(card.id)}
               />
-
-              {isEditFC && (
-                <div className="memo-card-link">
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    style={{
-                      fontSize: "var(--body-size)",
-                      color: "var(--color-error-button)",
-                      marginLeft: "5px",
-                    }}
-                  />
-                </div>
-              )}
             </div>
           </div>
         </div>

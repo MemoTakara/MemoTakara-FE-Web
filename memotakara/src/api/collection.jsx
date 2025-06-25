@@ -1,27 +1,5 @@
 import axiosClient from "@/axiosClient";
 
-// Hàm lấy danh sách public collection
-export const getPublicCollections = async () => {
-  try {
-    const response = await axiosClient.get("/public-collections");
-    return response.data; // Trả về danh sách collections
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách public collections:", error);
-    return [];
-  }
-};
-
-// Hàm lấy chi tiết của một public collection theo ID
-export const getPublicCollectionDetail = async (id) => {
-  try {
-    const response = await axiosClient.get(`/public-collections/${id}`);
-    return response.data; // Trả về chi tiết của collection
-  } catch (error) {
-    console.error("Lỗi khi lấy chi tiết public collection:", error);
-    return null; // Hoặc bạn có thể trả giá trị khác nếu cần
-  }
-};
-
 // Lấy danh sách các collection công khai của 1 người dùng xác định
 export const getPublicCollectionsByUser = async (userId) => {
   try {
@@ -33,79 +11,165 @@ export const getPublicCollectionsByUser = async (userId) => {
   }
 };
 
-// Lấy chi tiết 1 collection theo ID
+// Lấy danh sách tất cả bộ sưu tập với bộ lọc và phân trang
+export const getCollections = async (params = {}) => {
+  try {
+    const response = await axiosClient.get("/collections", { params });
+    return response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách bộ sưu tập:", error);
+    return { success: false, data: [], filters: {} };
+  }
+};
+
+// Lấy danh sách bộ sưu tập của người dùng
+export const getMyCollections = async (params = {}) => {
+  try {
+    const response = await axiosClient.get("/collections/my-collections", {
+      params,
+    });
+    return response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách bộ sưu tập của người dùng:", error);
+    return { success: false, data: [] };
+  }
+};
+
+// Tạo một bộ sưu tập mới
+export const createCollection = async (collectionData) => {
+  try {
+    const response = await axiosClient.post("/collections", collectionData);
+    return response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi tạo bộ sưu tập:", error);
+    return { success: false, message: "Failed to create collection" };
+  }
+};
+
+// Lấy thông tin một bộ sưu tập cụ thể (public)
+export const getCollectionByIdPublic = async (id) => {
+  try {
+    const response = await axiosClient.get(`/public-collections/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin bộ sưu tập:", error);
+    return { success: false, message: "Collection not found" };
+  }
+};
+
+// Lấy thông tin một bộ sưu tập cụ thể
 export const getCollectionById = async (id) => {
   try {
     const response = await axiosClient.get(`/collections/${id}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
-    console.error("Error fetching collection detail:", error);
-    throw error; // Đẩy lỗi lên để xử lý ở nơi gọi
+    console.error("Lỗi khi lấy thông tin bộ sưu tập:", error);
+    return { success: false, message: "Collection not found" };
   }
 };
 
-// Hàm lấy danh sách collection user sở hữu
-export const getOwnCollections = async () => {
-  const response = await axiosClient.get("/collections");
-  return response.data;
-};
-
-// Hàm tạo mới collection
-export const createCollection = async (data) => {
-  try {
-    const response = await axiosClient.post("/collections", data);
-    return response.data;
-  } catch (err) {
-    throw new Error("Error creating collection");
-  }
-};
-
-// Hàm update thông tin của collection
-export const updateCollection = async (collectionId, collectionData) => {
+// Cập nhật một bộ sưu tập cụ thể
+export const updateCollection = async (id, collectionData) => {
   try {
     const response = await axiosClient.put(
-      `/collections/${collectionId}`,
+      `/collections/${id}`,
       collectionData
     );
-    return response.data;
-  } catch (err) {
-    throw new Error("Error updating collection");
-  }
-};
-
-// Xóa collection theo ID
-export const deleteCollection = async (id) => {
-  const response = await axiosClient.delete(`/collections/${id}`);
-  return response.data;
-};
-
-// Hàm tìm kiếm public collection theo tên, tag, tác giả
-export const searchItems = async (query) => {
-  try {
-    const response = await axiosClient.get(`/search-public?query=${query}`);
-    return response.data; // Trả về kết quả tìm kiếm
+    return response.data.data;
   } catch (error) {
-    console.error("Lỗi khi tìm kiếm:", error);
-    return [];
+    console.error("Lỗi khi cập nhật bộ sưu tập:", error);
+    return { success: false, message: "Failed to update collection" };
   }
 };
 
-// Duplicate collection
-export const duplicateCollection = async (collectionId) => {
+// Xóa một bộ sưu tập cụ thể
+export const deleteCollection = async (id) => {
+  try {
+    const response = await axiosClient.delete(`/collections/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi xóa bộ sưu tập:", error);
+    return { success: false, message: "Failed to delete collection" };
+  }
+};
+
+// Sao chép một bộ sưu tập
+export const duplicateCollection = async (id) => {
+  try {
+    const response = await axiosClient.post(`/collections/${id}/duplicate`);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi sao chép bộ sưu tập:", error);
+    return { success: false, message: "Failed to duplicate collection" };
+  }
+};
+
+// Đánh giá một bộ sưu tập
+export const rateCollection = async (id, ratingData) => {
   try {
     const response = await axiosClient.post(
-      `/collections/${collectionId}/duplicate`
+      `/collections/${id}/rate`,
+      ratingData
     );
-    return {
-      success: true,
-      message: response.data.message,
-      newCollectionId: response.data.new_collection_id,
-    };
+    return response.data.data;
   } catch (error) {
-    console.error("Error duplicating collection:", error);
-    return {
-      success: false,
-      message: error.response?.data?.error || "Failed to duplicate collection",
-    };
+    console.error("Lỗi khi đánh giá bộ sưu tập:", error);
+    return { success: false, message: "Failed to submit rating" };
   }
 };
+
+// Lấy danh sách bộ sưu tập phổ biến
+export const getPopularCollections = async () => {
+  try {
+    const response = await axiosClient.get("/collections/popular");
+    return response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách bộ sưu tập phổ biến:", error);
+    return { success: false, data: [] };
+  }
+};
+
+// Gọi để lấy danh sách collection đã xem gần đây
+export const getRecentCollections = async () => {
+  try {
+    const res = await axiosClient.get("/collections/recent");
+    return res.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy recent list collection:", error);
+  }
+};
+
+// Không dùng: Lấy danh sách bộ sưu tập nổi bật
+// export const getFeaturedCollections = async () => {
+//   try {
+//     const response = await axiosClient.get("/collections/featured");
+//     return response.data.data;
+//   } catch (error) {
+//     console.error("Lỗi khi lấy danh sách bộ sưu tập nổi bật:", error);
+//     return { success: false, data: [] };
+//   }
+// };
+
+// Không dùng: Tìm kiếm bộ sưu tập với bộ lọc nâng cao
+// export const searchCollections = async (params = {}) => {
+//   try {
+//     const response = await axiosClient.get("/collections/search", { params });
+//     return response.data.data;
+//   } catch (error) {
+//     console.error("Lỗi khi tìm kiếm bộ sưu tập:", error);
+//     return { success: false, data: [] };
+//   }
+// };
+
+// Không dùng: Lấy danh sách bộ sưu tập theo tag
+// export const getCollectionsByTags = async (tags = []) => {
+//   try {
+//     const response = await axiosClient.get("/collections/by-tags", {
+//       params: { tags: tags.join(",") },
+//     });
+//     return response.data.data;
+//   } catch (error) {
+//     console.error("Lỗi khi lấy danh sách bộ sưu tập theo tag:", error);
+//     return { success: false, data: [] };
+//   }
+// };

@@ -1,0 +1,35 @@
+.noti-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 8px;
+}
+
+.noti-item.read {
+  opacity: 0.6;
+}
+
+.noti-icon {
+  font-size: 18px;
+}
+
+.noti-content {
+  flex: 1;
+}
+
+.noti-dropdown {
+  width: 350px;
+}
+
+.noti-dropdown-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.noti-dropdown-body {
+  max-height: 400px;
+  overflow-y: auto;
+}

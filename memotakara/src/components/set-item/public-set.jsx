@@ -2,14 +2,18 @@ import "./index.css";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { message } from "antd";
-import { duplicateCollection } from "@/api/collection";
-import MemoEditCollection from "@/components/create-collection/MemoEditCollection";
-import CollectionDropdown from "@/components/widget/collection-menu";
 
-const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
+import { duplicateCollection } from "@/api/collection";
+import CollectionDropdown from "@/components/collection-modal/collection-menu";
+import MemoEditCollection from "@/components/collection-modal/MemoEditCollection";
+import MemoRateCollection from "@/components/collection-modal/MemoRateCollection";
+
+const PublicSet = ({ collection, isAuthor, isPublic, onUpdate, isDetail }) => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [showRateModal, setShowRateModal] = useState(false);
+  const [selectedCollectionId, setSelectedCollectionId] = useState(null);
 
   if (!collection) {
     return <div>{t("views.pages.study_detail.no-collection-data")}</div>;
@@ -20,6 +24,7 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
 
     if (result.success) {
       messageApi.success(result.message);
+      setTimeout(() => navigate(`/public-study-set/${result.id}`), 3000);
     } else {
       messageApi.error(result.message);
     }
@@ -46,13 +51,14 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
               : collection.user?.username ||
                 t("components.header.search_user2")}
           </div>
-
-          <div className="set-item-collection-des">
-            {t("views.pages.study_detail.collection-des")}{" "}
-            {collection.description
-              ? collection.description
-              : t("views.pages.study_detail.no-description")}
-          </div>
+          {!isDetail && (
+            <div className="set-item-collection-des">
+              {t("views.pages.study_detail.collection-des")}{" "}
+              {collection.description
+                ? collection.description
+                : t("views.pages.study_detail.no-description")}
+            </div>
+          )}
         </div>
 
         <div className="set-item-footer">
@@ -61,6 +67,11 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
               isAuthor={isAuthor}
               onEdit={() => setIsModalVisible(true)}
               onCopy={handleDuplicate}
+              onRate={() => {
+                setSelectedCollectionId(collection.id);
+                setShowRateModal(true);
+              }}
+              collection={collection}
             />
           )}
 
@@ -78,6 +89,12 @@ const PublicSet = ({ collection, isAuthor, isPublic, onUpdate }) => {
         onCancel={() => setIsModalVisible(false)}
         onUpdate={handleUpdate}
         collection={collection}
+      />
+
+      <MemoRateCollection
+        visible={showRateModal}
+        onCancel={() => setShowRateModal(false)}
+        collectionId={selectedCollectionId}
       />
     </div>
   );

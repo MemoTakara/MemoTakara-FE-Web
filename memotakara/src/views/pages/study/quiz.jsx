@@ -6,7 +6,6 @@ import { Card, Radio, Alert } from "antd";
 import "@/views/pages/study_detail/index.css";
 import { useAuth } from "@/contexts/AuthContext";
 import { getCollectionById } from "@/api/collection";
-import { postRecentCollection } from "@/api/recentCollection";
 import { startSession, submitQuizAnswer, endSession } from "@/api/study";
 
 import LoadingPage from "@/views/error-pages/LoadingPage";
@@ -41,13 +40,9 @@ function StudyQuiz() {
   const fetchCollectionData = async () => {
     try {
       const data = await getCollectionById(id);
-      setCollection(data);
 
-      if (user && (data.privacy === 1 || user.id === data.user_id)) {
-        await postRecentCollection(data.id);
-      }
-
-      return data;
+      setCollection(data.collection);
+      return data.collection;
     } catch (err) {
       throw new Error(t("views.pages.study_detail.error-loading-collection"));
     }
@@ -226,7 +221,7 @@ function StudyQuiz() {
           collection={collection}
           isAuthor={user?.id === collection.user_id}
           onUpdate={setCollection}
-          isStudy={true}
+          isDetail={true}
         />
         <div style={{ textAlign: "center", marginTop: "20px" }}>
           {t("views.pages.study_detail.no-collection-data")}

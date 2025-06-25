@@ -2,7 +2,8 @@ import "./index.css";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { getCollectionProgress } from "@/api/flashcard";
+
+import { getCollectionProgress } from "@/api/progress";
 import BtnBlue from "@/components/btn/btn-blue";
 
 const DashboardCard = ({ collection, setAuthor }) => {
@@ -16,7 +17,7 @@ const DashboardCard = ({ collection, setAuthor }) => {
     const fetchProgress = async () => {
       try {
         const data = await getCollectionProgress(collection.id);
-        setProgress(data);
+        setProgress(data.progress);
       } catch (err) {
         console.error("Lỗi khi lấy tiến độ:", err);
       }
@@ -36,21 +37,21 @@ const DashboardCard = ({ collection, setAuthor }) => {
               className="dashboard_card_status_new"
               title={t("tooltip.new_card")}
             >
-              {progress.new}
+              {progress.new_cards}
             </div>
 
             <div
               className="dashboard_card_status_learn"
               title={t("tooltip.learning_card")}
             >
-              {progress.learning}
+              {progress.learning_cards}
             </div>
 
             <div
               className="dashboard_card_status_due"
               title={t("tooltip.due_card")}
             >
-              {progress.due}
+              {progress.review_cards}
             </div>
           </div>
         </div>
@@ -73,7 +74,7 @@ const DashboardCard = ({ collection, setAuthor }) => {
             style={{ marginLeft: "auto" }} // Để nút nằm ở bên phải
           >
             <BtnBlue
-              textKey="study_now"
+              textKey="see-details"
               style={{
                 fontSize: "var(--small-size)",
                 borderRadius: "var(--small-btn-radius)",
