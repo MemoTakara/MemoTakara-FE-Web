@@ -42,17 +42,32 @@ const FlashcardManagement = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewVisible, setPreviewVisible] = useState(false);
 
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 15,
+    total: 0,
+  });
+
   useEffect(() => {
     fetchFlashcards();
     fetchCollections();
   }, []);
 
-  const fetchFlashcards = async () => {
+  const fetchFlashcards = async (page = 1, pageSize = 15) => {
     setLoading(true);
     try {
-      const data = await getAllFlashcards();
-      setFlashcards(data);
-      setFilteredFlashcards(data); // Khởi tạo dữ liệu lọc
+      const { flashcards, pagination: apiPagination } = await getAllFlashcards({
+        page,
+        perPage: pageSize,
+      });
+
+      setFlashcards(flashcards);
+      setFilteredFlashcards(flashcards);
+      setPagination({
+        current: apiPagination.current_page,
+        pageSize: apiPagination.per_page,
+        total: apiPagination.total,
+      });
     } catch (error) {
       messageApi.error("Lỗi khi tải danh sách flashcards");
     }
@@ -66,6 +81,10 @@ const FlashcardManagement = () => {
     } catch (error) {
       messageApi.error("Lỗi khi tải danh sách collections");
     }
+  };
+
+  const handleTableChange = (pagination) => {
+    fetchFlashcards(pagination.current, pagination.pageSize);
   };
 
   // Tìm kiếm theo front, back hoặc tên collection
@@ -107,9 +126,9 @@ const FlashcardManagement = () => {
       formData.append("status", values.status || "new");
 
       // Sử dụng biến state (fileList) thay vì lấy từ form values
-      if (audioFileList.length > 0 && audioFileList[0].originFileObj) {
-        formData.append("audio_file", audioFileList[0].originFileObj);
-      }
+      // if (audioFileList.length > 0 && audioFileList[0].originFileObj) {
+      //   formData.append("audio_file", audioFileList[0].originFileObj);
+      // }
       if (imageFileList.length > 0 && imageFileList[0].originFileObj) {
         formData.append("image", imageFileList[0].originFileObj);
       }
@@ -135,18 +154,18 @@ const FlashcardManagement = () => {
       kanji: record.kanji,
       status: record.statuses?.[0]?.status || "new",
     }); // Hiển thị file âm thanh nếu có
-    if (record.audio_file) {
-      setAudioFileList([
-        {
-          uid: "-1",
-          name: record.audio_file,
-          status: "done",
-          url: `${config.storageBaseUrl}/storage/${record.audio_file}`,
-        },
-      ]);
-    } else {
-      setAudioFileList([]);
-    }
+    // if (record.audio_file) {
+    //   setAudioFileList([
+    //     {
+    //       uid: "-1",
+    //       name: record.audio_file,
+    //       status: "done",
+    //       url: `${config.storageBaseUrl}/storage/${record.audio_file}`,
+    //     },
+    //   ]);
+    // } else {
+    //   setAudioFileList([]);
+    // }
 
     // Hiển thị hình ảnh nếu có
     if (record.image) {
@@ -214,14 +233,14 @@ const FlashcardManagement = () => {
     setIsModalVisible(true);
   };
 
-  const handleAudioChange = ({ fileList }) => {
-    setAudioFileList(fileList);
-    if (fileList.length > 0 && fileList[0].originFileObj) {
-      setAudioFile(fileList[0].originFileObj);
-    } else {
-      setAudioFile(null);
-    }
-  };
+  // const handleAudioChange = ({ fileList }) => {
+  //   setAudioFileList(fileList);
+  //   if (fileList.length > 0 && fileList[0].originFileObj) {
+  //     setAudioFile(fileList[0].originFileObj);
+  //   } else {
+  //     setAudioFile(null);
+  //   }
+  // };
 
   const handleImageChange = ({ fileList }) => {
     setImageFileList(fileList);
@@ -253,19 +272,19 @@ const FlashcardManagement = () => {
     },
     { title: "Phát âm", dataIndex: "pronunciation" },
     { title: "Kanji", dataIndex: "kanji", render: (text) => text || "-" },
-    {
-      title: "Tập tin âm thanh",
-      dataIndex: "audio_file",
-      render: (text) =>
-        text ? (
-          <audio controls style={{ width: 150 }}>
-            <source src={`${config.storageBaseUrl}/storage/${text}`} />
-            Trình duyệt không hỗ trợ audio.
-          </audio>
-        ) : (
-          "-"
-        ),
-    },
+    // {
+    //   title: "Tập tin âm thanh",
+    //   dataIndex: "audio_file",
+    //   render: (text) =>
+    //     text ? (
+    //       <audio controls style={{ width: 150 }}>
+    //         <source src={`${config.storageBaseUrl}/storage/${text}`} />
+    //         Trình duyệt không hỗ trợ audio.
+    //       </audio>
+    //     ) : (
+    //       "-"
+    //     ),
+    // },
     {
       title: "Hình ảnh",
       dataIndex: "image",
@@ -369,7 +388,7 @@ const FlashcardManagement = () => {
     setIsEditMode(false);
     setCurrentFlashcard(null);
     form.resetFields();
-    setAudioFile(null);
+    // setAudioFile(null);
     setImageFile(null);
     setAudioFileList([]);
     setImageFileList([]);
@@ -407,7 +426,16 @@ const FlashcardManagement = () => {
         rowKey="id"
         bordered
         scroll={{ x: 2000 }}
+        pagination={{
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          total: pagination.total,
+          showSizeChanger: true,
+          showTotal: (total) => `Tổng cộng ${total} flashcards`,
+        }}
+        onChange={handleTableChange}
       />
+
       <Modal
         title={isEditMode ? "Chỉnh sửa Flashcard" : "Thêm Flashcard"}
         open={isModalVisible}
@@ -453,7 +481,7 @@ const FlashcardManagement = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item label="Tập tin âm thanh" name="audio_file">
+          {/* <Form.Item label="Tập tin âm thanh" name="audio_file">
             <Upload
               accept=".mp3,.wav,.m4a,.ogg,.flac"
               maxCount={1}
@@ -463,7 +491,7 @@ const FlashcardManagement = () => {
             >
               <Button icon={<UploadOutlined />}>Chọn âm thanh</Button>
             </Upload>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item label="Hình ảnh" name="image">
             <Upload

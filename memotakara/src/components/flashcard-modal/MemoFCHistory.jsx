@@ -59,6 +59,11 @@ const MemoFCHistory = ({ flashcardId, open, onClose }) => {
       key: "new_repetitions",
     },
     {
+      title: "Số lần trả lời sai",
+      dataIndex: "lapses",
+      key: "2",
+    },
+    {
       title: t("components.flashcard-modal.review-time"),
       dataIndex: "reviewed_at",
       key: "reviewed_at",

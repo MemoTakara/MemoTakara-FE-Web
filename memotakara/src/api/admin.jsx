@@ -1,5 +1,30 @@
 import axiosClient from "@/axiosClient";
 
+// Gửi thông báo
+export const sendNotification = async (values) => {
+  try {
+    const response = await axiosClient.post(
+      "/admins/notifications/send",
+      values
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi gửi thông báo:", error.response || error);
+    throw error;
+  }
+};
+
+// Hàm lấy danh sách thông báo
+export const getNotifications = async () => {
+  try {
+    const response = await axiosClient.get("/admins/notifications");
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách thông báo:", error.response || error);
+    throw error;
+  }
+};
+
 // Hàm yêu cầu đổi mật khẩu
 export const changePassword = async (oldPassword, newPassword) => {
   try {
@@ -119,12 +144,57 @@ export const deleteCollection = async (collectionId) => {
 };
 
 // Lấy danh sách flashcard của toàn hệ thống
-export const getAllFlashcards = async (collectionId) => {
+export const getAllFlashcards = async (params = {}) => {
   try {
-    const response = await axiosClient.get("/admins/flashcards");
-    return response.data;
+    const {
+      collectionId,
+      userId,
+      search,
+      perPage = 15,
+      page = 1,
+      includeStats = false,
+    } = params;
+
+    // Build query parameters
+    const queryParams = new URLSearchParams();
+
+    if (collectionId) {
+      queryParams.append("collection_id", collectionId);
+    }
+
+    if (userId) {
+      queryParams.append("user_id", userId);
+    }
+
+    if (search) {
+      queryParams.append("search", search);
+    }
+
+    queryParams.append("per_page", perPage);
+    queryParams.append("page", page);
+
+    if (includeStats) {
+      queryParams.append("include_stats", "true");
+    }
+
+    const response = await axiosClient.get(
+      `/admins/flashcards?${queryParams.toString()}`
+    );
+
+    // Xử lý response structure từ backend
+    if (response.data.success) {
+      return {
+        flashcards: response.data.data,
+        pagination: response.data.pagination,
+      };
+    } else {
+      throw new Error(response.data.message || "Failed to fetch flashcards");
+    }
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách flashcards:", error.response || error);
+    console.error(
+      "Lỗi khi lấy danh sách flashcards:",
+      error.response?.data || error
+    );
     throw error;
   }
 };

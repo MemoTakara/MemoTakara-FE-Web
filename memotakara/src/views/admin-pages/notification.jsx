@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { message, Button, Form, Input, Modal, Table } from "antd";
-import { getNotifications, sendNotification } from "@/api/notification";
+import { getNotifications, sendNotification } from "@/api/admin";
 
 const NotificationManager = () => {
   const [notifications, setNotifications] = useState([]);
